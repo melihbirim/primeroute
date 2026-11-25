@@ -249,21 +249,15 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
 pub(super) struct DenseGroups {
     groups: [Vec<super::SievingPrime>; 8],
     larger: [Vec<super::SievingPrime>; 8],
-    plain: Option<Vec<super::SievingPrime>>,
 }
 impl DenseGroups {
-    pub(super) fn new(span: usize) -> Self {
+    pub(super) fn new() -> Self {
         Self {
             groups: std::array::from_fn(|_| Vec::new()),
             larger: std::array::from_fn(|_| Vec::new()),
-            plain: (span < 8 * super::SEGMENT_SIZE).then(Vec::new),
         }
     }
     pub(super) fn activate(&mut self, state: super::SievingPrime) {
-        if let Some(states) = &mut self.plain {
-            states.push(state);
-            return;
-        }
         let class = super::RESIDUE_INDEX[state.prime as usize % 30];
         if state.prime <= 32 * 1024 {
             self.groups[class].push(state);
@@ -272,12 +266,6 @@ impl DenseGroups {
         }
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
-        if let Some(states) = &mut self.plain {
-            for state in states {
-                super::mark_dense(state, sieve);
-            }
-            return;
-        }
         for bytes in sieve.chunks_mut(32 * 1024) {
             mark_dense_group::<0>(&mut self.groups[0], bytes);
             mark_dense_group::<1>(&mut self.groups[1], bytes);
@@ -316,26 +304,16 @@ struct MediumPrime {
 pub(super) struct MediumGroups {
     current: [Vec<MediumPrime>; 64],
     next: [Vec<MediumPrime>; 64],
-    plain: Option<Vec<super::SparsePrime>>,
 }
 
 impl MediumGroups {
-    pub(super) fn new(span: usize) -> Self {
+    pub(super) fn new() -> Self {
         Self {
             current: std::array::from_fn(|_| Vec::new()),
             next: std::array::from_fn(|_| Vec::new()),
-            plain: (span < 8 * super::SEGMENT_SIZE).then(Vec::new),
         }
     }
     pub(super) fn activate(&mut self, state: &super::SparsePrime) {
-        if let Some(states) = &mut self.plain {
-            states.push(super::SparsePrime {
-                next: state.next,
-                quotient: state.quotient,
-                wheel: state.wheel,
-            });
-            return;
-        }
         // Only active medium primes enter: offsets are below one window plus
         // their next step (< 210 KiB), far below u32::MAX.
         self.current[state.wheel as usize].push(MediumPrime {
@@ -344,12 +322,6 @@ impl MediumGroups {
         });
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
-        if let Some(states) = &mut self.plain {
-            for state in states {
-                super::mark_medium(state, sieve);
-            }
-            return;
-        }
         for (wheel, states) in self.current.iter_mut().enumerate() {
             match wheel {
                 0 => mark_medium_group::<0>(states, &mut self.next, sieve),
@@ -767,7 +739,7 @@ mod tests {
     #[test]
     fn grouped_medium_matches_packed_steps_across_windows() {
         let mut reference = medium_states();
-        let mut groups = MediumGroups::new(8 * super::super::SEGMENT_SIZE);
+        let mut groups = MediumGroups::new();
         for state in &reference {
             groups.activate(state);
         }
@@ -807,7 +779,7 @@ mod tests {
         for round in 0..7 {
             for variant in [round % 2, (round + 1) % 2] {
                 let mut states = medium_states();
-                let mut groups = MediumGroups::new(8 * super::super::SEGMENT_SIZE);
+                let mut groups = MediumGroups::new();
                 for state in &states {
                     groups.activate(state);
                 }
@@ -849,41 +821,18 @@ mod tests {
         );
     }
     #[test]
-    fn short_multi_window_marking_matches_reference() {
-        let low = 1_000_000_000_000usize / 30;
-        let mut dense: Vec<_> = super::super::STATIC_SEEDS
-            .iter()
-            .copied()
-            .filter(|&p| p > 167 && p as usize <= super::super::DENSE_PRIME_LIMIT)
-            .map(|p| super::super::dense_prime(p as usize, low))
-            .collect();
-        let mut medium = medium_states();
-        let mut small = DenseGroups::new(4 * super::super::SEGMENT_SIZE);
-        let mut large = MediumGroups::new(4 * super::super::SEGMENT_SIZE);
-        for state in &dense {
-            small.activate(*state);
+    fn short_multi_window_queries_match_single_window_chunks() {
+        let start = 1_000_000_000_017usize;
+        let end = start + 15_999_999;
+        let mut expected = Vec::new();
+        for low in (start..=end).step_by(1_000_000) {
+            expected.extend(super::super::primes_in_range(low, (low + 999_999).min(end)));
         }
-        for state in &medium {
-            large.activate(state);
-        }
-        assert!(small.plain.is_some() && large.plain.is_some());
-        for len in [131_072, 131_071, 31, 0, 131_072] {
-            let mut expected = vec![255; len];
-            mark_reference(&mut dense, &mut expected);
-            for state in &mut medium {
-                super::super::mark_medium(state, &mut expected);
-            }
-            let mut actual = vec![255; len];
-            small.mark(&mut actual);
-            large.mark(&mut actual);
-            assert_eq!(actual, expected);
-            for (a, b) in small.plain.as_ref().unwrap().iter().zip(&dense) {
-                assert_eq!((a.next, a.first), (b.next, b.first));
-            }
-            for (a, b) in large.plain.as_ref().unwrap().iter().zip(&medium) {
-                assert_eq!((a.next, a.quotient, a.wheel), (b.next, b.quotient, b.wheel));
-            }
-        }
+        assert_eq!(super::super::primes_in_range(start, end), expected);
+        assert_eq!(
+            super::super::count_primes_in_range(start, end),
+            expected.len()
+        );
     }
     #[test]
     fn grouped_dense_matches_independent_streams() {
@@ -898,7 +847,7 @@ mod tests {
                 .map(|p| super::super::dense_prime(p as usize, low))
                 .collect();
             let mut reference = initial.clone();
-            let mut groups = DenseGroups::new(8 * super::super::SEGMENT_SIZE);
+            let mut groups = DenseGroups::new();
             for state in initial {
                 groups.activate(state);
             }
@@ -944,7 +893,7 @@ mod tests {
                 for offset in 0..3 {
                     let variant = (round + offset) % 3;
                     let mut states = initial.clone();
-                    let mut groups = DenseGroups::new(8 * super::super::SEGMENT_SIZE);
+                    let mut groups = DenseGroups::new();
                     for state in &initial {
                         groups.activate(*state);
                     }

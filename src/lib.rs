@@ -620,13 +620,6 @@ fn mark_dense_final_many(states: &[SievingPrime], sieve: &mut [u8]) {
 #[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline(never)]
 fn mark_dense_many(states: &mut [SievingPrime], sieve: &mut [u8]) {
-    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-    for chunk in sieve.chunks_mut(32 * 1024) {
-        for state in &mut *states {
-            mark_dense(state, chunk);
-        }
-    }
-    #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
     for state in states {
         mark_dense(state, sieve);
     }
@@ -941,7 +934,7 @@ fn sieve_segments_with_seeds(
     let mut window = 0;
     let mut active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-    let mut dense_groups = x86::DenseGroups::new(span);
+    let mut dense_groups = expanded.as_ref().map(|_| x86::DenseGroups::new());
     let mut medium_active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
     let mut medium_groups: Option<x86::MediumGroups> = None;
@@ -965,11 +958,17 @@ fn sieve_segments_with_seeds(
                 *next -= (low - first_byte) as u32;
             }
             #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-            dense_groups.activate(*state);
+            if let Some(groups) = &mut dense_groups {
+                groups.activate(*state);
+            }
         }
         active = next_active;
         #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-        dense_groups.mark(sieve);
+        if let Some(groups) = &mut dense_groups {
+            groups.mark(sieve);
+        } else {
+            mark_dense_many(&mut primes[..active], sieve);
+        }
         #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
         mark_dense_many(&mut primes[..active], sieve);
 
@@ -980,14 +979,20 @@ fn sieve_segments_with_seeds(
         for state in &mut medium[medium_active..next_medium_active] {
             state.next -= low;
             #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-            medium_groups
-                .get_or_insert_with(|| x86::MediumGroups::new(span))
-                .activate(state);
+            if expanded.is_some() {
+                medium_groups
+                    .get_or_insert_with(x86::MediumGroups::new)
+                    .activate(state);
+            }
         }
         medium_active = next_medium_active;
         #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
         if let Some(groups) = &mut medium_groups {
             groups.mark(sieve);
+        } else {
+            for state in &mut medium[..medium_active] {
+                mark_medium(state, sieve);
+            }
         }
         #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
         for state in &mut medium[..medium_active] {
