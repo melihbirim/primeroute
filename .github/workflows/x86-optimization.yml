@@ -18,7 +18,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install recorded Rust version
-        run: rustup toolchain install 1.94.1 --profile minimal && rustup default 1.94.1
+        run: rustup toolchain install 1.94.1 --profile minimal -c clippy,rustfmt && rustup default 1.94.1
       - uses: Swatinem/rust-cache@v2
       - name: Build primesieve
         run: |

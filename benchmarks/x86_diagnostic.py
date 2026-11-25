@@ -41,6 +41,15 @@ for name, flags in [("default", ""), ("v3", "-C target-cpu=x86-64-v3")]:
                           for p in sorted((source / "src").glob("*.rs"))},
     })
     (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")
+env = os.environ.copy()
+env["RUSTFLAGS"] = ""
+subprocess.run(["cargo", "fmt", "--check"], cwd=ROOT, env=env, check=True)
+subprocess.run(["cargo", "clippy", "--all-targets", "--locked", "--", "-D", "warnings"], cwd=ROOT, env=env, check=True)
+subprocess.run(["cargo", "test", "--release", "--locked", "--", "--test-threads=1"], cwd=ROOT, env=env, check=True)
+with (output / "kernel-profiles.log").open("w") as log:
+    subprocess.run(["cargo", "test", "--release", "--locked", "x86::tests::profile_", "--", "--ignored", "--nocapture", "--test-threads=1"], cwd=ROOT, env=env, stdout=log, check=True)
+subprocess.run(["bash", str(ROOT / "benchmarks/ci.sh"), str(primesieve), str(output / "candidate"), "x86 runtime candidate"], env=env, check=True)
+manifest["candidate_source_sha256"] = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "src").glob("*.rs"))}
 manifest["status"] = "complete"
 manifest["completed_at_utc"] = datetime.now(timezone.utc).isoformat()
 (output / "manifest.json").write_text(json.dumps(manifest, indent=2) + "\n")

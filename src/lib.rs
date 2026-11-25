@@ -1,6 +1,8 @@
 mod batch_order;
 mod candidates;
 mod next;
+#[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+mod x86;
 pub use next::{
     BatchOptions, BatchResult, BatchStats, BatchStrategy, batch_next_primes,
     batch_next_primes_with_options, is_prime, next_prime,
@@ -527,6 +529,13 @@ fn rotate_dense(state: &mut SievingPrime) {
             vst1q_u8(ptr, vqtbl2q_u8(table, a));
             vst1q_u8(ptr.add(16), vqtbl2q_u8(table, b));
         }
+        state.first = 0;
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 was checked; the helper loads and stores exactly eight u32s.
+        unsafe { x86::rotate_offsets(&mut state.next, first) };
         state.first = 0;
         return;
     }
@@ -1091,6 +1100,19 @@ fn append_seeds(primes: &mut Vec<u32>, low: usize, sieve: &[u8]) {
         unsafe { append_primes_neon(primes, low, sieve) };
         return;
     }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 was checked; the decoder reserves its padded output stores.
+        unsafe { x86::append_avx2(primes, low, sieve) };
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("popcnt") && std::arch::is_x86_feature_detected!("bmi1")
+    {
+        // SAFETY: both features checked; output stores are bounded by reservations.
+        unsafe { x86::append_popcnt(primes, low, sieve) };
+        return;
+    }
     for (i, &byte) in sieve.iter().enumerate() {
         let mut bits = byte;
         while bits != 0 {
@@ -1107,6 +1129,19 @@ fn append_primes(primes: &mut Vec<usize>, low: usize, sieve: &[u8]) {
         unsafe { append_primes_neon(primes, low, sieve) };
         return;
     }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 was checked; the decoder reserves its padded output stores.
+        unsafe { x86::append_avx2(primes, low, sieve) };
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("popcnt") && std::arch::is_x86_feature_detected!("bmi1")
+    {
+        // SAFETY: both features checked; output stores are bounded by reservations.
+        unsafe { x86::append_popcnt(primes, low, sieve) };
+        return;
+    }
     for (i, &byte) in sieve.iter().enumerate() {
         let mut bits = byte;
         while bits != 0 {
@@ -1116,7 +1151,10 @@ fn append_primes(primes: &mut Vec<usize>, low: usize, sieve: &[u8]) {
     }
 }
 
-#[cfg(all(target_arch = "aarch64", target_pointer_width = "64"))]
+#[cfg(all(
+    any(target_arch = "aarch64", target_arch = "x86_64"),
+    target_pointer_width = "64"
+))]
 #[derive(Clone, Copy)]
 struct DecodedWord {
     offsets: u64,
@@ -1124,7 +1162,10 @@ struct DecodedWord {
     len: u8,
 }
 
-#[cfg(all(target_arch = "aarch64", target_pointer_width = "64"))]
+#[cfg(all(
+    any(target_arch = "aarch64", target_arch = "x86_64"),
+    target_pointer_width = "64"
+))]
 #[allow(long_running_const_eval)]
 static DECODED_WORDS: [DecodedWord; 65_536] = {
     let mut table = [DecodedWord {
@@ -1307,6 +1348,16 @@ fn count_bits(bytes: &[u8]) -> usize {
     if std::arch::is_aarch64_feature_detected!("neon") {
         // SAFETY: NEON support was checked; the function bounds its loads.
         return unsafe { count_bits_neon(bytes) };
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 checked; all vector loads stay inside chunks_exact(32).
+        return unsafe { x86::count_avx2(bytes) };
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("popcnt") {
+        // SAFETY: POPCNT checked; u64 words are loaded through bounded slices.
+        return unsafe { x86::count_popcnt(bytes) };
     }
     bytes.iter().map(|byte| byte.count_ones() as usize).sum()
 }
