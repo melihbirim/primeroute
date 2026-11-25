@@ -458,6 +458,7 @@ fn dense_prime(p: usize, first_byte: usize) -> SievingPrime {
     }
 }
 
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline(always)]
 fn mark_dense(state: &mut SievingPrime, sieve: &mut [u8]) {
     let len = sieve.len();
@@ -616,6 +617,7 @@ fn mark_dense_final_many(states: &[SievingPrime], sieve: &mut [u8]) {
     }
 }
 
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline(never)]
 fn mark_dense_many(states: &mut [SievingPrime], sieve: &mut [u8]) {
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
@@ -938,6 +940,8 @@ fn sieve_segments_with_seeds(
     let mut low = first_byte;
     let mut window = 0;
     let mut active = 0;
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    let mut dense_groups = x86::DenseGroups::new();
     let mut medium_active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
     let mut medium_groups: Option<x86::MediumGroups> = None;
@@ -960,8 +964,13 @@ fn sieve_segments_with_seeds(
             for next in &mut state.next {
                 *next -= (low - first_byte) as u32;
             }
+            #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+            dense_groups.activate(*state);
         }
         active = next_active;
+        #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+        dense_groups.mark(sieve);
+        #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
         mark_dense_many(&mut primes[..active], sieve);
 
         let next_medium_active = medium.partition_point(|state| {

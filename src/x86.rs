@@ -245,6 +245,40 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
     }
 }
 
+#[derive(Clone)]
+pub(super) struct DenseGroups {
+    groups: [Vec<super::SievingPrime>; 8],
+}
+impl DenseGroups {
+    pub(super) fn new() -> Self {
+        Self {
+            groups: std::array::from_fn(|_| Vec::new()),
+        }
+    }
+    pub(super) fn activate(&mut self, state: super::SievingPrime) {
+        let class = super::RESIDUE_INDEX[state.prime as usize % 30];
+        self.groups[class].push(state);
+    }
+    pub(super) fn mark(&mut self, sieve: &mut [u8]) {
+        for bytes in sieve.chunks_mut(32 * 1024) {
+            mark_dense_group::<0>(&mut self.groups[0], bytes);
+            mark_dense_group::<1>(&mut self.groups[1], bytes);
+            mark_dense_group::<2>(&mut self.groups[2], bytes);
+            mark_dense_group::<3>(&mut self.groups[3], bytes);
+            mark_dense_group::<4>(&mut self.groups[4], bytes);
+            mark_dense_group::<5>(&mut self.groups[5], bytes);
+            mark_dense_group::<6>(&mut self.groups[6], bytes);
+            mark_dense_group::<7>(&mut self.groups[7], bytes);
+        }
+    }
+}
+#[inline(never)]
+fn mark_dense_group<const CLASS: usize>(states: &mut [super::SievingPrime], sieve: &mut [u8]) {
+    for state in states {
+        mark_dense_class::<CLASS>(state, sieve);
+    }
+}
+
 #[derive(Clone, Copy)]
 struct MediumPrime {
     next: u32,
@@ -390,7 +424,6 @@ fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -
     ((i - len) as u32, WHEEL)
 }
 
-#[cfg(test)]
 #[inline(always)]
 fn mark_dense_class<const CLASS: usize>(state: &mut super::SievingPrime, sieve: &mut [u8]) {
     let len = sieve.len();
@@ -770,5 +803,90 @@ mod tests {
             super::super::count_primes_in_range(start, end),
             expected.len()
         );
+    }
+    #[test]
+    fn grouped_dense_matches_independent_streams() {
+        for start in [1_000_000_000usize, 1_000_000_000_000] {
+            let low = start / 30;
+            let initial: Vec<_> = super::super::STATIC_SEEDS
+                .iter()
+                .copied()
+                .filter(|&p| {
+                    p > 167 && p as usize <= start.isqrt().min(super::super::DENSE_PRIME_LIMIT)
+                })
+                .map(|p| super::super::dense_prime(p as usize, low))
+                .collect();
+            let mut reference = initial.clone();
+            let mut groups = DenseGroups::new();
+            for state in initial {
+                groups.activate(state);
+            }
+            for len in [131_072, 131_071, 31, 0, 131_072] {
+                let mut expected = vec![255; len];
+                mark_reference(&mut reference, &mut expected);
+                let mut actual = vec![255; len];
+                groups.mark(&mut actual);
+                assert_eq!(actual, expected);
+                let mut states: Vec<_> = groups
+                    .groups
+                    .iter()
+                    .flatten()
+                    .map(|s| (s.prime, s.next, s.first))
+                    .collect();
+                states.sort_unstable_by_key(|s| s.0);
+                let target: Vec<_> = reference
+                    .iter()
+                    .map(|s| (s.prime, s.next, s.first))
+                    .collect();
+                assert_eq!(states, target);
+            }
+        }
+    }
+
+    #[test]
+    #[ignore = "native grouped dense-kernel selection experiment"]
+    fn profile_grouped_dense() {
+        use std::hint::black_box;
+        use std::time::Instant;
+        for start in [1_000_000_000usize, 1_000_000_000_000] {
+            let low = start / 30;
+            let initial: Vec<_> = super::super::STATIC_SEEDS
+                .iter()
+                .copied()
+                .filter(|&p| {
+                    p > 167 && p as usize <= start.isqrt().min(super::super::DENSE_PRIME_LIMIT)
+                })
+                .map(|p| super::super::dense_prime(p as usize, low))
+                .collect();
+            for round in 0..7 {
+                for offset in 0..3 {
+                    let variant = (round + offset) % 3;
+                    let mut states = initial.clone();
+                    let mut groups = DenseGroups::new();
+                    for state in &initial {
+                        groups.activate(*state);
+                    }
+                    let mut bitmap = vec![255; 131_072];
+                    let timer = Instant::now();
+                    for _ in 0..32 {
+                        bitmap.fill(255);
+                        match variant {
+                            0 => mark_reference(&mut states, &mut bitmap),
+                            1 => {
+                                for bytes in bitmap.chunks_mut(32 * 1024) {
+                                    mark_reference(&mut states, bytes);
+                                }
+                            }
+                            _ => groups.mark(&mut bitmap),
+                        }
+                        black_box(&bitmap);
+                    }
+                    println!(
+                        "grouped_dense start={start} round={round} variant={variant} ns={}",
+                        timer.elapsed().as_nanos() / 32
+                    );
+                }
+            }
+        }
     }
 }
