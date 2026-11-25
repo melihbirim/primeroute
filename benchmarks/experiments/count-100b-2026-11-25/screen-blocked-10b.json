@@ -1,0 +1,188 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T10:13:24.897930+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 10000000000,
+  "threads": 1,
+  "runs": 3,
+  "warmups": 1,
+  "commands": {
+    "baseline": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/baseline/prime-numbers",
+      "10000000000"
+    ],
+    "expanded": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/expanded/target/release/prime-numbers",
+      "10000000000"
+    ],
+    "expanded32": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/expanded32/target/release/prime-numbers",
+      "10000000000"
+    ],
+    "blocked-u32": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/blocked-u32/target/release/prime-numbers",
+      "10000000000"
+    ],
+    "blocked-u32-branchless": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/blocked-u32-branchless/target/release/prime-numbers",
+      "10000000000"
+    ],
+    "blocked-expanded-branchless": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/blocked-expanded-branchless/target/release/prime-numbers",
+      "10000000000"
+    ],
+    "blocked-expanded32-branchless": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/blocked-expanded32-branchless/target/release/prime-numbers",
+      "10000000000"
+    ]
+  },
+  "source_sha256": {
+    "baseline": {
+      "src/lib.rs": "3bd6266b9b3e9a41ae0b532bfae004619e25f4e9869346a5604067f2f3ff237a",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "expanded": {
+      "src/lib.rs": "b6d551f6e961dfd9ba52158c8dc9450ec6d4c127a3ed317c26e3aff69d051851",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "expanded32": {
+      "src/lib.rs": "d40e410ba9b7f4c8111675bbacdef10fa3c5a95833aec286bb3219494a5a1a49",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "blocked-u32": {
+      "src/lib.rs": "e572615cf570f7f75d2e3b5bd7b9832981fdc136c33b3885a6eb6a759dc6299a",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "blocked-u32-branchless": {
+      "src/lib.rs": "b1463387f7b14572e5fe0e903ce45f360bbb524481a7ff707fa67588531ec9f3",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "blocked-expanded-branchless": {
+      "src/lib.rs": "17b7a1c1db3a9e9337df55f6839c94168e5cc8f239bfc7f40d6ef7c6699e6461",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "blocked-expanded32-branchless": {
+      "src/lib.rs": "15da436134896813f98f269749e838d9277ea1f438ee970916b7b75cd5ed8e06",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "baseline": "6f0659e2eee4b8dc2a32f6401890fcd1ade8ee8385b7eaae3c92713ca222b631",
+    "expanded": "b7e7cab9f91c0bf1318ec845fc0df4b6525f6ebe637bf6aa9a8a676bc76ce45b",
+    "expanded32": "56b7c5edddac5e787a0ee19f9d8ffb99cf4bf8b7f94d429b1f0a12980e1e4a2e",
+    "blocked-u32": "4db32f6ed2ccab60a6a8b4a1244a2f0d45fdf8f3cb0287efcf77d7a992fa559b",
+    "blocked-u32-branchless": "867776d9a915ad7c1e7db83f97039ce0dcf0c150dcb4fa97791ec1d8c42d74f7",
+    "blocked-expanded-branchless": "03601751fbf4270fb54cd85b4d899069497f2633c7b5ac598e856f59d116b5dc",
+    "blocked-expanded32-branchless": "c11695d1d55f283bb0058d34a11c249dea3c59350a60859be90028cc1b341fec"
+  },
+  "prime_count": 455052511,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "baseline": {
+      "median_ms": 729.630834,
+      "min_ms": 728.160916,
+      "max_ms": 737.301833,
+      "samples_ms": [
+        728.160916,
+        737.301833,
+        729.630834
+      ]
+    },
+    "expanded": {
+      "median_ms": 665.085709,
+      "min_ms": 664.533,
+      "max_ms": 665.946583,
+      "samples_ms": [
+        665.946583,
+        665.085709,
+        664.533
+      ]
+    },
+    "expanded32": {
+      "median_ms": 671.822166,
+      "min_ms": 668.549708,
+      "max_ms": 674.279125,
+      "samples_ms": [
+        668.549708,
+        674.279125,
+        671.822166
+      ]
+    },
+    "blocked-u32": {
+      "median_ms": 773.401625,
+      "min_ms": 772.188,
+      "max_ms": 783.473209,
+      "samples_ms": [
+        772.188,
+        773.401625,
+        783.473209
+      ]
+    },
+    "blocked-u32-branchless": {
+      "median_ms": 774.897458,
+      "min_ms": 772.36475,
+      "max_ms": 778.907791,
+      "samples_ms": [
+        774.897458,
+        772.36475,
+        778.907791
+      ]
+    },
+    "blocked-expanded-branchless": {
+      "median_ms": 709.0625,
+      "min_ms": 704.451042,
+      "max_ms": 709.406667,
+      "samples_ms": [
+        704.451042,
+        709.0625,
+        709.406667
+      ]
+    },
+    "blocked-expanded32-branchless": {
+      "median_ms": 698.933792,
+      "min_ms": 698.5815,
+      "max_ms": 704.25625,
+      "samples_ms": [
+        704.25625,
+        698.933792,
+        698.5815
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T10:13:46.613254+00:00"
+}

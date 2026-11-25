@@ -1,0 +1,128 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T14:30:33.980780+00:00",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "metric": "Peak process RSS in bytes from macOS /usr/bin/time -l; one untimed warm-up query and one timed fresh query per process; single observation per case",
+  "source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "c23c4a67eb8eac3d168047f30082c61d21de982237563510e6d75d83204ff1c3",
+    "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+    "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a",
+    "examples/range_bench.rs": "798bb0c62f3053b6750218ea4099ad44d6fef0e7a53922578c96787a789a3413",
+    "benchmarks/range_bench.cpp": "57dcb833a9a47c17a39407545f6baad2b5767df561cb2ce877361983b4ad9386",
+    "benchmarks/ranges.py": "28c32a5bbbbb56cb604375bb6ca8679e5a3724ecfa311e08f64468c385a8e965"
+  },
+  "binary_sha256": {
+    "ours": "59425517782b0cfffc781cb2805dc95f41ce8defed9959952bab8b666102e99b",
+    "cpp": "44a068adfbd59fdb7e983e702fdb234eecb1002bfa745393a6e5a30a814b855e",
+    "ours_baseline": "3417ea91cff4cba56deb8d7631b64d59aaab5d26340c66e2a88205c4e0963fb6"
+  },
+  "cases": [
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000000999999,
+      "width": 1000000,
+      "mode": "count",
+      "implementation": "ours",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+        "1000000000000000000",
+        "1000000000000999999",
+        "count",
+        "1"
+      ],
+      "peak_rss_bytes": 10141696,
+      "native_result": {
+        "elapsed_ns": 189093500,
+        "repeats": 1,
+        "count": 24280,
+        "checksum": 0,
+        "threads": 1
+      },
+      "time_stderr": "        0.39 real         0.37 user         0.01 sys\n            10141696  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 585  page reclaims\n                 204  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                 236  involuntary context switches\n          5412060399  instructions retired\n          1292986951  cycles elapsed\n             6439248  peak memory footprint\n"
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000000999999,
+      "width": 1000000,
+      "mode": "count",
+      "implementation": "cpp_default",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/private/tmp/prime-numbers-cpp-range-bench",
+        "1000000000000000000",
+        "1000000000000999999",
+        "count",
+        "1",
+        "0"
+      ],
+      "peak_rss_bytes": 10600448,
+      "native_result": {
+        "elapsed_ns": 215167083,
+        "repeats": 1,
+        "count": 24280,
+        "checksum": 0,
+        "threads": 1
+      },
+      "time_stderr": "        0.44 real         0.42 user         0.01 sys\n            10600448  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                 798  page reclaims\n                  15  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                 280  involuntary context switches\n          4932898161  instructions retired\n          1453437291  cycles elapsed\n             9994576  peak memory footprint\n"
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000039999999,
+      "width": 40000000,
+      "mode": "count",
+      "implementation": "ours",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+        "1000000000000000000",
+        "1000000000039999999",
+        "count",
+        "1"
+      ],
+      "peak_rss_bytes": 39845888,
+      "native_result": {
+        "elapsed_ns": 284403375,
+        "repeats": 1,
+        "count": 966321,
+        "checksum": 0,
+        "threads": 1
+      },
+      "time_stderr": "        0.58 real         0.56 user         0.01 sys\n            39845888  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                2602  page reclaims\n                   0  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                  90  involuntary context switches\n          6530693123  instructions retired\n          1940009218  cycles elapsed\n            37945704  peak memory footprint\n"
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000039999999,
+      "width": 40000000,
+      "mode": "count",
+      "implementation": "cpp_default",
+      "command": [
+        "/usr/bin/time",
+        "-l",
+        "/private/tmp/prime-numbers-cpp-range-bench",
+        "1000000000000000000",
+        "1000000000039999999",
+        "count",
+        "1",
+        "0"
+      ],
+      "peak_rss_bytes": 36519936,
+      "native_result": {
+        "elapsed_ns": 315409084,
+        "repeats": 1,
+        "count": 966321,
+        "checksum": 0,
+        "threads": 1
+      },
+      "time_stderr": "        0.63 real         0.61 user         0.01 sys\n            36519936  maximum resident set size\n                   0  average shared memory size\n                   0  average unshared data size\n                   0  average unshared stack size\n                2394  page reclaims\n                   1  page faults\n                   0  swaps\n                   0  block input operations\n                   0  block output operations\n                   0  messages sent\n                   0  messages received\n                   0  signals received\n                   0  voluntary context switches\n                 119  involuntary context switches\n          5818209323  instructions retired\n          2130453703  cycles elapsed\n            35946880  peak memory footprint\n"
+    }
+  ],
+  "completed_at_utc": "2026-11-25T14:30:36.049227+00:00"
+}

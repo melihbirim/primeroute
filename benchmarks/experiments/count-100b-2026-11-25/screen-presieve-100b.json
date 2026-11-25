@@ -1,0 +1,112 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T10:20:42.653010+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 100000000000,
+  "threads": 1,
+  "runs": 2,
+  "warmups": 1,
+  "commands": {
+    "outlined-expanded": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/outlined-expanded/target/release/prime-numbers",
+      "100000000000"
+    ],
+    "outlined-packed": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/outlined-packed/target/release/prime-numbers",
+      "100000000000"
+    ],
+    "presieve257": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/presieve257/target/release/prime-numbers",
+      "100000000000"
+    ],
+    "presieve331": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/presieve331/target/release/prime-numbers",
+      "100000000000"
+    ]
+  },
+  "source_sha256": {
+    "outlined-expanded": {
+      "src/lib.rs": "5adafae26fd615979af1ae5c3d3d1911a270249da70a59a3bf86ab3f9255fffe",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "outlined-packed": {
+      "src/lib.rs": "b2def36f963b775d6fc50473fc491adf845536258135b55e9c317c61c5a0bb6e",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "presieve257": {
+      "src/lib.rs": "649a210ea776960593f150366908513fa35a52c3ac1cf270047e6440b121f4c0",
+      "src/next.rs": "830422c6634f8736e9a7407f8cab7285f721ac920781dcc85b66c6026feb86bb",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "presieve331": {
+      "src/lib.rs": "152a2377470f1fd8a638898958c85c06ea1b8ccbb4606afe3059fde9c9ca7970",
+      "src/next.rs": "fd63d3c525c862981185551d9b5f0d20a017d816b6f4f7ddca351f28fa761cb4",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "outlined-expanded": "a495c69d51c2c18d7c6166635a981e241b881c3fa6c7669a97b07bb8b67ca5e6",
+    "outlined-packed": "d34d2e084ccb2da4e3a1335173e9b8096f06a7c80ca0190842df435097b301ad",
+    "presieve257": "d7c1f4600a075fb1a265d7a2dd8708f2578b6f0a5077859d1d5f19f255078778",
+    "presieve331": "82adf9a5ac1b7d5546b9d2e0b8f0e97ab27dec4146714898d54630ef56710642"
+  },
+  "prime_count": 4118054813,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "outlined-expanded": {
+      "median_ms": 10755.900375,
+      "min_ms": 10611.983416,
+      "max_ms": 10899.817334,
+      "samples_ms": [
+        10611.983416,
+        10899.817334
+      ]
+    },
+    "outlined-packed": {
+      "median_ms": 9716.554833,
+      "min_ms": 9661.986375,
+      "max_ms": 9771.123291,
+      "samples_ms": [
+        9661.986375,
+        9771.123291
+      ]
+    },
+    "presieve257": {
+      "median_ms": 9665.9766665,
+      "min_ms": 9640.9685,
+      "max_ms": 9690.984833,
+      "samples_ms": [
+        9640.9685,
+        9690.984833
+      ]
+    },
+    "presieve331": {
+      "median_ms": 9732.6951665,
+      "min_ms": 9695.100375,
+      "max_ms": 9770.289958,
+      "samples_ms": [
+        9695.100375,
+        9770.289958
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T10:22:42.058135+00:00"
+}

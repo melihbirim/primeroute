@@ -1,0 +1,993 @@
+{
+  "status": "complete",
+  "expected_cases": 12,
+  "timestamp_utc": "2026-11-25T10:55:07.692615+00:00",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "threads": 1,
+  "runs": 7,
+  "warmup_batches": 1,
+  "fresh_queries_per_sample": 1,
+  "metric": "In-process milliseconds per fresh query; setup, allocation and result checksum included",
+  "cpu_info": "Apple M2 Pro\nLogical CPU cores: 12\nL1 cache size: 64 KiB\nL2 cache size: 4096 KiB\nL1 cache sharing: 1 thread\nL2 cache sharing: 4 threads",
+  "primesieve_version": "primesieve 12.18, <https://github.com/kimwalisch/primesieve>",
+  "rustc_version": "rustc 1.94.1 (e408947bf 2026-03-25) (Homebrew)",
+  "binary_sha256": {
+    "ours": "3417ea91cff4cba56deb8d7631b64d59aaab5d26340c66e2a88205c4e0963fb6",
+    "cpp": "44a068adfbd59fdb7e983e702fdb234eecb1002bfa745393a6e5a30a814b855e"
+  },
+  "source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "09abee545c4ac726fcc68c98cb12c0fe3514c7558b760f0bd4500f71db9f906f",
+    "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+    "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a",
+    "examples/range_bench.rs": "798bb0c62f3053b6750218ea4099ad44d6fef0e7a53922578c96787a789a3413",
+    "benchmarks/range_bench.cpp": "57dcb833a9a47c17a39407545f6baad2b5767df561cb2ce877361983b4ad9386",
+    "benchmarks/ranges.py": "0db0189148be1b90993b8b845e1551d05c5f8c896af6ea20cad6539f2415c9d4"
+  },
+  "cases": [
+    {
+      "start": 100000000000000,
+      "end": 100000000999999,
+      "width": 1000000,
+      "mode": "count",
+      "count": 30892,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "100000000000000",
+          "100000000999999",
+          "count",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000000999999",
+          "count",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000000999999",
+          "count",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 3.828209,
+          "mean_ms": 3.8370775714285714,
+          "min_ms": 3.755125,
+          "max_ms": 3.958084,
+          "samples_ms": [
+            3.880291,
+            3.794417,
+            3.755125,
+            3.958084,
+            3.801625,
+            3.828209,
+            3.841792
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 4.76425,
+          "mean_ms": 4.781541714285715,
+          "min_ms": 4.713667,
+          "max_ms": 4.88325,
+          "samples_ms": [
+            4.749708,
+            4.730375,
+            4.713667,
+            4.76425,
+            4.820458,
+            4.809084,
+            4.88325
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 4.884125,
+          "mean_ms": 4.872743857142857,
+          "min_ms": 4.7365,
+          "max_ms": 4.975625,
+          "samples_ms": [
+            4.800291,
+            4.949125,
+            4.884125,
+            4.845958,
+            4.975625,
+            4.917583,
+            4.7365
+          ]
+        }
+      }
+    },
+    {
+      "start": 100000000000000,
+      "end": 100000000999999,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 30892,
+      "checksum": 3089200015482962804,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "100000000000000",
+          "100000000999999",
+          "generate",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000000999999",
+          "generate",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000000999999",
+          "generate",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 3.861375,
+          "mean_ms": 3.8590415714285715,
+          "min_ms": 3.748708,
+          "max_ms": 3.996959,
+          "samples_ms": [
+            3.748708,
+            3.996959,
+            3.869958,
+            3.821166,
+            3.912875,
+            3.80225,
+            3.861375
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 4.370166,
+          "mean_ms": 4.383982,
+          "min_ms": 4.334541,
+          "max_ms": 4.484209,
+          "samples_ms": [
+            4.334541,
+            4.358666,
+            4.388583,
+            4.344167,
+            4.370166,
+            4.484209,
+            4.407542
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 4.466916,
+          "mean_ms": 4.468833,
+          "min_ms": 4.365375,
+          "max_ms": 4.589166,
+          "samples_ms": [
+            4.514708,
+            4.443833,
+            4.365375,
+            4.466916,
+            4.433625,
+            4.468208,
+            4.589166
+          ]
+        }
+      }
+    },
+    {
+      "start": 100000000000000,
+      "end": 100000039999999,
+      "width": 40000000,
+      "mode": "count",
+      "count": 1241066,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "100000000000000",
+          "100000039999999",
+          "count",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000039999999",
+          "count",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000039999999",
+          "count",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 18.503292,
+          "mean_ms": 18.500333285714287,
+          "min_ms": 18.31575,
+          "max_ms": 18.796958,
+          "samples_ms": [
+            18.31575,
+            18.503292,
+            18.796958,
+            18.61075,
+            18.373083,
+            18.382625,
+            18.519875
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 12.435417,
+          "mean_ms": 12.454773714285714,
+          "min_ms": 12.298291,
+          "max_ms": 12.617375,
+          "samples_ms": [
+            12.299417,
+            12.408916,
+            12.551208,
+            12.617375,
+            12.435417,
+            12.298291,
+            12.572792
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 12.734125,
+          "mean_ms": 12.775428714285715,
+          "min_ms": 12.519125,
+          "max_ms": 13.001792,
+          "samples_ms": [
+            12.519125,
+            12.880666,
+            12.940834,
+            13.001792,
+            12.637334,
+            12.714125,
+            12.734125
+          ]
+        }
+      }
+    },
+    {
+      "start": 100000000000000,
+      "end": 100000039999999,
+      "width": 40000000,
+      "mode": "generate",
+      "count": 1241066,
+      "checksum": 13426160367726287534,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "100000000000000",
+          "100000039999999",
+          "generate",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000039999999",
+          "generate",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000000",
+          "100000039999999",
+          "generate",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 19.751459,
+          "mean_ms": 20.06822042857143,
+          "min_ms": 19.418417,
+          "max_ms": 21.581708,
+          "samples_ms": [
+            19.55825,
+            20.128875,
+            19.751459,
+            21.581708,
+            20.316459,
+            19.418417,
+            19.722375
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 13.434667,
+          "mean_ms": 13.492905,
+          "min_ms": 13.189709,
+          "max_ms": 13.987375,
+          "samples_ms": [
+            13.256834,
+            13.654791,
+            13.514709,
+            13.987375,
+            13.434667,
+            13.189709,
+            13.41225
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 13.864667,
+          "mean_ms": 14.100387,
+          "min_ms": 13.406375,
+          "max_ms": 15.602875,
+          "samples_ms": [
+            13.63525,
+            13.406375,
+            14.518292,
+            15.602875,
+            14.050667,
+            13.624583,
+            13.864667
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000,
+      "end": 1000000000999999,
+      "width": 1000000,
+      "mode": "count",
+      "count": 28845,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000",
+          "1000000000999999",
+          "count",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000000999999",
+          "count",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000000999999",
+          "count",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 9.029458,
+          "mean_ms": 9.027577428571428,
+          "min_ms": 8.8755,
+          "max_ms": 9.2345,
+          "samples_ms": [
+            8.886584,
+            9.122458,
+            9.003083,
+            9.2345,
+            9.029458,
+            9.041459,
+            8.8755
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 10.017958,
+          "mean_ms": 10.015726285714285,
+          "min_ms": 9.895375,
+          "max_ms": 10.167792,
+          "samples_ms": [
+            10.167792,
+            10.044583,
+            9.955459,
+            9.895375,
+            10.017958,
+            9.934292,
+            10.094625
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 9.90075,
+          "mean_ms": 9.93867257142857,
+          "min_ms": 9.814042,
+          "max_ms": 10.162666,
+          "samples_ms": [
+            9.90075,
+            9.872375,
+            9.814042,
+            9.926292,
+            10.065,
+            10.162666,
+            9.829583
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000,
+      "end": 1000000000999999,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 28845,
+      "checksum": 10398255940748109299,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000",
+          "1000000000999999",
+          "generate",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000000999999",
+          "generate",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000000999999",
+          "generate",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 8.995833,
+          "mean_ms": 9.079583,
+          "min_ms": 8.8965,
+          "max_ms": 9.770625,
+          "samples_ms": [
+            8.934291,
+            9.770625,
+            9.039,
+            8.910041,
+            8.995833,
+            9.010791,
+            8.8965
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 8.490416,
+          "mean_ms": 8.535577285714286,
+          "min_ms": 8.3975,
+          "max_ms": 8.721792,
+          "samples_ms": [
+            8.625667,
+            8.721792,
+            8.429625,
+            8.3975,
+            8.606541,
+            8.4775,
+            8.490416
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 8.49825,
+          "mean_ms": 8.607237857142858,
+          "min_ms": 8.350166,
+          "max_ms": 9.211791,
+          "samples_ms": [
+            8.350166,
+            9.211791,
+            8.49825,
+            8.611375,
+            8.437917,
+            8.454166,
+            8.687
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000,
+      "end": 1000000039999999,
+      "width": 40000000,
+      "mode": "count",
+      "count": 1157923,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000",
+          "1000000039999999",
+          "count",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000039999999",
+          "count",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000039999999",
+          "count",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 38.062083,
+          "mean_ms": 38.23094057142857,
+          "min_ms": 37.890708,
+          "max_ms": 39.211584,
+          "samples_ms": [
+            37.890708,
+            38.062083,
+            39.211584,
+            37.943792,
+            38.315625,
+            38.141458,
+            38.051334
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 28.283458,
+          "mean_ms": 28.40941642857143,
+          "min_ms": 27.65625,
+          "max_ms": 30.032625,
+          "samples_ms": [
+            27.65625,
+            30.032625,
+            28.109791,
+            28.384833,
+            28.361,
+            28.283458,
+            28.037958
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 28.624291,
+          "mean_ms": 28.667625,
+          "min_ms": 28.175375,
+          "max_ms": 29.69975,
+          "samples_ms": [
+            28.517167,
+            28.175375,
+            29.69975,
+            28.730292,
+            28.732833,
+            28.193667,
+            28.624291
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000,
+      "end": 1000000039999999,
+      "width": 40000000,
+      "mode": "generate",
+      "count": 1157923,
+      "checksum": 14224890589432746599,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000",
+          "1000000039999999",
+          "generate",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000039999999",
+          "generate",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000",
+          "1000000039999999",
+          "generate",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 39.099708,
+          "mean_ms": 39.40484514285714,
+          "min_ms": 38.59225,
+          "max_ms": 41.534583,
+          "samples_ms": [
+            38.885833,
+            39.683209,
+            38.89575,
+            41.534583,
+            38.59225,
+            39.142583,
+            39.099708
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 28.329167,
+          "mean_ms": 28.45920242857143,
+          "min_ms": 28.180792,
+          "max_ms": 28.872458,
+          "samples_ms": [
+            28.329167,
+            28.478083,
+            28.24725,
+            28.180792,
+            28.872458,
+            28.267959,
+            28.838708
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 28.732833,
+          "mean_ms": 28.77399385714286,
+          "min_ms": 28.454916,
+          "max_ms": 29.027083,
+          "samples_ms": [
+            29.027083,
+            28.732833,
+            28.907792,
+            28.675875,
+            28.999167,
+            28.620291,
+            28.454916
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000000999999,
+      "width": 1000000,
+      "mode": "count",
+      "count": 24280,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000000",
+          "1000000000000999999",
+          "count",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000000999999",
+          "count",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000000999999",
+          "count",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 204.8,
+          "mean_ms": 205.16557742857142,
+          "min_ms": 204.4105,
+          "max_ms": 206.0885,
+          "samples_ms": [
+            206.0885,
+            204.460209,
+            204.4105,
+            205.931,
+            205.834125,
+            204.8,
+            204.634708
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 210.860458,
+          "mean_ms": 210.55760714285714,
+          "min_ms": 209.100208,
+          "max_ms": 211.824792,
+          "samples_ms": [
+            209.100208,
+            210.860458,
+            209.368375,
+            211.698833,
+            209.423959,
+            211.626625,
+            211.824792
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 210.3485,
+          "mean_ms": 210.643744,
+          "min_ms": 208.92775,
+          "max_ms": 212.680166,
+          "samples_ms": [
+            212.185,
+            208.92775,
+            209.583917,
+            210.3485,
+            210.741875,
+            210.039,
+            212.680166
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000000999999,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 24280,
+      "checksum": 4084799010429843912,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000000",
+          "1000000000000999999",
+          "generate",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000000999999",
+          "generate",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000000999999",
+          "generate",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 204.694917,
+          "mean_ms": 205.12695828571427,
+          "min_ms": 203.697667,
+          "max_ms": 208.591458,
+          "samples_ms": [
+            204.78775,
+            204.694917,
+            203.713708,
+            204.121041,
+            203.697667,
+            206.282167,
+            208.591458
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 159.166792,
+          "mean_ms": 159.7412977142857,
+          "min_ms": 157.038042,
+          "max_ms": 164.406042,
+          "samples_ms": [
+            158.866666,
+            159.166792,
+            164.406042,
+            158.886125,
+            159.272083,
+            160.553334,
+            157.038042
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 159.063542,
+          "mean_ms": 159.21849414285714,
+          "min_ms": 158.410125,
+          "max_ms": 160.352209,
+          "samples_ms": [
+            159.063542,
+            159.008917,
+            160.352209,
+            158.617708,
+            158.410125,
+            159.402083,
+            159.674875
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000039999999,
+      "width": 40000000,
+      "mode": "count",
+      "count": 966321,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000000",
+          "1000000000039999999",
+          "count",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000039999999",
+          "count",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000039999999",
+          "count",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 280.254542,
+          "mean_ms": 279.8953095714286,
+          "min_ms": 277.992959,
+          "max_ms": 281.077709,
+          "samples_ms": [
+            280.586791,
+            280.671292,
+            279.428416,
+            281.077709,
+            280.254542,
+            277.992959,
+            279.255458
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 309.961125,
+          "mean_ms": 310.40114871428574,
+          "min_ms": 307.211458,
+          "max_ms": 316.023,
+          "samples_ms": [
+            316.023,
+            307.445791,
+            308.054542,
+            309.961125,
+            313.10975,
+            307.211458,
+            311.002375
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 309.333166,
+          "mean_ms": 309.42357757142855,
+          "min_ms": 307.614625,
+          "max_ms": 313.478084,
+          "samples_ms": [
+            309.805459,
+            307.614625,
+            309.542583,
+            308.000542,
+            309.333166,
+            308.190584,
+            313.478084
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000000000,
+      "end": 1000000000039999999,
+      "width": 40000000,
+      "mode": "generate",
+      "count": 966321,
+      "checksum": 6758462127560201453,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000000000",
+          "1000000000039999999",
+          "generate",
+          "1"
+        ],
+        "cpp_default": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000039999999",
+          "generate",
+          "1",
+          "0"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000000000",
+          "1000000000039999999",
+          "generate",
+          "1",
+          "1024"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 280.224792,
+          "mean_ms": 281.478113,
+          "min_ms": 278.025958,
+          "max_ms": 288.638916,
+          "samples_ms": [
+            288.638916,
+            280.224792,
+            278.737416,
+            278.648667,
+            284.281167,
+            281.789875,
+            278.025958
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 273.209292,
+          "mean_ms": 274.0610594285714,
+          "min_ms": 272.583125,
+          "max_ms": 277.266542,
+          "samples_ms": [
+            275.401916,
+            273.081958,
+            273.209292,
+            273.027583,
+            272.583125,
+            273.857,
+            277.266542
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 274.61825,
+          "mean_ms": 274.6790355714286,
+          "min_ms": 273.873875,
+          "max_ms": 275.70875,
+          "samples_ms": [
+            275.70875,
+            274.046041,
+            274.61825,
+            274.015417,
+            273.873875,
+            275.507458,
+            274.983458
+          ]
+        }
+      }
+    }
+  ],
+  "completed_at_utc": "2026-11-25T10:56:01.129592+00:00"
+}

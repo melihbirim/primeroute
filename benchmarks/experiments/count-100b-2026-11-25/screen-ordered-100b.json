@@ -1,0 +1,89 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T10:30:47.402242+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 100000000000,
+  "threads": 1,
+  "runs": 2,
+  "warmups": 1,
+  "commands": {
+    "max32-packed": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/max32-packed/target/release/prime-numbers",
+      "100000000000"
+    ],
+    "small-seeds-max32": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/small-seeds-max32/target/release/prime-numbers",
+      "100000000000"
+    ],
+    "ordered-tails": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/ordered-tails/target/release/prime-numbers",
+      "100000000000"
+    ]
+  },
+  "source_sha256": {
+    "max32-packed": {
+      "src/lib.rs": "8b46ee58b2751e41d9b9d61f7cc28678ae2f5539b7e4b4ec7cc102394d56e151",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "small-seeds-max32": {
+      "src/lib.rs": "ea5f8ee71049caa76315520056284697d7ae9d28ad78888e9ac6f5198e0af3c5",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "ordered-tails": {
+      "src/lib.rs": "746e49680154e9a504a4ee43426d5142f5b063f24cc262c612c2943ebd161f86",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "max32-packed": "f040e4a869452e22039183d13adabe599a10d4407c069686038203b57607a0e1",
+    "small-seeds-max32": "4425ba55f37d00fb2f3f08b984cb8e5530de7b112f297dd2ffa4ee73f70fc2f3",
+    "ordered-tails": "2c0cd66e63e4d696ba205da8f55558225de4ca05f097941a582ba57a5a5e1682"
+  },
+  "prime_count": 4118054813,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "max32-packed": {
+      "median_ms": 9479.173583,
+      "min_ms": 9430.513791,
+      "max_ms": 9527.833375,
+      "samples_ms": [
+        9430.513791,
+        9527.833375
+      ]
+    },
+    "small-seeds-max32": {
+      "median_ms": 9584.6995205,
+      "min_ms": 9562.591041,
+      "max_ms": 9606.808,
+      "samples_ms": [
+        9606.808,
+        9562.591041
+      ]
+    },
+    "ordered-tails": {
+      "median_ms": 9144.610604500002,
+      "min_ms": 9098.91025,
+      "max_ms": 9190.310959,
+      "samples_ms": [
+        9190.310959,
+        9098.91025
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T10:32:11.598309+00:00"
+}

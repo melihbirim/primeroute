@@ -1,0 +1,64 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T10:34:22.885034+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 100000000000,
+  "threads": 1,
+  "runs": 1,
+  "warmups": 0,
+  "commands": {
+    "ordered-tails": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/ordered-tails/target/release/prime-numbers",
+      "100000000000"
+    ],
+    "ordered-compact": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/ordered-compact/target/release/prime-numbers",
+      "100000000000"
+    ]
+  },
+  "source_sha256": {
+    "ordered-tails": {
+      "src/lib.rs": "746e49680154e9a504a4ee43426d5142f5b063f24cc262c612c2943ebd161f86",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "ordered-compact": {
+      "src/lib.rs": "f76b4da6fdc8e09d80bfa6af05b1f7cd828101d6629576a59caf800b77764201",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "ordered-tails": "2c0cd66e63e4d696ba205da8f55558225de4ca05f097941a582ba57a5a5e1682",
+    "ordered-compact": "292c949d25c5abe38c031add8da7607bc2412a8e7cbde48b7b1830a638d7f87e"
+  },
+  "prime_count": 4118054813,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "ordered-tails": {
+      "median_ms": 9044.010416,
+      "min_ms": 9044.010416,
+      "max_ms": 9044.010416,
+      "samples_ms": [
+        9044.010416
+      ]
+    },
+    "ordered-compact": {
+      "median_ms": 8950.781417,
+      "min_ms": 8950.781417,
+      "max_ms": 8950.781417,
+      "samples_ms": [
+        8950.781417
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T10:34:40.886400+00:00"
+}

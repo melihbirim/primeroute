@@ -1,0 +1,122 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T11:07:57.134666+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 100000000,
+  "threads": 1,
+  "runs": 30,
+  "warmups": 5,
+  "commands": {
+    "ordered-compact": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/ordered-compact/target/release/prime-numbers",
+      "100000000"
+    ],
+    "adaptive-light": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/adaptive-light/target/release/prime-numbers",
+      "100000000"
+    ]
+  },
+  "source_sha256": {
+    "ordered-compact": {
+      "src/lib.rs": "f76b4da6fdc8e09d80bfa6af05b1f7cd828101d6629576a59caf800b77764201",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "adaptive-light": {
+      "src/lib.rs": "7f48ef9a3930f292cbef49a08706e5fddf5c4cd897a817cd3f6ca07d56a0a1f0",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "ordered-compact": "292c949d25c5abe38c031add8da7607bc2412a8e7cbde48b7b1830a638d7f87e",
+    "adaptive-light": "fdf19cb4fc11b0f5429dbd85a8334fd637d12e340533f939f84e1cd7230cebf4"
+  },
+  "prime_count": 5761455,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "ordered-compact": {
+      "median_ms": 8.1956455,
+      "min_ms": 7.496875,
+      "max_ms": 14.241042,
+      "samples_ms": [
+        8.589042,
+        7.726458,
+        8.275333,
+        8.38,
+        10.264584,
+        8.224375,
+        7.496875,
+        8.1725,
+        7.678667,
+        7.788083,
+        7.828459,
+        14.241042,
+        7.974458,
+        9.657083,
+        7.95225,
+        11.194292,
+        10.21325,
+        7.817625,
+        8.25575,
+        8.218791,
+        7.970083,
+        7.96975,
+        7.766459,
+        9.4065,
+        8.367083,
+        7.894916,
+        7.716083,
+        8.080541,
+        8.6785,
+        10.147917
+      ]
+    },
+    "adaptive-light": {
+      "median_ms": 7.8806665,
+      "min_ms": 7.1725,
+      "max_ms": 9.668333,
+      "samples_ms": [
+        7.846875,
+        8.002666,
+        7.1725,
+        7.410791,
+        7.339167,
+        7.726834,
+        7.868625,
+        7.558458,
+        7.629708,
+        7.411125,
+        7.881458,
+        7.854917,
+        7.818583,
+        9.668333,
+        8.006417,
+        7.561083,
+        7.925292,
+        9.364542,
+        8.002667,
+        7.879875,
+        7.956375,
+        8.178084,
+        7.575083,
+        8.431291,
+        7.892875,
+        8.267208,
+        7.336042,
+        8.060708,
+        9.417167,
+        8.740958
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T11:07:58.117879+00:00"
+}

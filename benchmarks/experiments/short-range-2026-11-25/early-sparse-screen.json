@@ -1,0 +1,472 @@
+{
+  "status": "complete",
+  "kind": "exploratory variant screen",
+  "timestamp": "2026-11-25T11:44:47.282244+00:00",
+  "source_sha256": {
+    "src/lib.rs": "520b698cba867fed1cb47a78955275f86551d0441eb099b36df7fbf6cd18b8ef",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d"
+  },
+  "binary_sha256": {
+    "ours": "bf98d5b5ebcc83b71be4c2b5ae9cc12fca5d3ba7dc0a52753220615b21b46936",
+    "baseline": "3417ea91cff4cba56deb8d7631b64d59aaab5d26340c66e2a88205c4e0963fb6",
+    "cpp": "44a068adfbd59fdb7e983e702fdb234eecb1002bfa745393a6e5a30a814b855e"
+  },
+  "runs": 9,
+  "repeats": 10,
+  "threads": 1,
+  "cases": [
+    {
+      "start": 1000000000,
+      "width": 1000000,
+      "mode": "count",
+      "count": 48155,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000",
+          "1000999999",
+          "count",
+          "10"
+        ],
+        "baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/short-range-2026-11-25/baseline/range_bench",
+          "1000000000",
+          "1000999999",
+          "count",
+          "10"
+        ],
+        "cpp": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000",
+          "1000999999",
+          "count",
+          "10",
+          "0"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.0955208,
+          "samples_ms": [
+            0.09735,
+            0.0888,
+            0.09695,
+            0.09789160000000001,
+            0.0925666,
+            0.0939375,
+            0.0955208,
+            0.0961167,
+            0.08972089999999999
+          ]
+        },
+        "baseline": {
+          "median_ms": 0.14402920000000002,
+          "samples_ms": [
+            0.1440125,
+            0.1402167,
+            0.1748875,
+            0.13992079999999998,
+            0.1467041,
+            0.1386584,
+            0.15645420000000002,
+            0.14402920000000002,
+            0.1462292
+          ]
+        },
+        "cpp": {
+          "median_ms": 0.0845875,
+          "samples_ms": [
+            0.1331167,
+            0.0853709,
+            0.0982375,
+            0.08265,
+            0.0977709,
+            0.0830583,
+            0.0822958,
+            0.08060830000000001,
+            0.0845875
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 48155,
+      "checksum": 48179107682461,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "10"
+        ],
+        "baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/short-range-2026-11-25/baseline/range_bench",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "10"
+        ],
+        "cpp": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "10",
+          "0"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.1458458,
+          "samples_ms": [
+            0.1575875,
+            0.1345375,
+            0.1458458,
+            0.1402958,
+            0.1200375,
+            0.19372920000000002,
+            0.1819667,
+            0.17145839999999998,
+            0.12245
+          ]
+        },
+        "baseline": {
+          "median_ms": 0.1901167,
+          "samples_ms": [
+            0.1980916,
+            0.1936125,
+            0.18307920000000003,
+            0.1874958,
+            0.181275,
+            0.17959170000000002,
+            0.252,
+            0.2319166,
+            0.1901167
+          ]
+        },
+        "cpp": {
+          "median_ms": 0.1302375,
+          "samples_ms": [
+            0.1846041,
+            0.1146292,
+            0.10564169999999999,
+            0.1067,
+            0.1302375,
+            0.1625,
+            0.20556660000000002,
+            0.213575,
+            0.1155542
+          ]
+        }
+      }
+    },
+    {
+      "start": 100000000000,
+      "width": 1000000,
+      "mode": "count",
+      "count": 39434,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "100000000000",
+          "100000999999",
+          "count",
+          "10"
+        ],
+        "baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/short-range-2026-11-25/baseline/range_bench",
+          "100000000000",
+          "100000999999",
+          "count",
+          "10"
+        ],
+        "cpp": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000",
+          "100000999999",
+          "count",
+          "10",
+          "0"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.4102542,
+          "samples_ms": [
+            0.3941458,
+            0.4224292,
+            0.417875,
+            0.4102542,
+            0.40599579999999996,
+            0.3852959,
+            0.3935542,
+            0.42295,
+            0.4165833
+          ]
+        },
+        "baseline": {
+          "median_ms": 0.40037079999999997,
+          "samples_ms": [
+            0.4321042,
+            0.3908833,
+            0.37900829999999996,
+            0.39600420000000003,
+            0.40037079999999997,
+            0.4064584,
+            0.4334166,
+            0.40592090000000003,
+            0.3891792
+          ]
+        },
+        "cpp": {
+          "median_ms": 0.2948084,
+          "samples_ms": [
+            0.3022917,
+            0.32314170000000003,
+            0.2944,
+            0.2890375,
+            0.32209170000000004,
+            0.29178329999999997,
+            0.2948084,
+            0.3044416,
+            0.287125
+          ]
+        }
+      }
+    },
+    {
+      "start": 100000000000,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 39434,
+      "checksum": 3943419683177632,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "100000000000",
+          "100000999999",
+          "generate",
+          "10"
+        ],
+        "baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/short-range-2026-11-25/baseline/range_bench",
+          "100000000000",
+          "100000999999",
+          "generate",
+          "10"
+        ],
+        "cpp": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "100000000000",
+          "100000999999",
+          "generate",
+          "10",
+          "0"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.4218584,
+          "samples_ms": [
+            0.4400875,
+            0.4218584,
+            0.4083875,
+            0.4556792,
+            0.4130375,
+            0.4407459,
+            0.4182667,
+            0.4234792,
+            0.4080167
+          ]
+        },
+        "baseline": {
+          "median_ms": 0.4305792,
+          "samples_ms": [
+            0.4384917,
+            0.4305792,
+            0.4165875,
+            0.44503329999999997,
+            0.4576416,
+            0.4221125,
+            0.42917920000000004,
+            0.4329584,
+            0.430525
+          ]
+        },
+        "cpp": {
+          "median_ms": 0.32895409999999997,
+          "samples_ms": [
+            0.3244666,
+            0.3264709,
+            0.3310125,
+            0.3728875,
+            0.32895409999999997,
+            0.3471833,
+            0.32414590000000004,
+            0.32164159999999997,
+            0.335075
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000,
+      "width": 1000000,
+      "mode": "count",
+      "count": 36249,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "10"
+        ],
+        "baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/short-range-2026-11-25/baseline/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "10"
+        ],
+        "cpp": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "10",
+          "0"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.8993167,
+          "samples_ms": [
+            0.8848584,
+            0.9251916,
+            0.8993167,
+            0.8870125,
+            0.8933,
+            0.8933875,
+            0.9053,
+            0.9650709000000001,
+            0.9258
+          ]
+        },
+        "baseline": {
+          "median_ms": 0.9158583,
+          "samples_ms": [
+            0.9158583,
+            0.9086042,
+            0.8962791999999999,
+            0.9065625,
+            0.908425,
+            0.9272417,
+            0.9260041,
+            0.9202709,
+            0.9165416999999999
+          ]
+        },
+        "cpp": {
+          "median_ms": 0.8847666999999999,
+          "samples_ms": [
+            0.8847666999999999,
+            0.8849834,
+            0.8346208,
+            0.8592333000000001,
+            0.8746,
+            0.849025,
+            0.885325,
+            0.9065875,
+            0.885775
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 36249,
+      "checksum": 36249018122131905,
+      "commands": {
+        "ours": [
+          "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "10"
+        ],
+        "baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/short-range-2026-11-25/baseline/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "10"
+        ],
+        "cpp": [
+          "/private/tmp/prime-numbers-cpp-range-bench",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "10",
+          "0"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.9650415999999999,
+          "samples_ms": [
+            0.9650415999999999,
+            0.9934458,
+            0.994675,
+            0.9564041,
+            0.9578167,
+            0.9753958,
+            0.9696167,
+            0.9441625,
+            0.911925
+          ]
+        },
+        "baseline": {
+          "median_ms": 0.9670416,
+          "samples_ms": [
+            0.9252208000000001,
+            0.9561,
+            0.9743,
+            0.94145,
+            0.9703584000000001,
+            0.9714541,
+            0.9708,
+            0.9609167,
+            0.9670416
+          ]
+        },
+        "cpp": {
+          "median_ms": 0.8838083,
+          "samples_ms": [
+            0.8530667,
+            0.8660291999999999,
+            0.8947709,
+            0.843225,
+            0.8949083000000001,
+            0.9027959,
+            0.891825,
+            0.8756041999999999,
+            0.8838083
+          ]
+        }
+      }
+    }
+  ]
+}

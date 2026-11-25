@@ -1,0 +1,122 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T11:02:39.516280+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 100000000,
+  "threads": 1,
+  "runs": 30,
+  "warmups": 5,
+  "commands": {
+    "ordered-compact": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/ordered-compact/target/release/prime-numbers",
+      "100000000"
+    ],
+    "adaptive": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/adaptive/target/release/prime-numbers",
+      "100000000"
+    ]
+  },
+  "source_sha256": {
+    "ordered-compact": {
+      "src/lib.rs": "f76b4da6fdc8e09d80bfa6af05b1f7cd828101d6629576a59caf800b77764201",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "adaptive": {
+      "src/lib.rs": "37fbbd1a9f1382a24450bfb450075b1abda5875f88574b23c8d28ba1a114211e",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "ordered-compact": "292c949d25c5abe38c031add8da7607bc2412a8e7cbde48b7b1830a638d7f87e",
+    "adaptive": "e329e9d84314c75e08ad516d3176ca90d02d317fbbf07b0189972f53909f6497"
+  },
+  "prime_count": 5761455,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "ordered-compact": {
+      "median_ms": 8.544563,
+      "min_ms": 7.577333,
+      "max_ms": 18.729042,
+      "samples_ms": [
+        8.857458,
+        8.034334,
+        8.075917,
+        8.387917,
+        7.77375,
+        8.057042,
+        10.26825,
+        10.005375,
+        8.985042,
+        9.673833,
+        8.283791,
+        7.943208,
+        9.134042,
+        9.13425,
+        8.7255,
+        8.10625,
+        8.371084,
+        8.301083,
+        8.144875,
+        8.351167,
+        7.679875,
+        7.577333,
+        9.086584,
+        8.450667,
+        8.638459,
+        9.605375,
+        10.973375,
+        10.643292,
+        9.118,
+        18.729042
+      ]
+    },
+    "adaptive": {
+      "median_ms": 7.9241665,
+      "min_ms": 7.212125,
+      "max_ms": 14.117541,
+      "samples_ms": [
+        7.621,
+        8.2955,
+        7.831583,
+        7.699917,
+        7.951542,
+        8.406875,
+        8.855916,
+        7.896791,
+        7.979167,
+        7.773459,
+        7.442458,
+        8.490792,
+        7.553125,
+        7.68325,
+        7.757625,
+        7.888875,
+        7.212125,
+        7.605125,
+        7.99,
+        7.723584,
+        7.771625,
+        7.776458,
+        8.497542,
+        9.696,
+        9.747708,
+        11.460959,
+        8.957291,
+        9.830834,
+        11.902709,
+        14.117541
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T11:02:40.530417+00:00"
+}

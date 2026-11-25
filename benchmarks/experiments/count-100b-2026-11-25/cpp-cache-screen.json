@@ -1,0 +1,470 @@
+{
+  "kind": "exploratory cache sweep; settings selected for fresh final comparisons",
+  "threads": 1,
+  "started_at_utc": "2026-11-25T10:25:42.399615+00:00",
+  "binary_sha256": "39b671e1368a94877eda4346f7de4fc88ea0e18e6bb25ecd20e3847cc5c96118",
+  "cases": [
+    {
+      "limit": 100000000,
+      "count": 5761455,
+      "results": {
+        "512": {
+          "median_ms": 7.426,
+          "samples_ms": [
+            10.511917,
+            7.897542,
+            6.755792,
+            7.4745,
+            7.019708,
+            8.395458,
+            7.753958,
+            7.261375,
+            7.3775,
+            7.13725
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=512"
+          ]
+        },
+        "128": {
+          "median_ms": 7.298021,
+          "samples_ms": [
+            9.731667,
+            8.734459,
+            6.783625,
+            7.512375,
+            7.051667,
+            7.605959,
+            7.38675,
+            7.209292,
+            7.193417,
+            7.114458
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=128"
+          ]
+        },
+        "1024": {
+          "median_ms": 7.4623124999999995,
+          "samples_ms": [
+            8.621292,
+            7.659083,
+            7.848209,
+            7.720792,
+            6.98775,
+            9.676417,
+            7.265542,
+            7.0415,
+            7.053334,
+            7.26025
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=1024"
+          ]
+        },
+        "64": {
+          "median_ms": 7.233313,
+          "samples_ms": [
+            8.247375,
+            8.708375,
+            7.430333,
+            7.129625,
+            7.191959,
+            11.32975,
+            7.274667,
+            6.939375,
+            6.891917,
+            6.97325
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=64"
+          ]
+        },
+        "256": {
+          "median_ms": 7.2153125,
+          "samples_ms": [
+            8.802875,
+            8.265875,
+            7.092916,
+            7.717,
+            7.30425,
+            7.717667,
+            6.857166,
+            6.864791,
+            6.699375,
+            7.126375
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=256"
+          ]
+        },
+        "2048": {
+          "median_ms": 7.419021,
+          "samples_ms": [
+            8.887125,
+            7.765208,
+            6.8905,
+            7.61475,
+            7.521834,
+            7.709042,
+            7.316208,
+            6.908834,
+            6.723458,
+            7.020542
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=2048"
+          ]
+        }
+      },
+      "best_size_kib": 256
+    },
+    {
+      "limit": 1000000000,
+      "count": 50847534,
+      "results": {
+        "512": {
+          "median_ms": 62.863875,
+          "samples_ms": [
+            62.863875,
+            63.193667,
+            62.179917
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "1000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=512"
+          ]
+        },
+        "128": {
+          "median_ms": 64.363709,
+          "samples_ms": [
+            64.363709,
+            64.432459,
+            63.8825
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "1000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=128"
+          ]
+        },
+        "1024": {
+          "median_ms": 63.203541,
+          "samples_ms": [
+            63.094667,
+            63.203541,
+            63.323875
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "1000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=1024"
+          ]
+        },
+        "64": {
+          "median_ms": 64.201333,
+          "samples_ms": [
+            64.201333,
+            64.50475,
+            63.347875
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "1000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=64"
+          ]
+        },
+        "256": {
+          "median_ms": 63.498958,
+          "samples_ms": [
+            63.498958,
+            63.164542,
+            63.824083
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "1000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=256"
+          ]
+        },
+        "2048": {
+          "median_ms": 64.236417,
+          "samples_ms": [
+            64.449209,
+            63.005709,
+            64.236417
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "1000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=2048"
+          ]
+        }
+      },
+      "best_size_kib": 512
+    },
+    {
+      "limit": 10000000000,
+      "count": 455052511,
+      "results": {
+        "512": {
+          "median_ms": 751.1767505,
+          "samples_ms": [
+            749.429292,
+            752.924209
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "10000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=512"
+          ]
+        },
+        "128": {
+          "median_ms": 785.4930830000001,
+          "samples_ms": [
+            786.059958,
+            784.926208
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "10000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=128"
+          ]
+        },
+        "1024": {
+          "median_ms": 746.351375,
+          "samples_ms": [
+            748.640875,
+            744.061875
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "10000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=1024"
+          ]
+        },
+        "64": {
+          "median_ms": 859.403479,
+          "samples_ms": [
+            861.704,
+            857.102958
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "10000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=64"
+          ]
+        },
+        "256": {
+          "median_ms": 751.1786875,
+          "samples_ms": [
+            753.535458,
+            748.821917
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "10000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=256"
+          ]
+        },
+        "2048": {
+          "median_ms": 752.6908960000001,
+          "samples_ms": [
+            753.083584,
+            752.298208
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "10000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=2048"
+          ]
+        }
+      },
+      "best_size_kib": 1024
+    },
+    {
+      "limit": 100000000000,
+      "count": 4118054813,
+      "results": {
+        "512": {
+          "median_ms": 9854.362208,
+          "samples_ms": [
+            9854.362208
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=512"
+          ]
+        },
+        "128": {
+          "median_ms": 10709.066708,
+          "samples_ms": [
+            10709.066708
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=128"
+          ]
+        },
+        "1024": {
+          "median_ms": 9794.756959,
+          "samples_ms": [
+            9794.756959
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=1024"
+          ]
+        },
+        "64": {
+          "median_ms": 12402.868708,
+          "samples_ms": [
+            12402.868708
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=64"
+          ]
+        },
+        "256": {
+          "median_ms": 9868.007083,
+          "samples_ms": [
+            9868.007083
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=256"
+          ]
+        },
+        "2048": {
+          "median_ms": 9820.633458,
+          "samples_ms": [
+            9820.633458
+          ],
+          "command": [
+            "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+            "100000000000",
+            "--threads=1",
+            "--count=1",
+            "--quiet",
+            "--no-status",
+            "--size=2048"
+          ]
+        }
+      },
+      "best_size_kib": 1024
+    }
+  ],
+  "status": "complete",
+  "completed_at_utc": "2026-11-25T10:26:55.747033+00:00"
+}

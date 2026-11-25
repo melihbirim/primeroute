@@ -1,0 +1,244 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T10:45:08.551005+00:00",
+  "source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "09abee545c4ac726fcc68c98cb12c0fe3514c7558b760f0bd4500f71db9f906f",
+    "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+    "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a",
+    "benchmarks/compare.py": "d8ee3401f2849390739566d54c035ab301fbbf0473b61ac1a1fe4a3f5e037128",
+    "benchmarks/ranges.py": "0db0189148be1b90993b8b845e1551d05c5f8c896af6ea20cad6539f2415c9d4",
+    "benchmarks/batch_next.py": "a0cedd1ac722469ef6f4c96018f1c16b65cd5beb874ceb3569e29887520a79eb",
+    "benchmarks/batch_next.cpp": "22b6cbfeab7f4c9749ceffe5b0fa6cc8a18b74b0721b4101dc26440a63e97b38",
+    "benchmarks/range_bench.cpp": "57dcb833a9a47c17a39407545f6baad2b5767df561cb2ce877361983b4ad9386",
+    "examples/range_bench.rs": "798bb0c62f3053b6750218ea4099ad44d6fef0e7a53922578c96787a789a3413",
+    "benchmarks/primal/Cargo.toml": "250d809ff6cac9af4cd1c200b2f9114b9fd183d8f68f9775b171debab9200174",
+    "benchmarks/primal/Cargo.lock": "621dac1c42ce3c072a61815c59c94ecd73bb467ae99f2c4d44b722e554acd2d0",
+    "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde",
+    "benchmarks/primal/src/bin/batch_next.rs": "5c97b62de2b7cc0e9ebfbe1d85c466456289d5a7db9133e3011f4e9c5249966c"
+  },
+  "source_snapshot": "benchmarks/snapshots/2026-11-25-count-optimized",
+  "runtime_threads": 1,
+  "optimization": "ordered dense tails, packed medium steps, long-request masks and tiny-root seed sieve",
+  "baseline_source_snapshot": "benchmarks/experiments/count-100b-2026-11-25/baseline",
+  "cache_calibration": "benchmarks/experiments/count-100b-2026-11-25/cpp-cache-screen.json",
+  "build_commands": [
+    [
+      "cargo",
+      "build",
+      "--release",
+      "--locked",
+      "--example",
+      "range_bench",
+      "--bin",
+      "prime-numbers"
+    ],
+    [
+      "cargo",
+      "build",
+      "--offline",
+      "--release",
+      "--locked",
+      "--manifest-path",
+      "benchmarks/primal/Cargo.toml",
+      "--bins"
+    ],
+    [
+      "clang++",
+      "-O3",
+      "-std=c++14",
+      "-I/private/tmp/prime-numbers-primesieve-v12.18/include",
+      "benchmarks/range_bench.cpp",
+      "/private/tmp/prime-numbers-primesieve-v12.18/build/libprimesieve.a",
+      "-pthread",
+      "-o",
+      "/private/tmp/prime-numbers-cpp-range-bench"
+    ]
+  ],
+  "runs": [
+    {
+      "name": "Prefix count 100000000000",
+      "command": [
+        "python3",
+        "benchmarks/compare.py",
+        "--primesieve",
+        "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+        "--cpp-size",
+        "1024",
+        "--progress",
+        "--limit",
+        "100000000000",
+        "--output",
+        "benchmarks/results-100b.json",
+        "--warmups",
+        "1",
+        "--runs",
+        "5",
+        "--baseline",
+        "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/baseline/prime-numbers"
+      ],
+      "output": "benchmarks/results-100b.json"
+    },
+    {
+      "name": "Prefix count 100000000",
+      "command": [
+        "python3",
+        "benchmarks/compare.py",
+        "--primesieve",
+        "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+        "--cpp-size",
+        "256",
+        "--progress",
+        "--limit",
+        "100000000",
+        "--output",
+        "benchmarks/results.json"
+      ],
+      "output": "benchmarks/results.json"
+    },
+    {
+      "name": "Prefix count 1000000000",
+      "command": [
+        "python3",
+        "benchmarks/compare.py",
+        "--primesieve",
+        "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+        "--cpp-size",
+        "1024",
+        "--progress",
+        "--limit",
+        "1000000000",
+        "--output",
+        "benchmarks/results-1b.json"
+      ],
+      "output": "benchmarks/results-1b.json"
+    },
+    {
+      "name": "Prefix count 10000000000",
+      "command": [
+        "python3",
+        "benchmarks/compare.py",
+        "--primesieve",
+        "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+        "--cpp-size",
+        "1024",
+        "--progress",
+        "--limit",
+        "10000000000",
+        "--output",
+        "benchmarks/results-10b.json"
+      ],
+      "output": "benchmarks/results-10b.json"
+    },
+    {
+      "name": "Batch next-prime",
+      "command": [
+        "python3",
+        "benchmarks/batch_next.py",
+        "--primesieve-dir",
+        "/private/tmp/prime-numbers-primesieve-v12.18",
+        "--seed",
+        "12648431",
+        "--runs",
+        "7",
+        "--warmups",
+        "1",
+        "--include-sieve"
+      ],
+      "output": "benchmarks/batch-next-results.json"
+    },
+    {
+      "name": "Second query seed",
+      "command": [
+        "python3",
+        "benchmarks/batch_next.py",
+        "--primesieve-dir",
+        "/private/tmp/prime-numbers-primesieve-v12.18",
+        "--seed",
+        "12648432",
+        "--runs",
+        "7",
+        "--warmups",
+        "1",
+        "--include-sieve",
+        "--only",
+        "scattered_1e8,clustered_1e8,clustered_1e12,clustered_1e14,mixed_1e12",
+        "--output",
+        "benchmarks/batch-next-cluster-holdout-results.json"
+      ],
+      "output": "benchmarks/batch-next-cluster-holdout-results.json"
+    },
+    {
+      "name": "Existing range suite",
+      "command": [
+        "python3",
+        "benchmarks/ranges.py",
+        "--cpp",
+        "/private/tmp/prime-numbers-cpp-range-bench",
+        "--primesieve",
+        "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+        "--runs",
+        "30",
+        "--warmups",
+        "5",
+        "--repeats",
+        "3"
+      ],
+      "output": "benchmarks/range-results.json"
+    },
+    {
+      "name": "High-start narrow/wide ranges",
+      "command": [
+        "python3",
+        "benchmarks/ranges.py",
+        "--cpp",
+        "/private/tmp/prime-numbers-cpp-range-bench",
+        "--primesieve",
+        "/private/tmp/prime-numbers-primesieve-v12.18/build/primesieve",
+        "--runs",
+        "7",
+        "--warmups",
+        "1",
+        "--repeats",
+        "1",
+        "--starts",
+        "100000000000000",
+        "1000000000000000",
+        "1000000000000000000",
+        "--widths",
+        "1000000",
+        "40000000",
+        "--output",
+        "benchmarks/high-range-results.json"
+      ],
+      "output": "benchmarks/high-range-results.json"
+    }
+  ],
+  "completed_runs": [
+    "Prefix count 100000000000",
+    "Prefix count 100000000",
+    "Prefix count 1000000000",
+    "Prefix count 10000000000",
+    "Batch next-prime",
+    "Second query seed",
+    "Existing range suite",
+    "High-start narrow/wide ranges"
+  ],
+  "completed_at_utc": "2026-11-25T10:56:01.140952+00:00",
+  "additional_reports": [
+    "benchmarks/high-range-memory.json"
+  ],
+  "validation": {
+    "rust_debug_tests": 24,
+    "rust_release_tests": 24,
+    "clippy": "main and benchmark crates, all targets, warnings denied",
+    "independent_primal_crosscheck": "passed",
+    "all_counts_and_checksums": "matched",
+    "batch_answer_arrays": "matched",
+    "source_and_binary_freeze": "verified"
+  },
+  "verified_at_utc": "2026-11-25T11:18:52.941812+00:00"
+}

@@ -1,0 +1,80 @@
+{
+  "kind": "exploratory short-range regression check",
+  "start": 1000000000,
+  "end": 1000999999,
+  "mode": "count",
+  "threads": 1,
+  "count": 48155,
+  "commands": {
+    "previous": "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+    "adaptive-light": "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/adaptive-light/target/release/examples/range_bench",
+    "cpp": "/private/tmp/prime-numbers-cpp-range-bench"
+  },
+  "binary_sha256": {
+    "previous": "3417ea91cff4cba56deb8d7631b64d59aaab5d26340c66e2a88205c4e0963fb6",
+    "adaptive-light": "ebe50ba36f79f4aacc676e96e1e0887a2f54f8bb532739371b2c733d49633010",
+    "cpp": "44a068adfbd59fdb7e983e702fdb234eecb1002bfa745393a6e5a30a814b855e"
+  },
+  "results": {
+    "previous": {
+      "median_ms": 0.15894433333333335,
+      "samples_ms": [
+        0.148028,
+        0.14622233333333334,
+        0.14491666666666667,
+        0.17625,
+        0.183764,
+        0.181625,
+        0.15894433333333335,
+        0.15386133333333335,
+        0.15997233333333336,
+        0.167,
+        0.17927766666666667,
+        0.15279166666666666,
+        0.15730566666666665,
+        0.17616666666666667,
+        0.146111
+      ]
+    },
+    "adaptive-light": {
+      "median_ms": 0.162278,
+      "samples_ms": [
+        0.15252766666666664,
+        0.154597,
+        0.16006966666666667,
+        0.18886133333333335,
+        0.196236,
+        0.188653,
+        0.19005566666666665,
+        0.15105566666666664,
+        0.162278,
+        0.156986,
+        0.22354166666666667,
+        0.169986,
+        0.161764,
+        0.16459733333333335,
+        0.155639
+      ]
+    },
+    "cpp": {
+      "median_ms": 0.13933333333333334,
+      "samples_ms": [
+        0.095764,
+        0.0935,
+        0.13933333333333334,
+        0.15569433333333335,
+        0.14968066666666666,
+        0.165375,
+        0.175014,
+        0.09002766666666667,
+        0.09881933333333333,
+        0.651375,
+        0.17034733333333335,
+        0.290778,
+        0.111847,
+        0.094014,
+        0.094222
+      ]
+    }
+  }
+}

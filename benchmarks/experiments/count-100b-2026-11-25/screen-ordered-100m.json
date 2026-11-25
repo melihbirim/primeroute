@@ -1,0 +1,184 @@
+{
+  "status": "complete",
+  "started_at_utc": "2026-11-25T10:30:45.987148+00:00",
+  "kind": "exploratory; candidate selection, not final performance claim",
+  "limit_inclusive": 100000000,
+  "threads": 1,
+  "runs": 20,
+  "warmups": 5,
+  "commands": {
+    "baseline": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/baseline/prime-numbers",
+      "100000000"
+    ],
+    "max32-packed": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/max32-packed/target/release/prime-numbers",
+      "100000000"
+    ],
+    "small-seeds-max32": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/small-seeds-max32/target/release/prime-numbers",
+      "100000000"
+    ],
+    "ordered-tails": [
+      "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/count-100b-2026-11-25/ordered-tails/target/release/prime-numbers",
+      "100000000"
+    ]
+  },
+  "source_sha256": {
+    "baseline": {
+      "src/lib.rs": "3bd6266b9b3e9a41ae0b532bfae004619e25f4e9869346a5604067f2f3ff237a",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "max32-packed": {
+      "src/lib.rs": "8b46ee58b2751e41d9b9d61f7cc28678ae2f5539b7e4b4ec7cc102394d56e151",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "small-seeds-max32": {
+      "src/lib.rs": "ea5f8ee71049caa76315520056284697d7ae9d28ad78888e9ac6f5198e0af3c5",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    },
+    "ordered-tails": {
+      "src/lib.rs": "746e49680154e9a504a4ee43426d5142f5b063f24cc262c612c2943ebd161f86",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/main.rs": "2d089e4252cd5eca88b67503fb48abd4ae4db6636105ab7614140e0790c62e5c",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "Cargo.toml": "2dace88a765a7c5facea3fb0daa16d35c0ecb2ef115547a8f4df8b0c948168d5",
+      "Cargo.lock": "ad06af2f1f87adfbf30b33356cf56cc1f0a5e19cdb3693cbb83c0e44f3b60d2a"
+    }
+  },
+  "binary_sha256": {
+    "baseline": "6f0659e2eee4b8dc2a32f6401890fcd1ade8ee8385b7eaae3c92713ca222b631",
+    "max32-packed": "f040e4a869452e22039183d13adabe599a10d4407c069686038203b57607a0e1",
+    "small-seeds-max32": "4425ba55f37d00fb2f3f08b984cb8e5530de7b112f297dd2ffa4ee73f70fc2f3",
+    "ordered-tails": "2c0cd66e63e4d696ba205da8f55558225de4ca05f097941a582ba57a5a5e1682"
+  },
+  "prime_count": 5761455,
+  "metric": "Process wall time ms, including startup/output capture",
+  "results": {
+    "baseline": {
+      "median_ms": 7.511125,
+      "min_ms": 6.977792,
+      "max_ms": 8.049417,
+      "samples_ms": [
+        7.068917,
+        6.977792,
+        7.131583,
+        7.278208,
+        7.183209,
+        7.4785,
+        7.54375,
+        7.679708,
+        7.708375,
+        7.781875,
+        7.949958,
+        7.882959,
+        7.3005,
+        7.937375,
+        7.262125,
+        7.773833,
+        7.696209,
+        7.38525,
+        8.049417,
+        7.19225
+      ]
+    },
+    "max32-packed": {
+      "median_ms": 7.2097085,
+      "min_ms": 6.732375,
+      "max_ms": 9.431041,
+      "samples_ms": [
+        6.902959,
+        6.928291,
+        6.732375,
+        6.841917,
+        6.838667,
+        9.431041,
+        7.992208,
+        7.09725,
+        8.447917,
+        7.984042,
+        8.389917,
+        7.480625,
+        7.627166,
+        7.44,
+        7.532666,
+        7.036,
+        6.899458,
+        7.081583,
+        7.322167,
+        6.987584
+      ]
+    },
+    "small-seeds-max32": {
+      "median_ms": 6.976604,
+      "min_ms": 6.659208,
+      "max_ms": 13.810208,
+      "samples_ms": [
+        7.233125,
+        6.729958,
+        6.779917,
+        6.659208,
+        6.750958,
+        6.67575,
+        13.810208,
+        7.54475,
+        7.359959,
+        8.739584,
+        9.985167,
+        7.361709,
+        7.631334,
+        7.413083,
+        6.884584,
+        7.02125,
+        6.931958,
+        6.875166,
+        6.922959,
+        6.732917
+      ]
+    },
+    "ordered-tails": {
+      "median_ms": 7.228417,
+      "min_ms": 6.494125,
+      "max_ms": 7.9275,
+      "samples_ms": [
+        6.720125,
+        6.796458,
+        6.8415,
+        6.494125,
+        6.949375,
+        6.861334,
+        7.396833,
+        7.902,
+        7.57825,
+        7.717916,
+        7.606458,
+        7.331417,
+        7.142583,
+        7.9275,
+        7.018458,
+        7.263833,
+        7.229334,
+        7.2275,
+        7.234584,
+        6.944708
+      ]
+    }
+  },
+  "completed_at_utc": "2026-11-25T10:30:47.348793+00:00"
+}
