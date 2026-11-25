@@ -1,0 +1,77 @@
+name: Benchmark
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  PRIMESIEVE_VERSION: v12.18
+  CARGO_TERM_COLOR: always
+
+jobs:
+  test:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install stable --profile minimal -c clippy,rustfmt && rustup default stable
+      - uses: Swatinem/rust-cache@v2
+      - run: cargo fmt --check
+      - run: cargo clippy --all-targets --locked -- -D warnings
+      - run: cargo test --locked
+      - run: cargo test --release --locked
+
+  benchmark:
+    needs: test
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, ubuntu-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rust toolchain
+        run: rustup toolchain install stable --profile minimal && rustup default stable
+      - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            .
+            benchmarks/primal
+
+      - name: Cache primesieve
+        id: primesieve-cache
+        uses: actions/cache@v4
+        with:
+          path: ${{ runner.temp }}/primesieve
+          key: primesieve-${{ env.PRIMESIEVE_VERSION }}-${{ runner.os }}-${{ runner.arch }}
+      - name: Build primesieve
+        if: steps.primesieve-cache.outputs.cache-hit != 'true'
+        run: |
+          git clone --depth 1 --branch "$PRIMESIEVE_VERSION" https://github.com/kimwalisch/primesieve "$RUNNER_TEMP/primesieve"
+          cmake -S "$RUNNER_TEMP/primesieve" -B "$RUNNER_TEMP/primesieve/build" \
+            -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
+          cmake --build "$RUNNER_TEMP/primesieve/build" --parallel
+
+      - name: Run benchmarks
+        env:
+          CXX: clang++
+        run: |
+          title="${{ runner.os }} ${{ runner.arch }} · ${GITHUB_SHA::7}"
+          benchmarks/ci.sh "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/bench" "$title"
+          cat "$RUNNER_TEMP/bench/summary.md" >> "$GITHUB_STEP_SUMMARY"
+          "$RUNNER_TEMP/primesieve/build/primesieve" --cpu-info | sed 's/^/    /' >> "$GITHUB_STEP_SUMMARY"
+
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: benchmark-${{ runner.os }}-${{ runner.arch }}-${{ github.sha }}
+          path: ${{ runner.temp }}/bench
