@@ -163,6 +163,11 @@ a second query seed, direct/sieve controls and reproduction commands.
 These results cover one ARM machine. Wider ranges and some high-start list
 queries still favor primesieve. Other CPUs need their own measurements.
 
+On x86-64 (GitHub Linux runner, one thread) primeroute is currently slower than
+primesieve in most cases: about 1.7–1.9× for counting and up to 2× for lists.
+The speed-ups are NEON-only and tuned on Apple Silicon. Batch queries with
+isolated inputs still win. CI benchmarks every commit on both platforms.
+
 ## How it works
 
 Sparse next-prime queries test candidates directly. Dense query groups share a
