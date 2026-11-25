@@ -248,16 +248,22 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
 #[derive(Clone)]
 pub(super) struct DenseGroups {
     groups: [Vec<super::SievingPrime>; 8],
+    larger: [Vec<super::SievingPrime>; 8],
 }
 impl DenseGroups {
     pub(super) fn new() -> Self {
         Self {
             groups: std::array::from_fn(|_| Vec::new()),
+            larger: std::array::from_fn(|_| Vec::new()),
         }
     }
     pub(super) fn activate(&mut self, state: super::SievingPrime) {
         let class = super::RESIDUE_INDEX[state.prime as usize % 30];
-        self.groups[class].push(state);
+        if state.prime <= 32 * 1024 {
+            self.groups[class].push(state);
+        } else {
+            self.larger[class].push(state);
+        }
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
         for bytes in sieve.chunks_mut(32 * 1024) {
@@ -270,6 +276,16 @@ impl DenseGroups {
             mark_dense_group::<6>(&mut self.groups[6], bytes);
             mark_dense_group::<7>(&mut self.groups[7], bytes);
         }
+        // Larger primes have few hits per window. Visiting their state four
+        // times costs more than the cache locality saves, so advance them once.
+        mark_dense_group::<0>(&mut self.larger[0], sieve);
+        mark_dense_group::<1>(&mut self.larger[1], sieve);
+        mark_dense_group::<2>(&mut self.larger[2], sieve);
+        mark_dense_group::<3>(&mut self.larger[3], sieve);
+        mark_dense_group::<4>(&mut self.larger[4], sieve);
+        mark_dense_group::<5>(&mut self.larger[5], sieve);
+        mark_dense_group::<6>(&mut self.larger[6], sieve);
+        mark_dense_group::<7>(&mut self.larger[7], sieve);
     }
 }
 #[inline(never)]
@@ -830,6 +846,7 @@ mod tests {
                 let mut states: Vec<_> = groups
                     .groups
                     .iter()
+                    .chain(groups.larger.iter())
                     .flatten()
                     .map(|s| (s.prime, s.next, s.first))
                     .collect();
