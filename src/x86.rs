@@ -329,7 +329,11 @@ impl MediumGroups {
     }
     pub(super) fn activate(&mut self, state: &super::SparsePrime) {
         if let Some(states) = &mut self.plain {
-            states.push(*state);
+            states.push(super::SparsePrime {
+                next: state.next,
+                quotient: state.quotient,
+                wheel: state.wheel,
+            });
             return;
         }
         // Only active medium primes enter: offsets are below one window plus
