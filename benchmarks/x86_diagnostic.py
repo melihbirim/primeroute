@@ -48,7 +48,11 @@ subprocess.run(["cargo", "clippy", "--all-targets", "--locked", "--", "-D", "war
 subprocess.run(["cargo", "test", "--release", "--locked", "--", "--test-threads=1"], cwd=ROOT, env=env, check=True)
 with (output / "kernel-profiles.log").open("w") as log:
     subprocess.run(["cargo", "test", "--release", "--locked", "x86::tests::profile_", "--", "--ignored", "--nocapture", "--test-threads=1"], cwd=ROOT, env=env, stdout=log, check=True)
-subprocess.run(["bash", str(ROOT / "benchmarks/ci.sh"), str(primesieve), str(output / "candidate"), "x86 runtime candidate"], env=env, check=True)
+subprocess.run(["cargo", "build", "--release", "--locked", "--bin", "primeroute", "--example", "range_bench"],cwd=ROOT,env=env,check=True)
+subprocess.run(["cargo", "build", "--release", "--locked", "--manifest-path", str(ROOT / "benchmarks/primal/Cargo.toml"), "--bins"],cwd=ROOT,env=env,check=True)
+for name in ["range_bench", "batch_next"]:
+    subprocess.run(["clang++", "-O3", "-std=c++14", "-I"+str(primesieve/"include"), str(ROOT/"benchmarks"/(name+".cpp")),str(primesieve/"build/libprimesieve.a"),"-pthread","-o",str(ROOT/"target/release"/(name+"-cpp"))],check=True)
+subprocess.run([sys.executable,str(ROOT/"benchmarks/platform_compare.py"),"--baseline",str(output.parent/"x86-source-default"),"--v3",str(output.parent/"x86-source-v3"),"--primesieve-dir",str(primesieve),"--cpp-range",str(ROOT/"target/release/range_bench-cpp"),"--cpp-batch",str(ROOT/"target/release/batch_next-cpp"),"--output",str(output/"paired-results.json"),"--runs","9","--warmups","2","--large"],env=env,cwd=ROOT,check=True)
 manifest["candidate_source_sha256"] = {str(p.relative_to(ROOT)): hashlib.sha256(p.read_bytes()).hexdigest() for p in sorted((ROOT / "src").glob("*.rs"))}
 manifest["status"] = "complete"
 manifest["completed_at_utc"] = datetime.now(timezone.utc).isoformat()

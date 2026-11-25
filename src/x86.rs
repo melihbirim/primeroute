@@ -245,6 +245,151 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
     }
 }
 
+#[derive(Clone, Copy)]
+struct MediumPrime {
+    next: u32,
+    quotient: u32,
+}
+
+pub(super) struct MediumGroups {
+    current: [Vec<MediumPrime>; 64],
+    next: [Vec<MediumPrime>; 64],
+}
+
+impl MediumGroups {
+    pub(super) fn new() -> Self {
+        Self {
+            current: std::array::from_fn(|_| Vec::new()),
+            next: std::array::from_fn(|_| Vec::new()),
+        }
+    }
+    pub(super) fn activate(&mut self, state: &super::SparsePrime) {
+        // Only active medium primes enter: offsets are below one window plus
+        // their next step (< 210 KiB), far below u32::MAX.
+        self.current[state.wheel as usize].push(MediumPrime {
+            next: u32::try_from(state.next).unwrap(),
+            quotient: state.quotient,
+        });
+    }
+    pub(super) fn mark(&mut self, sieve: &mut [u8]) {
+        for (wheel, states) in self.current.iter_mut().enumerate() {
+            match wheel {
+                0 => mark_medium_group::<0>(states, &mut self.next, sieve),
+                1 => mark_medium_group::<1>(states, &mut self.next, sieve),
+                2 => mark_medium_group::<2>(states, &mut self.next, sieve),
+                3 => mark_medium_group::<3>(states, &mut self.next, sieve),
+                4 => mark_medium_group::<4>(states, &mut self.next, sieve),
+                5 => mark_medium_group::<5>(states, &mut self.next, sieve),
+                6 => mark_medium_group::<6>(states, &mut self.next, sieve),
+                7 => mark_medium_group::<7>(states, &mut self.next, sieve),
+                8 => mark_medium_group::<8>(states, &mut self.next, sieve),
+                9 => mark_medium_group::<9>(states, &mut self.next, sieve),
+                10 => mark_medium_group::<10>(states, &mut self.next, sieve),
+                11 => mark_medium_group::<11>(states, &mut self.next, sieve),
+                12 => mark_medium_group::<12>(states, &mut self.next, sieve),
+                13 => mark_medium_group::<13>(states, &mut self.next, sieve),
+                14 => mark_medium_group::<14>(states, &mut self.next, sieve),
+                15 => mark_medium_group::<15>(states, &mut self.next, sieve),
+                16 => mark_medium_group::<16>(states, &mut self.next, sieve),
+                17 => mark_medium_group::<17>(states, &mut self.next, sieve),
+                18 => mark_medium_group::<18>(states, &mut self.next, sieve),
+                19 => mark_medium_group::<19>(states, &mut self.next, sieve),
+                20 => mark_medium_group::<20>(states, &mut self.next, sieve),
+                21 => mark_medium_group::<21>(states, &mut self.next, sieve),
+                22 => mark_medium_group::<22>(states, &mut self.next, sieve),
+                23 => mark_medium_group::<23>(states, &mut self.next, sieve),
+                24 => mark_medium_group::<24>(states, &mut self.next, sieve),
+                25 => mark_medium_group::<25>(states, &mut self.next, sieve),
+                26 => mark_medium_group::<26>(states, &mut self.next, sieve),
+                27 => mark_medium_group::<27>(states, &mut self.next, sieve),
+                28 => mark_medium_group::<28>(states, &mut self.next, sieve),
+                29 => mark_medium_group::<29>(states, &mut self.next, sieve),
+                30 => mark_medium_group::<30>(states, &mut self.next, sieve),
+                31 => mark_medium_group::<31>(states, &mut self.next, sieve),
+                32 => mark_medium_group::<32>(states, &mut self.next, sieve),
+                33 => mark_medium_group::<33>(states, &mut self.next, sieve),
+                34 => mark_medium_group::<34>(states, &mut self.next, sieve),
+                35 => mark_medium_group::<35>(states, &mut self.next, sieve),
+                36 => mark_medium_group::<36>(states, &mut self.next, sieve),
+                37 => mark_medium_group::<37>(states, &mut self.next, sieve),
+                38 => mark_medium_group::<38>(states, &mut self.next, sieve),
+                39 => mark_medium_group::<39>(states, &mut self.next, sieve),
+                40 => mark_medium_group::<40>(states, &mut self.next, sieve),
+                41 => mark_medium_group::<41>(states, &mut self.next, sieve),
+                42 => mark_medium_group::<42>(states, &mut self.next, sieve),
+                43 => mark_medium_group::<43>(states, &mut self.next, sieve),
+                44 => mark_medium_group::<44>(states, &mut self.next, sieve),
+                45 => mark_medium_group::<45>(states, &mut self.next, sieve),
+                46 => mark_medium_group::<46>(states, &mut self.next, sieve),
+                47 => mark_medium_group::<47>(states, &mut self.next, sieve),
+                48 => mark_medium_group::<48>(states, &mut self.next, sieve),
+                49 => mark_medium_group::<49>(states, &mut self.next, sieve),
+                50 => mark_medium_group::<50>(states, &mut self.next, sieve),
+                51 => mark_medium_group::<51>(states, &mut self.next, sieve),
+                52 => mark_medium_group::<52>(states, &mut self.next, sieve),
+                53 => mark_medium_group::<53>(states, &mut self.next, sieve),
+                54 => mark_medium_group::<54>(states, &mut self.next, sieve),
+                55 => mark_medium_group::<55>(states, &mut self.next, sieve),
+                56 => mark_medium_group::<56>(states, &mut self.next, sieve),
+                57 => mark_medium_group::<57>(states, &mut self.next, sieve),
+                58 => mark_medium_group::<58>(states, &mut self.next, sieve),
+                59 => mark_medium_group::<59>(states, &mut self.next, sieve),
+                60 => mark_medium_group::<60>(states, &mut self.next, sieve),
+                61 => mark_medium_group::<61>(states, &mut self.next, sieve),
+                62 => mark_medium_group::<62>(states, &mut self.next, sieve),
+                _ => mark_medium_group::<63>(states, &mut self.next, sieve),
+            }
+            states.clear();
+        }
+        std::mem::swap(&mut self.current, &mut self.next);
+    }
+}
+
+#[inline(never)]
+fn mark_medium_group<const WHEEL: usize>(
+    states: &[MediumPrime],
+    next: &mut [Vec<MediumPrime>; 64],
+    sieve: &mut [u8],
+) {
+    for state in states {
+        let (offset, wheel) = mark_medium_chain::<WHEEL>(*state, sieve);
+        next[wheel].push(MediumPrime {
+            next: offset,
+            quotient: state.quotient,
+        });
+    }
+}
+
+#[inline(always)]
+fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -> (u32, usize) {
+    let mut i = state.next as usize;
+    let q = state.quotient as usize;
+    let len = sieve.len();
+    macro_rules! hit {
+        ($offset:expr) => {{
+            let wheel = (WHEEL / 8) * 8 + ((WHEEL + $offset) & 7);
+            if i >= len {
+                return ((i - len) as u32, wheel);
+            }
+            let step = super::WHEEL_STEPS[wheel];
+            sieve[i] &= step.mask;
+            i += q * step.gap as usize + step.carry as usize;
+        }};
+    }
+    hit!(0);
+    hit!(1);
+    hit!(2);
+    hit!(3);
+    hit!(4);
+    hit!(5);
+    hit!(6);
+    hit!(7);
+    // A full wheel advances by p. Medium p > SEGMENT_SIZE >= len, so
+    // there cannot be a ninth mark in this window, even in dense masks.
+    debug_assert!(i >= len);
+    ((i - len) as u32, WHEEL)
+}
+
 #[cfg(test)]
 #[inline(always)]
 fn mark_dense_class<const CLASS: usize>(state: &mut super::SievingPrime, sieve: &mut [u8]) {
@@ -527,5 +672,103 @@ mod tests {
                 }
             }
         }
+    }
+    fn medium_states() -> Vec<super::super::SparsePrime> {
+        let low = 1_000_000_000_000usize / 30;
+        super::super::STATIC_SEEDS
+            .iter()
+            .copied()
+            .filter(|&p| p as usize > super::super::DENSE_PRIME_LIMIT && p as usize <= 1_000_000)
+            .map(|p| {
+                let mut state = super::super::SparsePrime::new(p as usize, low);
+                state.next -= low;
+                state
+            })
+            .collect()
+    }
+
+    #[test]
+    fn grouped_medium_matches_packed_steps_across_windows() {
+        let mut reference = medium_states();
+        let mut groups = MediumGroups::new();
+        for state in &reference {
+            groups.activate(state);
+        }
+        for len in [131_072, 131_072, 131_072, 131_072, 31, 0, 131_072, 131_071] {
+            let mut expected = vec![255; len];
+            for state in &mut reference {
+                super::super::mark_medium(state, &mut expected);
+            }
+            let mut actual = vec![255; len];
+            groups.mark(&mut actual);
+            assert_eq!(actual, expected);
+            let mut states: Vec<_> = groups
+                .current
+                .iter()
+                .enumerate()
+                .flat_map(|(wheel, group)| {
+                    group
+                        .iter()
+                        .map(move |s| (s.quotient, wheel / 8, wheel, s.next as usize))
+                })
+                .collect();
+            states.sort_unstable();
+            let mut target: Vec<_> = reference
+                .iter()
+                .map(|s| (s.quotient, s.wheel as usize / 8, s.wheel as usize, s.next))
+                .collect();
+            target.sort_unstable();
+            assert_eq!(states, target);
+        }
+    }
+
+    #[test]
+    #[ignore = "native medium-kernel selection experiment"]
+    fn profile_medium() {
+        use std::hint::black_box;
+        use std::time::Instant;
+        for round in 0..7 {
+            for variant in [round % 2, (round + 1) % 2] {
+                let mut states = medium_states();
+                let mut groups = MediumGroups::new();
+                for state in &states {
+                    groups.activate(state);
+                }
+                let mut bitmap = vec![255; 131_072];
+                let timer = Instant::now();
+                for _ in 0..32 {
+                    bitmap.fill(255);
+                    if variant == 0 {
+                        for state in &mut states {
+                            super::super::mark_medium(state, &mut bitmap);
+                        }
+                    } else {
+                        groups.mark(&mut bitmap);
+                    }
+                    black_box(&bitmap);
+                }
+                println!(
+                    "medium round={round} variant={variant} ns={}",
+                    timer.elapsed().as_nanos() / 32
+                );
+            }
+        }
+    }
+    #[test]
+    fn medium_square_activation_matches_single_window_queries() {
+        let start = 131_101usize * 131_101 - 2_000_000;
+        let end = start + 8_000_000;
+        let mut expected = Vec::new();
+        let mut low = start;
+        while low <= end {
+            let high = (low + 999_999).min(end);
+            expected.extend(super::super::primes_in_range(low, high));
+            low = high + 1;
+        }
+        assert_eq!(super::super::primes_in_range(start, end), expected);
+        assert_eq!(
+            super::super::count_primes_in_range(start, end),
+            expected.len()
+        );
     }
 }

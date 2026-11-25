@@ -618,6 +618,13 @@ fn mark_dense_final_many(states: &[SievingPrime], sieve: &mut [u8]) {
 
 #[inline(never)]
 fn mark_dense_many(states: &mut [SievingPrime], sieve: &mut [u8]) {
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    for chunk in sieve.chunks_mut(32 * 1024) {
+        for state in &mut *states {
+            mark_dense(state, chunk);
+        }
+    }
+    #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
     for state in states {
         mark_dense(state, sieve);
     }
@@ -720,6 +727,7 @@ fn mark_sparse_once(state: SparsePrime, low: usize, sieve: &mut [u8]) {
 
 // Carry bytes and masks rotate with the multiplier wheel. Keeping all eight
 // in registers removes the dependent table load from each medium-prime hit.
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 const PACKED_CARRIES: [u64; 8] = {
     let mut packed = [0u64; 8];
     let mut class = 0;
@@ -733,6 +741,7 @@ const PACKED_CARRIES: [u64; 8] = {
     }
     packed
 };
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 const PACKED_MASKS: [u64; 8] = {
     let mut packed = [0u64; 8];
     let mut class = 0;
@@ -742,6 +751,7 @@ const PACKED_MASKS: [u64; 8] = {
     }
     packed
 };
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 const PACKED_GAPS: u64 = {
     let mut packed = 0;
     let mut i = 0;
@@ -751,6 +761,7 @@ const PACKED_GAPS: u64 = {
     }
     packed
 };
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline]
 fn mark_medium(state: &mut SparsePrime, sieve: &mut [u8]) {
     let class = state.wheel as usize / 8;
@@ -928,6 +939,8 @@ fn sieve_segments_with_seeds(
     let mut window = 0;
     let mut active = 0;
     let mut medium_active = 0;
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    let mut medium_groups: Option<x86::MediumGroups> = None;
     let mut pending_active = 0;
     while low < total_bytes {
         let len = SEGMENT_SIZE.min(total_bytes - low);
@@ -957,8 +970,17 @@ fn sieve_segments_with_seeds(
         });
         for state in &mut medium[medium_active..next_medium_active] {
             state.next -= low;
+            #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+            medium_groups
+                .get_or_insert_with(x86::MediumGroups::new)
+                .activate(state);
         }
         medium_active = next_medium_active;
+        #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+        if let Some(groups) = &mut medium_groups {
+            groups.mark(sieve);
+        }
+        #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
         for state in &mut medium[..medium_active] {
             mark_medium(state, sieve);
         }
