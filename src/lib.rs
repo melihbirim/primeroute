@@ -392,6 +392,12 @@ impl SparsePrime {
 
 fn seed_primes(limit: usize) -> Vec<u32> {
     debug_assert!(limit <= u32::MAX as usize);
+    // Batch queries can reuse the same bounded seed metadata as standalone
+    // ranges. Return an owned prefix; no query results survive the call.
+    if limit <= STATIC_SEED_LIMIT {
+        let end = STATIC_SEEDS.partition_point(|&p| p as usize <= limit);
+        return STATIC_SEEDS[..end].to_vec();
+    }
     // Reuse the packed sieve for larger seed tables. Recursion quickly shrinks
     // the bound by sqrt(); the small odd-only sieve below terminates it.
     if limit >= 4_096 {
@@ -1429,6 +1435,29 @@ unsafe fn count_bits_neon(bytes: &[u8]) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn seed_prefix_reuse_matches_independent_sieve_at_boundaries() {
+        for limit in [
+            0,
+            1,
+            2,
+            3,
+            5,
+            167,
+            4095,
+            4096,
+            1_000_000,
+            STATIC_SEED_LIMIT,
+            STATIC_SEED_LIMIT + 1,
+        ] {
+            assert_eq!(
+                seed_primes(limit),
+                small_seed_primes(limit),
+                "limit={limit}"
+            );
+        }
+    }
 
     #[test]
     fn static_seeds_and_reciprocals_match_independent_arithmetic() {
