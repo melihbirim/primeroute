@@ -165,8 +165,11 @@ queries still favor primesieve. Other CPUs need their own measurements.
 
 On x86-64 (GitHub Linux runner, one thread) primeroute is currently slower than
 primesieve in most cases: about 1.7–1.9× for counting and up to 2× for lists.
-The speed-ups are NEON-only and tuned on Apple Silicon. Batch queries with
-isolated inputs still win. CI benchmarks every commit on both platforms.
+The SIMD paths use NEON and were tuned on Apple Silicon. Seed metadata,
+integer reciprocal alignment and other sieve optimizations are portable.
+Batch queries with isolated inputs still win on this runner. The
+[CI workflow](.github/workflows/benchmark.yml) runs a reduced benchmark suite
+on both platforms for pushes and pull requests.
 
 ## How it works
 
@@ -231,11 +234,16 @@ strategy and limits.
 cargo test --locked
 cargo test --release --locked
 cargo fmt --check
-cargo clippy --all-targets -- -D warnings
+cargo fmt --manifest-path benchmarks/primal/Cargo.toml --check
+cargo clippy --all-targets --locked -- -D warnings
+cargo clippy --manifest-path benchmarks/primal/Cargo.toml --all-targets --locked -- -D warnings
+python3 -m unittest discover -s benchmarks -p 'test_*.py'
 ```
 
 All **28 tests** pass in debug and release on the measured ARM machine.
 Formatting and Clippy pass for the main crate and benchmark crate.
+Summary regression tests check threshold boundaries and consistent win totals
+across count, range and batch reports.
 
 Coverage includes independent sieve comparisons, known counts, deterministic
 primality checks, prime-gap and integer endpoints, batch ordering and limits,
@@ -247,9 +255,12 @@ Range benchmarks compare counts and wrapping-u64 checksums. Batch benchmarks
 compare full answer arrays. A separate helper cross-checks primality and
 next-prime results against primal.
 
-The code matches the completed [benchmark manifest](benchmarks/measurement-2026-11-25.json).
-It records source and binary hashes, commands and the source snapshot. Previous
-executables, reports and experiments are retained in the
+The published M2 Pro measurements come from the pre-rename `prime-numbers`
+build in the [benchmark manifest](benchmarks/measurement-2026-11-25.json).
+The four algorithm source files are unchanged. The package name, CLI, benchmark
+helpers and build files have since changed. The original source and binary hashes
+identify that historical build. Previous executables, reports and experiments
+are retained in the
 [archive](benchmarks/experiments/short-range-2026-11-25/README.md).
 
 Reproduce the [counting](benchmarks/README.md#reproduce),

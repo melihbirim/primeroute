@@ -1,0 +1,34 @@
+name: Native x86 experiments
+
+on:
+  push:
+    branches: ['bench/x86-native-*']
+
+concurrency:
+  group: x86-experiments-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install recorded Rust version
+        run: rustup toolchain install 1.94.1 --profile minimal && rustup default 1.94.1
+      - uses: Swatinem/rust-cache@v2
+      - name: Build primesieve
+        run: |
+          git clone --depth 1 --branch v12.18 https://github.com/kimwalisch/primesieve "$RUNNER_TEMP/primesieve"
+          cmake -S "$RUNNER_TEMP/primesieve" -B "$RUNNER_TEMP/primesieve/build" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
+          cmake --build "$RUNNER_TEMP/primesieve/build" --parallel 2
+      - name: Compare default and x86-64-v3 builds
+        run: python3 benchmarks/x86_diagnostic.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: x86-diagnostic-${{ github.sha }}
+          path: ${{ runner.temp }}/x86-results

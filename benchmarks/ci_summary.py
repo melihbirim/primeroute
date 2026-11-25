@@ -7,6 +7,9 @@ import json
 import sys
 from pathlib import Path
 
+WIN_RATIO = 0.97
+LOSS_RATIO = 1.03
+
 
 def best(results, prefix):
     times = [r["median_ms"] for name, r in results.items() if name.startswith(prefix)]
@@ -19,11 +22,18 @@ def fmt(ms):
     return f"{ms / 1000:.3f} s" if ms >= 1000 else f"{ms:.3f} ms"
 
 
-def verdict(ours, cpp):
+def outcome(ours, cpp):
     if ours is None or cpp is None:
         return "—"
     ratio = ours / cpp
-    mark = "✅" if ratio < 0.97 else "❌" if ratio > 1.03 else "≈"
+    return "✅" if ratio < WIN_RATIO else "❌" if ratio > LOSS_RATIO else "≈"
+
+
+def verdict(ours, cpp):
+    mark = outcome(ours, cpp)
+    if mark == "—":
+        return mark
+    ratio = ours / cpp
     return f"{mark} <0.01×" if ratio < 0.01 else f"{mark} {ratio:.2f}×"
 
 
@@ -49,7 +59,7 @@ def main():
         primal = res.get("primal_rust", {}).get("median_ms")
         rows.append([f"{report['limit_inclusive']:,}", fmt(ours), fmt(cpp), fmt(primal), verdict(ours, cpp)])
         total += 1
-        wins += ours < cpp
+        wins += outcome(ours, cpp) == "✅"
     if rows:
         sections += ["### Count primes up to N (process time)", "",
                      table(["N", "primeroute", "primesieve", "primal", "vs primesieve"], rows), ""]
@@ -64,7 +74,7 @@ def main():
             rows.append([f"{case['start']:,}", f"{case['width']:,}", case["mode"],
                          fmt(ours), fmt(cpp), fmt(primal), verdict(ours, cpp)])
             total += 1
-            wins += ours < cpp
+            wins += outcome(ours, cpp) == "✅"
         sections += ["### Ranges (per fresh query)", "",
                      table(["Start", "Width", "Mode", "primeroute", "primesieve", "primal adapter", "vs primesieve"], rows), ""]
 
@@ -77,16 +87,18 @@ def main():
             primal = res.get("primal", {}).get("median_ms")
             rows.append([case["name"], f"{case['query_count']:,}", fmt(ours), fmt(cpp), fmt(primal), verdict(ours, cpp)])
             total += 1
-            wins += cpp is not None and ours < cpp
+            wins += outcome(ours, cpp) == "✅"
         sections += ["### Batch next-prime (whole batch)", "",
                      table(["Workload", "Queries", "primeroute", "primesieve", "primal", "vs primesieve"], rows), ""]
 
     header = [f"## {title}", "",
-              f"**primeroute faster than primesieve in {wins}/{total} cases.** "
-              "Ratio = primeroute time / primesieve time: ✅ below 0.97, ❌ above 1.03, ≈ in between. "
+              f"**primeroute wins against primesieve in {wins}/{total} cases.** "
+              f"Ratio = primeroute time / primesieve time: ✅ below {WIN_RATIO:.2f}, "
+              f"❌ above {LOSS_RATIO:.2f}, ≈ in between. "
               "All comparators use one thread. Shared CI runners are noisy; "
               "treat these as indicative, not as published results.", ""]
     print("\n".join(header + sections))
 
 
-main()
+if __name__ == "__main__":
+    main()
