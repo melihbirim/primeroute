@@ -941,7 +941,7 @@ fn sieve_segments_with_seeds(
     let mut window = 0;
     let mut active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-    let mut dense_groups = x86::DenseGroups::new();
+    let mut dense_groups = x86::DenseGroups::new(span);
     let mut medium_active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
     let mut medium_groups: Option<x86::MediumGroups> = None;
@@ -981,7 +981,7 @@ fn sieve_segments_with_seeds(
             state.next -= low;
             #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
             medium_groups
-                .get_or_insert_with(x86::MediumGroups::new)
+                .get_or_insert_with(|| x86::MediumGroups::new(span))
                 .activate(state);
         }
         medium_active = next_medium_active;
