@@ -26,7 +26,7 @@ jobs:
           cmake -S "$RUNNER_TEMP/primesieve" -B "$RUNNER_TEMP/primesieve/build" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
           cmake --build "$RUNNER_TEMP/primesieve/build" --parallel 2
       - name: Screen counting kernels
-        run: python3 benchmarks/counting26_streams.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results" --screen-only
+        run: python3 benchmarks/counting26_tail.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results" --screen-only
       - name: Upload selection evidence
         uses: actions/upload-artifact@v4
         with:

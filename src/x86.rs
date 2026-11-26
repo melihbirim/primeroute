@@ -2,108 +2,7 @@
 use super::{DECODED_WORDS, DecodedWord, RESIDUES};
 use std::arch::x86_64::*;
 
-pub(super) const SEGMENT_BYTES: usize = 128 * 1024;
-pub(super) const DENSE_LIMIT: usize = 128 * 1024;
 const CACHE_BLOCK: usize = 32 * 1024;
-const CACHE_DENSE_LIMIT: usize = 32 * 1024;
-const FILL_GROUP: usize = 6;
-pub(super) const AVX_FILL: bool = false;
-pub(super) const COMPACT_FILL: bool = true;
-const RECONSTRUCT_STREAMS: bool = true;
-const _: () = assert!(
-    CACHE_BLOCK <= super::SEGMENT_SIZE
-        && DENSE_LIMIT <= super::STATIC_DENSE_LIMIT
-        && SEGMENT_BYTES.is_power_of_two()
-);
-
-#[target_feature(enable = "avx2")]
-pub(super) unsafe fn fill_compact(low: usize, sieve: &mut [u8]) {
-    let patterns = super::PATTERNS;
-    // SAFETY: AVX2 enabled; each helper splits at every input wrap.
-    unsafe {
-        cyclic::<4, true>(low, sieve, patterns[..4].try_into().unwrap());
-        cyclic::<4, false>(low, sieve, patterns[4..8].try_into().unwrap());
-        cyclic::<4, false>(low, sieve, patterns[8..12].try_into().unwrap());
-        cyclic::<4, false>(low, sieve, patterns[12..16].try_into().unwrap());
-        cyclic::<1, false>(low, sieve, patterns[16..].try_into().unwrap());
-    }
-}
-
-#[target_feature(enable = "avx2")]
-unsafe fn cyclic<const N: usize, const INIT: bool>(
-    low: usize,
-    mut output: &mut [u8],
-    patterns: [&[u8]; N],
-) {
-    let mut offsets: [usize; N] = std::array::from_fn(|i| low % patterns[i].len());
-    while !output.is_empty() {
-        let len = (0..N).fold(output.len(), |len, i| {
-            len.min(patterns[i].len() - offsets[i])
-        });
-        let inputs = std::array::from_fn(|i| &patterns[i][offsets[i]..offsets[i] + len]);
-        let (chunk, tail) = output.split_at_mut(len);
-        // SAFETY: every input is exactly chunk.len() bytes; AVX2 enabled.
-        unsafe { combine::<N, INIT>(chunk, inputs) };
-        for i in 0..N {
-            offsets[i] += len;
-            if offsets[i] == patterns[i].len() {
-                offsets[i] = 0;
-            }
-        }
-        output = tail;
-    }
-}
-
-#[target_feature(enable = "avx2")]
-pub(super) unsafe fn fill_expanded(low: usize, sieve: &mut [u8], patterns: &[Vec<u8>; 17]) {
-    let sources: [&[u8]; 17] = std::array::from_fn(|i| {
-        let offset = low % super::PATTERNS[i].len();
-        &patterns[i][offset..offset + sieve.len()]
-    });
-    // SAFETY: all slices contain sieve.len() bytes, and AVX2 is enabled.
-    unsafe {
-        match FILL_GROUP {
-            6 => {
-                combine::<6, true>(sieve, sources[..6].try_into().unwrap());
-                combine::<6, false>(sieve, sources[6..12].try_into().unwrap());
-                combine::<5, false>(sieve, sources[12..].try_into().unwrap());
-            }
-            9 => {
-                combine::<9, true>(sieve, sources[..9].try_into().unwrap());
-                combine::<8, false>(sieve, sources[9..].try_into().unwrap());
-            }
-            _ => combine::<17, true>(sieve, sources),
-        }
-    }
-}
-
-#[target_feature(enable = "avx2")]
-#[inline]
-unsafe fn combine<const N: usize, const INIT: bool>(output: &mut [u8], sources: [&[u8]; N]) {
-    let vector_len = output.len() / 32 * 32;
-    for offset in (0..vector_len).step_by(32) {
-        // SAFETY: offset + 32 <= output.len(); inputs are at least that long.
-        unsafe {
-            let mut bits = if INIT {
-                _mm256_set1_epi8(-1)
-            } else {
-                _mm256_loadu_si256(output.as_ptr().add(offset).cast())
-            };
-            for source in sources {
-                bits =
-                    _mm256_and_si256(bits, _mm256_loadu_si256(source.as_ptr().add(offset).cast()));
-            }
-            _mm256_storeu_si256(output.as_mut_ptr().add(offset).cast(), bits);
-        }
-    }
-    for offset in vector_len..output.len() {
-        let mut bits = if INIT { 255 } else { output[offset] };
-        for source in sources {
-            bits &= source[offset];
-        }
-        output[offset] = bits;
-    }
-}
 
 #[target_feature(enable = "avx2")]
 pub(super) unsafe fn rotate_offsets(offsets: &mut [u32; 8], first: usize) {
@@ -348,17 +247,10 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
     }
 }
 
-// In-place canonical-wheel traversal follows primesieve's EratSmall design.
-// Copyright (c) 2010-2026 Kim Walisch; BSD-2-Clause, see THIRD_PARTY_NOTICES.md.
-// This implementation uses primeroute's own residue order and grouped state.
-const DENSE_OFFSET_MASK: u32 = (1 << 29) - 1;
-struct DensePrime {
-    quotient: u32,
-    next_wheel: u32,
-}
+#[derive(Clone)]
 pub(super) struct DenseGroups {
-    groups: [Vec<DensePrime>; 8],
-    larger: [Vec<DensePrime>; 8],
+    groups: [Vec<super::SievingPrime>; 8],
+    larger: [Vec<super::SievingPrime>; 8],
 }
 impl DenseGroups {
     pub(super) fn new() -> Self {
@@ -369,17 +261,11 @@ impl DenseGroups {
     }
     pub(super) fn activate(&mut self, state: super::SievingPrime) {
         let class = super::RESIDUE_INDEX[state.prime as usize % 30];
-        let next = state.next[state.first as usize];
-        debug_assert!(next <= DENSE_OFFSET_MASK);
-        let groups = if state.prime as usize <= CACHE_DENSE_LIMIT {
-            &mut self.groups
+        if state.prime <= 32 * 1024 {
+            self.groups[class].push(state);
         } else {
-            &mut self.larger
-        };
-        groups[class].push(DensePrime {
-            quotient: state.prime / 30,
-            next_wheel: next | ((state.first as u32) << 29),
-        });
+            self.larger[class].push(state);
+        }
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
         for bytes in sieve.chunks_mut(CACHE_BLOCK) {
@@ -392,8 +278,8 @@ impl DenseGroups {
             mark_dense_group::<6>(&mut self.groups[6], bytes);
             mark_dense_group::<7>(&mut self.groups[7], bytes);
         }
-        // Few-hit primes advance once per outer window. Compact in-place
-        // states avoid queue moves while the small-prime work stays in L1.
+        // Larger primes have few hits per window. Visiting their state four
+        // times costs more than the cache locality saves, so advance them once.
         mark_dense_group::<0>(&mut self.larger[0], sieve);
         mark_dense_group::<1>(&mut self.larger[1], sieve);
         mark_dense_group::<2>(&mut self.larger[2], sieve);
@@ -405,180 +291,10 @@ impl DenseGroups {
     }
 }
 #[inline(never)]
-fn mark_dense_group<const CLASS: usize>(states: &mut [DensePrime], sieve: &mut [u8]) {
-    if RECONSTRUCT_STREAMS && std::arch::is_x86_feature_detected!("avx2") {
-        // SAFETY: AVX2 detected once for this group.
-        unsafe { mark_stream_group::<CLASS>(states, sieve) };
-    } else {
-        mark_canonical_group::<CLASS>(states, sieve);
-    }
-}
-
-#[target_feature(enable = "avx2")]
-unsafe fn mark_stream_group<const CLASS: usize>(states: &mut [DensePrime], sieve: &mut [u8]) {
-    let steps = const { canonical_steps(CLASS) };
-    let factors: [u32; 8] = std::array::from_fn(|i| steps[i].0 as u32);
-    let carries: [u32; 8] = std::array::from_fn(|i| steps[i].1 as u32);
-    // SAFETY: both coefficient arrays have exactly eight 32-bit elements.
-    let (factors, carries) = unsafe {
-        (
-            _mm256_loadu_si256(factors.as_ptr().cast()),
-            _mm256_loadu_si256(carries.as_ptr().cast()),
-        )
-    };
-    let lanes = _mm256_setr_epi32(0, 1, 2, 3, 4, 5, 6, 7);
+fn mark_dense_group<const CLASS: usize>(states: &mut [super::SievingPrime], sieve: &mut [u8]) {
     for state in states {
-        let packed = state.next_wheel;
-        let first = (packed >> 29) as usize;
-        let offset = packed & DENSE_OFFSET_MASK;
-        if offset as usize >= sieve.len() {
-            state.next_wheel = packed - sieve.len() as u32;
-            continue;
-        }
-        let q = state.quotient;
-        let prime = q * 30 + RESIDUES[CLASS] as u32;
-        let origin = offset.wrapping_sub(q * steps[first].0 as u32 + steps[first].1 as u32);
-        // Lanes before the minimum belong to the following period. All final
-        // offsets are nonnegative and below offset + prime; intermediate
-        // wrapping subtraction is intentional and canceled by vector addition.
-        let wrap = _mm256_and_si256(
-            _mm256_cmpgt_epi32(_mm256_set1_epi32(first as i32), lanes),
-            _mm256_set1_epi32(prime as i32),
-        );
-        let offsets = _mm256_add_epi32(
-            _mm256_add_epi32(
-                _mm256_mullo_epi32(factors, _mm256_set1_epi32(q as i32)),
-                carries,
-            ),
-            _mm256_add_epi32(_mm256_set1_epi32(origin as i32), wrap),
-        );
-        let mut wide = super::SievingPrime {
-            prime,
-            next: [0; 8],
-            masks: super::WHEEL_MASKS[CLASS],
-            first: first as u8,
-        };
-        // SAFETY: wide.next supplies exactly 32 writable bytes.
-        unsafe { _mm256_storeu_si256(wide.next.as_mut_ptr().cast(), offsets) };
-        mark_dense_class::<CLASS>(&mut wide, sieve);
-        state.next_wheel = wide.next[wide.first as usize] | ((wide.first as u32) << 29);
+        mark_dense_class::<CLASS>(state, sieve);
     }
-}
-
-#[inline(never)]
-fn mark_canonical_group<const CLASS: usize>(states: &mut [DensePrime], sieve: &mut [u8]) {
-    let len = sieve.len();
-    let steps = const { canonical_steps(CLASS) };
-    'primes: for state in states {
-        let packed = state.next_wheel;
-        let mut i = (packed & DENSE_OFFSET_MASK) as usize;
-        if i >= len {
-            // Subtraction cannot borrow into the three wheel bits.
-            state.next_wheel = packed - len as u32;
-            continue;
-        }
-        let wheel = (packed >> 29) as usize;
-        let q = state.quotient as usize;
-        macro_rules! hit {
-            ($index:expr) => {{
-                if i >= len {
-                    state.next_wheel = (i - len) as u32 | (($index as u32) << 29);
-                    continue 'primes;
-                }
-                let step = super::WHEEL_STEPS[CLASS * 8 + $index];
-                // SAFETY: the preceding check establishes i < len.
-                unsafe {
-                    *sieve.get_unchecked_mut(i) &= step.mask;
-                }
-                i += q * step.gap as usize + step.carry as usize;
-            }};
-        }
-        // Finish the starting partial wheel. Bulk cycles always start at zero,
-        // giving eight class-specialized loops instead of 64 wheel loops.
-        // Labeled blocks provide fall-through entry without duplicating tails.
-        'prefix_done: {
-            'p7: {
-                'p6: {
-                    'p5: {
-                        'p4: {
-                            'p3: {
-                                'p2: {
-                                    'p1: {
-                                        match wheel {
-                                            0 => break 'prefix_done,
-                                            1 => break 'p1,
-                                            2 => break 'p2,
-                                            3 => break 'p3,
-                                            4 => break 'p4,
-                                            5 => break 'p5,
-                                            6 => break 'p6,
-                                            _ => break 'p7,
-                                        }
-                                    }
-                                    hit!(1);
-                                }
-                                hit!(2);
-                            }
-                            hit!(3);
-                        }
-                        hit!(4);
-                    }
-                    hit!(5);
-                }
-                hit!(6);
-            }
-            hit!(7);
-        }
-        let h = q * steps[7].0 + steps[7].1;
-        if h < len {
-            let a = q * steps[1].0 + steps[1].1;
-            let b = q * steps[2].0 + steps[2].1;
-            let c = q * steps[3].0 + steps[3].1;
-            let d = q * steps[4].0 + steps[4].1;
-            let e = q * steps[5].0 + steps[5].1;
-            let f = q * steps[6].0 + steps[6].1;
-            let p = q * 30 + RESIDUES[CLASS];
-            let end = len - h;
-            while i < end {
-                // SAFETY: offsets are nondecreasing and h is their maximum.
-                // i < len - h bounds all eight accesses; a full wheel adds p.
-                unsafe {
-                    *sieve.get_unchecked_mut(i) &= steps[0].2;
-                    *sieve.get_unchecked_mut(i + a) &= steps[1].2;
-                    *sieve.get_unchecked_mut(i + b) &= steps[2].2;
-                    *sieve.get_unchecked_mut(i + c) &= steps[3].2;
-                    *sieve.get_unchecked_mut(i + d) &= steps[4].2;
-                    *sieve.get_unchecked_mut(i + e) &= steps[5].2;
-                    *sieve.get_unchecked_mut(i + f) &= steps[6].2;
-                    *sieve.get_unchecked_mut(i + h) &= steps[7].2;
-                }
-                i += p;
-            }
-        }
-        hit!(0);
-        hit!(1);
-        hit!(2);
-        hit!(3);
-        hit!(4);
-        hit!(5);
-        hit!(6);
-        assert!(i >= len, "full wheel was already handled");
-        state.next_wheel = (i - len) as u32 | (7 << 29);
-    }
-}
-const fn canonical_steps(class: usize) -> [(usize, usize, u8); 8] {
-    let mut values = [(0, 0, 0); 8];
-    let mut gap = 0;
-    let mut carry = 0;
-    let mut index = 0;
-    while index < 8 {
-        let step = super::WHEEL_STEPS[class * 8 + index];
-        values[index] = (gap, carry, step.mask);
-        gap += step.gap as usize;
-        carry += step.carry as usize;
-        index += 1;
-    }
-    values
 }
 
 #[derive(Clone, Copy)]
@@ -601,7 +317,7 @@ impl MediumGroups {
     }
     pub(super) fn activate(&mut self, state: &super::SparsePrime) {
         // Only active medium primes enter: offsets are below one window plus
-        // their next step (at most 2.6 windows), far below u32::MAX.
+        // their next step (< 210 KiB), far below u32::MAX.
         self.current[state.wheel as usize].push(MediumPrime {
             next: u32::try_from(state.next).unwrap(),
             quotient: state.quotient,
@@ -712,18 +428,18 @@ fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -
             i += q * step.gap as usize + step.carry as usize;
         }};
     }
-    // One complete wheel advances by p. Repeat when smaller medium primes
-    // have more than eight hits; each bounds check returns the exact next state.
-    loop {
-        hit!(0);
-        hit!(1);
-        hit!(2);
-        hit!(3);
-        hit!(4);
-        hit!(5);
-        hit!(6);
-        hit!(7);
-    }
+    hit!(0);
+    hit!(1);
+    hit!(2);
+    hit!(3);
+    hit!(4);
+    hit!(5);
+    hit!(6);
+    hit!(7);
+    // A full wheel advances by p. Medium p > SEGMENT_SIZE >= len, so
+    // there cannot be a ninth mark in this window, even in dense masks.
+    debug_assert!(i >= len);
+    ((i - len) as u32, WHEEL)
 }
 
 #[inline(always)]
@@ -758,20 +474,70 @@ fn mark_dense_class<const CLASS: usize>(state: &mut super::SievingPrime, sieve: 
         h += p;
         last += p;
     }
-    state.next = [a, b, c, d, e, f, g, h].map(|n| n as u32);
-    // Remaining hits form a prefix of that order. Advancing a stream by p
-    // moves it past the other seven, so first rotates to the next minimum.
-    let mut first = state.first as usize;
-    while (state.next[first] as usize) < len {
-        let i = state.next[first] as usize;
-        sieve[i] &= super::WHEEL_MASKS[CLASS][first];
-        state.next[first] += p as u32;
-        first = (first + 1) & 7;
+    // Keep the eight stream offsets local until the tail is complete. Each
+    // tail access has a constant mask and field; the generic scalar marker is
+    // retained as an independent oracle in the existing differential tests.
+    macro_rules! save {
+        ($first:expr) => {{
+            state.next = [a, b, c, d, e, f, g, h].map(|n| (n - len) as u32);
+            state.first = $first;
+        }};
     }
-    for next in &mut state.next {
-        *next -= len as u32;
+    macro_rules! hit {
+        ($index:expr, $offset:ident, $mask:ident) => {{
+            if $offset >= len {
+                save!($index);
+                return;
+            }
+            // SAFETY: the preceding check establishes offset < len.
+            unsafe {
+                *sieve.get_unchecked_mut($offset) &= $mask;
+            }
+            $offset += p;
+        }};
     }
-    state.first = first as u8;
+    'prefix_done: {
+        'p7: {
+            'p6: {
+                'p5: {
+                    'p4: {
+                        'p3: {
+                            'p2: {
+                                'p1: {
+                                    match state.first {
+                                        0 => break 'prefix_done,
+                                        1 => break 'p1,
+                                        2 => break 'p2,
+                                        3 => break 'p3,
+                                        4 => break 'p4,
+                                        5 => break 'p5,
+                                        6 => break 'p6,
+                                        _ => break 'p7,
+                                    }
+                                }
+                                hit!(1, b, mb);
+                            }
+                            hit!(2, c, mc);
+                        }
+                        hit!(3, d, md);
+                    }
+                    hit!(4, e, me);
+                }
+                hit!(5, f, mf);
+            }
+            hit!(6, g, mg);
+        }
+        hit!(7, h, mh);
+    }
+    hit!(0, a, ma);
+    hit!(1, b, mb);
+    hit!(2, c, mc);
+    hit!(3, d, md);
+    hit!(4, e, me);
+    hit!(5, f, mf);
+    hit!(6, g, mg);
+    // The predecessor of the starting minimum is already beyond the end.
+    save!(7);
 }
 
 #[cfg(test)]
@@ -802,56 +568,6 @@ fn mark_classes(states: &mut [super::SievingPrime], bitmap: &mut [u8]) {
 #[cfg(test)]
 mod tests {
     use super::*;
-
-    #[test]
-    fn packed_dense_state_has_disjoint_fields() {
-        assert_eq!(std::mem::size_of::<DensePrime>(), 8);
-        for wheel in 0..8u32 {
-            for next in [0, 1, 32768, 131072, DENSE_OFFSET_MASK] {
-                let packed = next | (wheel << 29);
-                assert_eq!(packed & DENSE_OFFSET_MASK, next);
-                assert_eq!(packed >> 29, wheel);
-                if next >= 131072 {
-                    assert_eq!((packed - 131072) & DENSE_OFFSET_MASK, next - 131072);
-                    assert_eq!((packed - 131072) >> 29, wheel);
-                }
-            }
-        }
-    }
-
-    #[test]
-    fn expanded_fill_matches_cyclic_masks_with_unaligned_tails() {
-        if !std::arch::is_x86_feature_detected!("avx2") {
-            return;
-        }
-        let expanded = super::super::PATTERNS.map(|p| super::super::repeat_pattern(p, 131_072));
-        for low in [0, 1, 17, 1_000_000_000_000usize / 30] {
-            for len in [0, 1, 31, 32, 33, 127, 1023, 131_071, 131_072] {
-                let mut expected = vec![0; len];
-                super::super::fill_segment(low, &mut expected);
-                let mut guarded = vec![0xa5; len + 63];
-                // SAFETY: AVX2 checked; expanded patterns include every input byte.
-                unsafe { fill_expanded(low, &mut guarded[31..31 + len], &expanded) };
-                assert_eq!(&guarded[31..31 + len], expected);
-                assert!(
-                    guarded[..31]
-                        .iter()
-                        .chain(&guarded[31 + len..])
-                        .all(|&b| b == 0xa5)
-                );
-                guarded.fill(0xa5);
-                // SAFETY: AVX2 checked above; the helper uses bounded chunks.
-                unsafe { fill_compact(low, &mut guarded[31..31 + len]) };
-                assert_eq!(&guarded[31..31 + len], expected);
-                assert!(
-                    guarded[..31]
-                        .iter()
-                        .chain(&guarded[31 + len..])
-                        .all(|&b| b == 0xa5)
-                );
-            }
-        }
-    }
 
     #[test]
     fn counts_match_scalar_for_unaligned_inputs_and_tails() {
@@ -1063,7 +779,7 @@ mod tests {
         super::super::STATIC_SEEDS
             .iter()
             .copied()
-            .filter(|&p| p as usize > DENSE_LIMIT && p as usize <= 1_000_000)
+            .filter(|&p| p as usize > super::super::DENSE_PRIME_LIMIT && p as usize <= 1_000_000)
             .map(|p| {
                 let mut state = super::super::SparsePrime::new(p as usize, low);
                 state.next -= low;
@@ -1141,11 +857,7 @@ mod tests {
     }
     #[test]
     fn medium_square_activation_matches_single_window_queries() {
-        let p = *super::super::STATIC_SEEDS
-            .iter()
-            .find(|&&p| p as usize > DENSE_LIMIT)
-            .unwrap() as usize;
-        let start = p * p - 2_000_000;
+        let start = 131_101usize * 131_101 - 2_000_000;
         let end = start + 40_000_000;
         let mut expected = Vec::new();
         let mut low = start;
@@ -1188,9 +900,7 @@ mod tests {
                 .collect();
             let mut reference = initial.clone();
             let mut groups = DenseGroups::new();
-            let mut portable = DenseGroups::new();
             for state in initial {
-                portable.activate(state);
                 groups.activate(state);
             }
             for len in [131_072, 131_071, 31, 0, 131_072] {
@@ -1199,64 +909,19 @@ mod tests {
                 let mut actual = vec![255; len];
                 groups.mark(&mut actual);
                 assert_eq!(actual, expected);
-                let mut fallback = vec![255; len];
-                let markers = [
-                    mark_canonical_group::<0>,
-                    mark_canonical_group::<1>,
-                    mark_canonical_group::<2>,
-                    mark_canonical_group::<3>,
-                    mark_canonical_group::<4>,
-                    mark_canonical_group::<5>,
-                    mark_canonical_group::<6>,
-                    mark_canonical_group::<7>,
-                ];
-                for (class, marker) in markers.into_iter().enumerate() {
-                    for chunk in fallback.chunks_mut(CACHE_BLOCK) {
-                        marker(&mut portable.groups[class], chunk);
-                    }
-                    marker(&mut portable.larger[class], &mut fallback);
-                }
-                assert_eq!(fallback, expected);
-                // The packed state stores the minimum offset and wheel.
                 let mut states: Vec<_> = groups
                     .groups
                     .iter()
                     .chain(groups.larger.iter())
-                    .enumerate()
-                    .flat_map(|(class, states)| {
-                        let class = class % 8;
-                        states.iter().map(move |s| {
-                            (
-                                30 * s.quotient + RESIDUES[class] as u32,
-                                s.next_wheel & DENSE_OFFSET_MASK,
-                                (s.next_wheel >> 29) as u8,
-                            )
-                        })
-                    })
+                    .flatten()
+                    .map(|s| (s.prime, s.next, s.first))
                     .collect();
                 states.sort_unstable_by_key(|s| s.0);
                 let target: Vec<_> = reference
                     .iter()
-                    .map(|s| (s.prime, s.next[s.first as usize], s.first))
+                    .map(|s| (s.prime, s.next, s.first))
                     .collect();
                 assert_eq!(states, target);
-                let mut fallback_states: Vec<_> = portable
-                    .groups
-                    .iter()
-                    .chain(portable.larger.iter())
-                    .enumerate()
-                    .flat_map(|(class, states)| {
-                        states.iter().map(move |s| {
-                            (
-                                30 * s.quotient + RESIDUES[class % 8] as u32,
-                                s.next_wheel & DENSE_OFFSET_MASK,
-                                (s.next_wheel >> 29) as u8,
-                            )
-                        })
-                    })
-                    .collect();
-                fallback_states.sort_unstable_by_key(|s| s.0);
-                assert_eq!(fallback_states, target);
             }
         }
     }
