@@ -3,7 +3,8 @@ use super::{DECODED_WORDS, DecodedWord, RESIDUES};
 use std::arch::x86_64::*;
 
 const CACHE_BLOCK: usize = 32 * 1024;
-const VECTOR_STATE_ADVANCE: bool = true;
+const VECTOR_STATE_ADVANCE: bool = false;
+const QUEUED_DENSE_MIN: usize = 8 * 1024;
 
 #[target_feature(enable = "avx2")]
 pub(super) unsafe fn rotate_offsets(offsets: &mut [u32; 8], first: usize) {
@@ -252,16 +253,25 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
 pub(super) struct DenseGroups {
     groups: [Vec<super::SievingPrime>; 8],
     larger: [Vec<super::SievingPrime>; 8],
+    queued: MediumGroups,
 }
 impl DenseGroups {
     pub(super) fn new() -> Self {
         Self {
             groups: std::array::from_fn(|_| Vec::new()),
             larger: std::array::from_fn(|_| Vec::new()),
+            queued: MediumGroups::new(),
         }
     }
     pub(super) fn activate(&mut self, state: super::SievingPrime) {
         let class = super::RESIDUE_INDEX[state.prime as usize % 30];
+        if state.prime as usize > QUEUED_DENSE_MIN {
+            self.queued.current[class * 8 + state.first as usize].push(MediumPrime {
+                quotient: state.prime / 30,
+                next: state.next[state.first as usize],
+            });
+            return;
+        }
         if state.prime <= 32 * 1024 {
             self.groups[class].push(state);
         } else {
@@ -289,6 +299,34 @@ impl DenseGroups {
         mark_dense_group::<5>(&mut self.larger[5], sieve);
         mark_dense_group::<6>(&mut self.larger[6], sieve);
         mark_dense_group::<7>(&mut self.larger[7], sieve);
+        self.queued.mark(sieve);
+    }
+    #[cfg(test)]
+    fn normalized_states(&self) -> Vec<(u32, u32, u8)> {
+        let mut states: Vec<_> = self
+            .groups
+            .iter()
+            .chain(self.larger.iter())
+            .flatten()
+            .map(|s| (s.prime, s.next[s.first as usize], s.first))
+            .collect();
+        states.extend(
+            self.queued
+                .current
+                .iter()
+                .enumerate()
+                .flat_map(|(wheel, states)| {
+                    states.iter().map(move |s| {
+                        (
+                            s.quotient * 30 + RESIDUES[wheel / 8] as u32,
+                            s.next,
+                            (wheel % 8) as u8,
+                        )
+                    })
+                }),
+        );
+        states.sort_unstable_by_key(|s| s.0);
+        states
     }
 }
 #[inline(never)]
@@ -372,6 +410,7 @@ struct MediumPrime {
     quotient: u32,
 }
 
+#[derive(Clone)]
 pub(super) struct MediumGroups {
     current: [Vec<MediumPrime>; 64],
     next: [Vec<MediumPrime>; 64],
@@ -393,109 +432,123 @@ impl MediumGroups {
         });
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
-        for (wheel, states) in self.current.iter_mut().enumerate() {
-            match wheel {
-                0 => mark_medium_group::<0>(states, &mut self.next, sieve),
-                1 => mark_medium_group::<1>(states, &mut self.next, sieve),
-                2 => mark_medium_group::<2>(states, &mut self.next, sieve),
-                3 => mark_medium_group::<3>(states, &mut self.next, sieve),
-                4 => mark_medium_group::<4>(states, &mut self.next, sieve),
-                5 => mark_medium_group::<5>(states, &mut self.next, sieve),
-                6 => mark_medium_group::<6>(states, &mut self.next, sieve),
-                7 => mark_medium_group::<7>(states, &mut self.next, sieve),
-                8 => mark_medium_group::<8>(states, &mut self.next, sieve),
-                9 => mark_medium_group::<9>(states, &mut self.next, sieve),
-                10 => mark_medium_group::<10>(states, &mut self.next, sieve),
-                11 => mark_medium_group::<11>(states, &mut self.next, sieve),
-                12 => mark_medium_group::<12>(states, &mut self.next, sieve),
-                13 => mark_medium_group::<13>(states, &mut self.next, sieve),
-                14 => mark_medium_group::<14>(states, &mut self.next, sieve),
-                15 => mark_medium_group::<15>(states, &mut self.next, sieve),
-                16 => mark_medium_group::<16>(states, &mut self.next, sieve),
-                17 => mark_medium_group::<17>(states, &mut self.next, sieve),
-                18 => mark_medium_group::<18>(states, &mut self.next, sieve),
-                19 => mark_medium_group::<19>(states, &mut self.next, sieve),
-                20 => mark_medium_group::<20>(states, &mut self.next, sieve),
-                21 => mark_medium_group::<21>(states, &mut self.next, sieve),
-                22 => mark_medium_group::<22>(states, &mut self.next, sieve),
-                23 => mark_medium_group::<23>(states, &mut self.next, sieve),
-                24 => mark_medium_group::<24>(states, &mut self.next, sieve),
-                25 => mark_medium_group::<25>(states, &mut self.next, sieve),
-                26 => mark_medium_group::<26>(states, &mut self.next, sieve),
-                27 => mark_medium_group::<27>(states, &mut self.next, sieve),
-                28 => mark_medium_group::<28>(states, &mut self.next, sieve),
-                29 => mark_medium_group::<29>(states, &mut self.next, sieve),
-                30 => mark_medium_group::<30>(states, &mut self.next, sieve),
-                31 => mark_medium_group::<31>(states, &mut self.next, sieve),
-                32 => mark_medium_group::<32>(states, &mut self.next, sieve),
-                33 => mark_medium_group::<33>(states, &mut self.next, sieve),
-                34 => mark_medium_group::<34>(states, &mut self.next, sieve),
-                35 => mark_medium_group::<35>(states, &mut self.next, sieve),
-                36 => mark_medium_group::<36>(states, &mut self.next, sieve),
-                37 => mark_medium_group::<37>(states, &mut self.next, sieve),
-                38 => mark_medium_group::<38>(states, &mut self.next, sieve),
-                39 => mark_medium_group::<39>(states, &mut self.next, sieve),
-                40 => mark_medium_group::<40>(states, &mut self.next, sieve),
-                41 => mark_medium_group::<41>(states, &mut self.next, sieve),
-                42 => mark_medium_group::<42>(states, &mut self.next, sieve),
-                43 => mark_medium_group::<43>(states, &mut self.next, sieve),
-                44 => mark_medium_group::<44>(states, &mut self.next, sieve),
-                45 => mark_medium_group::<45>(states, &mut self.next, sieve),
-                46 => mark_medium_group::<46>(states, &mut self.next, sieve),
-                47 => mark_medium_group::<47>(states, &mut self.next, sieve),
-                48 => mark_medium_group::<48>(states, &mut self.next, sieve),
-                49 => mark_medium_group::<49>(states, &mut self.next, sieve),
-                50 => mark_medium_group::<50>(states, &mut self.next, sieve),
-                51 => mark_medium_group::<51>(states, &mut self.next, sieve),
-                52 => mark_medium_group::<52>(states, &mut self.next, sieve),
-                53 => mark_medium_group::<53>(states, &mut self.next, sieve),
-                54 => mark_medium_group::<54>(states, &mut self.next, sieve),
-                55 => mark_medium_group::<55>(states, &mut self.next, sieve),
-                56 => mark_medium_group::<56>(states, &mut self.next, sieve),
-                57 => mark_medium_group::<57>(states, &mut self.next, sieve),
-                58 => mark_medium_group::<58>(states, &mut self.next, sieve),
-                59 => mark_medium_group::<59>(states, &mut self.next, sieve),
-                60 => mark_medium_group::<60>(states, &mut self.next, sieve),
-                61 => mark_medium_group::<61>(states, &mut self.next, sieve),
-                62 => mark_medium_group::<62>(states, &mut self.next, sieve),
-                _ => mark_medium_group::<63>(states, &mut self.next, sieve),
-            }
+        mark_medium_class::<0>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<1>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<2>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<3>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<4>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<5>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<6>(&self.current, &mut self.next, sieve);
+        mark_medium_class::<7>(&self.current, &mut self.next, sieve);
+        for states in &mut self.current {
             states.clear();
         }
         std::mem::swap(&mut self.current, &mut self.next);
     }
 }
 
+// Sorted wheel entry points share one full-cycle body per residue class.
+// Canonical traversal follows primesieve EratSmall; BSD-2-Clause notice applies.
 #[inline(never)]
-fn mark_medium_group<const WHEEL: usize>(
-    states: &[MediumPrime],
+fn mark_medium_class<const CLASS: usize>(
+    current: &[Vec<MediumPrime>; 64],
     next: &mut [Vec<MediumPrime>; 64],
     sieve: &mut [u8],
 ) {
-    for state in states {
-        let (offset, wheel) = mark_medium_chain::<WHEEL>(*state, sieve);
-        next[wheel].push(MediumPrime {
-            next: offset,
-            quotient: state.quotient,
-        });
+    for first in 0..8 {
+        for state in &current[CLASS * 8 + first] {
+            let (offset, wheel) = medium_class_chain::<CLASS>(*state, first, sieve);
+            next[CLASS * 8 + wheel].push(MediumPrime {
+                next: offset,
+                quotient: state.quotient,
+            });
+        }
     }
 }
-
 #[inline(always)]
-fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -> (u32, usize) {
+fn medium_class_chain<const CLASS: usize>(
+    state: MediumPrime,
+    first: usize,
+    sieve: &mut [u8],
+) -> (u32, usize) {
     let mut i = state.next as usize;
     let q = state.quotient as usize;
     let len = sieve.len();
+    let steps = const { medium_canonical_steps(CLASS) };
+    if i >= len {
+        return ((i - len) as u32, first);
+    }
     macro_rules! hit {
-        ($offset:expr) => {{
-            let wheel = (WHEEL / 8) * 8 + ((WHEEL + $offset) & 7);
+        ($index:expr) => {{
             if i >= len {
-                return ((i - len) as u32, wheel);
+                return ((i - len) as u32, $index);
             }
-            let step = super::WHEEL_STEPS[wheel];
-            sieve[i] &= step.mask;
+            let step = super::WHEEL_STEPS[CLASS * 8 + $index];
+            // SAFETY: the preceding check establishes i < len.
+            unsafe {
+                *sieve.get_unchecked_mut(i) &= step.mask;
+            }
             i += q * step.gap as usize + step.carry as usize;
         }};
+    }
+    'prefix_done: {
+        'p7: {
+            'p6: {
+                'p5: {
+                    'p4: {
+                        'p3: {
+                            'p2: {
+                                'p1: {
+                                    match first {
+                                        0 => break 'prefix_done,
+                                        1 => break 'p1,
+                                        2 => break 'p2,
+                                        3 => break 'p3,
+                                        4 => break 'p4,
+                                        5 => break 'p5,
+                                        6 => break 'p6,
+                                        _ => break 'p7,
+                                    }
+                                }
+                                hit!(1);
+                            }
+                            hit!(2);
+                        }
+                        hit!(3);
+                    }
+                    hit!(4);
+                }
+                hit!(5);
+            }
+            hit!(6);
+        }
+        hit!(7);
+    }
+    let h = q * steps[7].0 + steps[7].1;
+    if h < len {
+        let a = q * steps[1].0 + steps[1].1;
+        let b = q * steps[2].0 + steps[2].1;
+        let c = q * steps[3].0 + steps[3].1;
+        let d = q * steps[4].0 + steps[4].1;
+        let e = q * steps[5].0 + steps[5].1;
+        let f = q * steps[6].0 + steps[6].1;
+        let prime = q * 30 + RESIDUES[CLASS];
+        let end = len - h;
+        while i < end {
+            // SAFETY: offsets are nondecreasing and h is their maximum.
+            // i < len - h bounds all eight accesses simultaneously.
+            unsafe {
+                *sieve.get_unchecked_mut(i) &= steps[0].2;
+                *sieve.get_unchecked_mut(i + a) &= steps[1].2;
+                *sieve.get_unchecked_mut(i + b) &= steps[2].2;
+                *sieve.get_unchecked_mut(i + c) &= steps[3].2;
+                *sieve.get_unchecked_mut(i + d) &= steps[4].2;
+                *sieve.get_unchecked_mut(i + e) &= steps[5].2;
+                *sieve.get_unchecked_mut(i + f) &= steps[6].2;
+                *sieve.get_unchecked_mut(i + h) &= steps[7].2;
+            }
+            i += prime;
+        }
     }
     hit!(0);
     hit!(1);
@@ -504,11 +557,20 @@ fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -
     hit!(4);
     hit!(5);
     hit!(6);
-    hit!(7);
-    // A full wheel advances by p. Medium p > SEGMENT_SIZE >= len, so
-    // there cannot be a ninth mark in this window, even in dense masks.
     debug_assert!(i >= len);
-    ((i - len) as u32, WHEEL)
+    ((i - len) as u32, 7)
+}
+const fn medium_canonical_steps(class: usize) -> [(usize, usize, u8); 8] {
+    let mut values = [(0, 0, 0); 8];
+    let (mut gap, mut carry, mut index) = (0, 0, 0);
+    while index < 8 {
+        let step = super::WHEEL_STEPS[class * 8 + index];
+        values[index] = (gap, carry, step.mask);
+        gap += step.gap as usize;
+        carry += step.carry as usize;
+        index += 1;
+    }
+    values
 }
 
 #[inline(always)]
@@ -543,70 +605,20 @@ fn mark_dense_class<const CLASS: usize>(state: &mut super::SievingPrime, sieve: 
         h += p;
         last += p;
     }
-    // Keep the eight stream offsets local until the tail is complete. Each
-    // tail access has a constant mask and field; the generic scalar marker is
-    // retained as an independent oracle in the existing differential tests.
-    macro_rules! save {
-        ($first:expr) => {{
-            state.next = [a, b, c, d, e, f, g, h].map(|n| (n - len) as u32);
-            state.first = $first;
-        }};
+    state.next = [a, b, c, d, e, f, g, h].map(|n| n as u32);
+    // Remaining hits form a prefix of that order. Advancing a stream by p
+    // moves it past the other seven, so first rotates to the next minimum.
+    let mut first = state.first as usize;
+    while (state.next[first] as usize) < len {
+        let i = state.next[first] as usize;
+        sieve[i] &= super::WHEEL_MASKS[CLASS][first];
+        state.next[first] += p as u32;
+        first = (first + 1) & 7;
     }
-    macro_rules! hit {
-        ($index:expr, $offset:ident, $mask:ident) => {{
-            if $offset >= len {
-                save!($index);
-                return;
-            }
-            // SAFETY: the preceding check establishes offset < len.
-            unsafe {
-                *sieve.get_unchecked_mut($offset) &= $mask;
-            }
-            $offset += p;
-        }};
+    for next in &mut state.next {
+        *next -= len as u32;
     }
-    'prefix_done: {
-        'p7: {
-            'p6: {
-                'p5: {
-                    'p4: {
-                        'p3: {
-                            'p2: {
-                                'p1: {
-                                    match state.first {
-                                        0 => break 'prefix_done,
-                                        1 => break 'p1,
-                                        2 => break 'p2,
-                                        3 => break 'p3,
-                                        4 => break 'p4,
-                                        5 => break 'p5,
-                                        6 => break 'p6,
-                                        _ => break 'p7,
-                                    }
-                                }
-                                hit!(1, b, mb);
-                            }
-                            hit!(2, c, mc);
-                        }
-                        hit!(3, d, md);
-                    }
-                    hit!(4, e, me);
-                }
-                hit!(5, f, mf);
-            }
-            hit!(6, g, mg);
-        }
-        hit!(7, h, mh);
-    }
-    hit!(0, a, ma);
-    hit!(1, b, mb);
-    hit!(2, c, mc);
-    hit!(3, d, md);
-    hit!(4, e, me);
-    hit!(5, f, mf);
-    hit!(6, g, mg);
-    // The predecessor of the starting minimum is already beyond the end.
-    save!(7);
+    state.first = first as u8;
 }
 
 #[cfg(test)]
@@ -839,15 +851,14 @@ mod tests {
                             let mut grouped = vec![255; len];
                             groups.mark(&mut grouped);
                             assert_eq!(grouped, b);
-                            let grouped_state = groups
-                                .groups
-                                .iter()
-                                .chain(groups.larger.iter())
-                                .flatten()
-                                .next()
-                                .unwrap();
-                            assert_eq!(grouped_state.next, expected.next);
-                            assert_eq!(grouped_state.first, expected.first);
+                            assert_eq!(
+                                groups.normalized_states(),
+                                vec![(
+                                    expected.prime,
+                                    expected.next[expected.first as usize],
+                                    expected.first
+                                )]
+                            );
                         }
                     }
                 }
@@ -906,7 +917,10 @@ mod tests {
         super::super::STATIC_SEEDS
             .iter()
             .copied()
-            .filter(|&p| p as usize > super::super::DENSE_PRIME_LIMIT && p as usize <= 1_000_000)
+            .filter(|&p| {
+                p as usize > QUEUED_DENSE_MIN.min(super::super::DENSE_PRIME_LIMIT)
+                    && p as usize <= 1_000_000
+            })
             .map(|p| {
                 let mut state = super::super::SparsePrime::new(p as usize, low);
                 state.next -= low;
@@ -1036,17 +1050,10 @@ mod tests {
                 let mut actual = vec![255; len];
                 groups.mark(&mut actual);
                 assert_eq!(actual, expected);
-                let mut states: Vec<_> = groups
-                    .groups
-                    .iter()
-                    .chain(groups.larger.iter())
-                    .flatten()
-                    .map(|s| (s.prime, s.next, s.first))
-                    .collect();
-                states.sort_unstable_by_key(|s| s.0);
+                let states = groups.normalized_states();
                 let target: Vec<_> = reference
                     .iter()
-                    .map(|s| (s.prime, s.next, s.first))
+                    .map(|s| (s.prime, s.next[s.first as usize], s.first))
                     .collect();
                 assert_eq!(states, target);
             }
