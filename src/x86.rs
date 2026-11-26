@@ -9,6 +9,7 @@ const QUEUED_DENSE_MIN: usize = 8 * 1024;
 
 pub(super) const COMPACT_PRE_SIEVE: bool = true;
 const WIDE_PRE_SIEVE: bool = true;
+const OVERLAP_PRE_SIEVE_TAIL: bool = true;
 // Balance periods so each three-input pass keeps its cyclic tables in L1.
 static COMPACT_0: [u8; 23 * 167] = super::pre_sieve([23, 167]);
 static COMPACT_1: [u8; 13 * 17 * 19] = super::pre_sieve([13, 17, 19]);
@@ -117,22 +118,38 @@ unsafe fn compact_combine256<const N: usize, const INIT: bool>(
     inputs: [&[u8]; N],
 ) {
     let vectors = output.len() / 32 * 32;
-    for offset in (0..vectors).step_by(32) {
-        // SAFETY: all slices contain offset + 32 bytes; AVX2 enabled.
-        unsafe {
-            let mut bits = if INIT {
-                _mm256_set1_epi8(-1)
-            } else {
-                _mm256_loadu_si256(output.as_ptr().add(offset).cast())
-            };
-            for input in inputs {
-                bits =
-                    _mm256_and_si256(bits, _mm256_loadu_si256(input.as_ptr().add(offset).cast()));
+    macro_rules! block {
+        ($offset:expr) => {{
+            let offset = $offset;
+            // SAFETY: all slices contain offset + 32 bytes; AVX2 enabled.
+            unsafe {
+                let mut bits = if INIT {
+                    _mm256_set1_epi8(-1)
+                } else {
+                    _mm256_loadu_si256(output.as_ptr().add(offset).cast())
+                };
+                for input in inputs {
+                    bits = _mm256_and_si256(
+                        bits,
+                        _mm256_loadu_si256(input.as_ptr().add(offset).cast()),
+                    );
+                }
+                _mm256_storeu_si256(output.as_mut_ptr().add(offset).cast(), bits);
             }
-            _mm256_storeu_si256(output.as_mut_ptr().add(offset).cast(), bits);
+        }};
+    }
+    for offset in (0..vectors).step_by(32) {
+        block!(offset);
+    }
+    if vectors < output.len() {
+        if OVERLAP_PRE_SIEVE_TAIL && output.len() >= 32 {
+            // INIT recomputes identical masks; later passes use idempotent AND.
+            // The overlapping vector remains inside every input and output.
+            block!(output.len() - 32);
+        } else {
+            compact_tail::<N, INIT>(output, inputs, vectors);
         }
     }
-    compact_tail::<N, INIT>(output, inputs, vectors);
 }
 #[target_feature(enable = "avx512f")]
 #[inline]
@@ -141,31 +158,45 @@ unsafe fn compact_combine512<const N: usize, const INIT: bool>(
     inputs: [&[u8]; N],
 ) {
     let vectors = output.len() / 64 * 64;
+    macro_rules! block {
+        ($offset:expr) => {{
+            let offset = $offset;
+            // SAFETY: all slices contain offset + 64 bytes; only AVX-512F is used.
+            unsafe {
+                let mut bits = if INIT {
+                    _mm512_set1_epi32(-1)
+                } else {
+                    _mm512_loadu_si512(output.as_ptr().add(offset).cast())
+                };
+                let mut source = 0;
+                while source + 1 < N {
+                    let a = _mm512_loadu_si512(inputs[source].as_ptr().add(offset).cast());
+                    let b = _mm512_loadu_si512(inputs[source + 1].as_ptr().add(offset).cast());
+                    bits = _mm512_ternarylogic_epi32::<0x80>(bits, a, b);
+                    source += 2;
+                }
+                if source < N {
+                    bits = _mm512_and_si512(
+                        bits,
+                        _mm512_loadu_si512(inputs[source].as_ptr().add(offset).cast()),
+                    );
+                }
+                _mm512_storeu_si512(output.as_mut_ptr().add(offset).cast(), bits);
+            }
+        }};
+    }
     for offset in (0..vectors).step_by(64) {
-        // SAFETY: all slices contain offset + 64 bytes; only AVX-512F is used.
-        unsafe {
-            let mut bits = if INIT {
-                _mm512_set1_epi32(-1)
-            } else {
-                _mm512_loadu_si512(output.as_ptr().add(offset).cast())
-            };
-            let mut source = 0;
-            while source + 1 < N {
-                let a = _mm512_loadu_si512(inputs[source].as_ptr().add(offset).cast());
-                let b = _mm512_loadu_si512(inputs[source + 1].as_ptr().add(offset).cast());
-                bits = _mm512_ternarylogic_epi32::<0x80>(bits, a, b);
-                source += 2;
-            }
-            if source < N {
-                bits = _mm512_and_si512(
-                    bits,
-                    _mm512_loadu_si512(inputs[source].as_ptr().add(offset).cast()),
-                );
-            }
-            _mm512_storeu_si512(output.as_mut_ptr().add(offset).cast(), bits);
+        block!(offset);
+    }
+    if vectors < output.len() {
+        if OVERLAP_PRE_SIEVE_TAIL && output.len() >= 64 {
+            // INIT recomputes identical masks; later passes use idempotent AND.
+            // The overlapping vector remains inside every input and output.
+            block!(output.len() - 64);
+        } else {
+            compact_tail::<N, INIT>(output, inputs, vectors);
         }
     }
-    compact_tail::<N, INIT>(output, inputs, vectors);
 }
 #[inline]
 fn compact_tail<const N: usize, const INIT: bool>(
