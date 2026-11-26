@@ -14,6 +14,9 @@ const SMALL_PRIMES: [usize; 39] = [
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
     101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
 ];
+#[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+const SEGMENT_SIZE: usize = x86::SEGMENT_BYTES;
+#[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
 const SEGMENT_SIZE: usize = 128 * 1024;
 // Bounded compiler-generated seed primes, not range answers or cached counts.
 const STATIC_SEED_LIMIT: usize = 1 << 20;
@@ -185,6 +188,12 @@ fn repeat_pattern(pattern: &[u8], size: usize) -> Vec<u8> {
 
 fn fill_expanded(low: usize, sieve: &mut [u8], patterns: &[Vec<u8>; 17]) {
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if x86::COMPACT_FILL && std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 checked; cyclic chunks bound all pattern accesses.
+        unsafe { x86::fill_compact(low, sieve) };
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
     if x86::AVX_FILL && std::arch::is_x86_feature_detected!("avx2") {
         // SAFETY: AVX2 checked; the helper bounds every input and output access.
         unsafe { x86::fill_expanded(low, sieve, patterns) };
@@ -226,7 +235,7 @@ struct SievingPrime {
     first: u8,
 }
 
-const DENSE_PRIME_LIMIT: usize = SEGMENT_SIZE;
+const DENSE_PRIME_LIMIT: usize = 128 * 1024;
 
 const RESIDUE_INDEX: [usize; 30] = {
     let mut indices = [0; 30];
@@ -910,8 +919,7 @@ fn sieve_segments_with_seeds(
         return;
     }
 
-    let expanded =
-        (span >= 8 * SEGMENT_SIZE).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
+    let expanded = (span >= 8 * 128 * 1024).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
     let dense_limit = DENSE_PRIME_LIMIT.min(span);
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
     let dense_limit = if expanded.is_some() {
