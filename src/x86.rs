@@ -2,7 +2,7 @@
 use super::{DECODED_WORDS, DecodedWord, RESIDUES};
 use std::arch::x86_64::*;
 
-pub(super) const SEGMENT_BYTES: usize = 128 * 1024;
+pub(super) const SEGMENT_BYTES: usize = 512 * 1024;
 const CACHE_BLOCK: usize = 32 * 1024;
 const VECTOR_STATE_ADVANCE: bool = false;
 const QUEUED_DENSE_MIN: usize = 8 * 1024;
@@ -10,7 +10,7 @@ const QUEUED_DENSE_MIN: usize = 8 * 1024;
 pub(super) const COMPACT_PRE_SIEVE: bool = true;
 const WIDE_PRE_SIEVE: bool = true;
 const OVERLAP_PRE_SIEVE_TAIL: bool = true;
-const MIXED_PRE_SIEVE_PASSES: bool = true;
+const MIXED_PRE_SIEVE_PASSES: bool = false;
 // Balance periods so each three-input pass keeps its cyclic tables in L1.
 static COMPACT_0: [u8; 23 * 167] = super::pre_sieve([23, 167]);
 static COMPACT_1: [u8; 13 * 17 * 19] = super::pre_sieve([13, 17, 19]);
