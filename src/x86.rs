@@ -729,6 +729,50 @@ mod tests {
     }
 
     #[test]
+    fn dense_tails_match_scalar_for_every_starting_wheel() {
+        for class in 0..8 {
+            for floor in [173, 100_000] {
+                let p = *super::super::STATIC_SEEDS
+                    .iter()
+                    .find(|&&p| {
+                        p as usize >= floor && super::super::RESIDUE_INDEX[p as usize % 30] == class
+                    })
+                    .unwrap() as usize;
+                for first in 0..8 {
+                    for delta in [0, p - 1] {
+                        let mut initial = super::super::SievingPrime {
+                            prime: p as u32,
+                            next: [0; 8],
+                            masks: super::super::WHEEL_MASKS[class],
+                            first: first as u8,
+                        };
+                        let mut offset = delta;
+                        for n in 0..8 {
+                            let index = (first + n) & 7;
+                            initial.next[index] = offset as u32;
+                            let step = super::super::WHEEL_STEPS[class * 8 + index];
+                            offset += (p / 30) * step.gap as usize + step.carry as usize;
+                        }
+                        for len in [0, 1, 31, p - 1, p, p + 1, 32_768, 131_072] {
+                            let (mut actual, mut expected) = (initial, initial);
+                            let mut a = vec![255; len];
+                            let mut b = a.clone();
+                            mark_classes(std::slice::from_mut(&mut actual), &mut a);
+                            super::super::mark_dense(&mut expected, &mut b);
+                            assert_eq!(
+                                a, b,
+                                "class={class}, p={p}, first={first}, delta={delta}, len={len}"
+                            );
+                            assert_eq!(actual.next, expected.next);
+                            assert_eq!(actual.first, expected.first);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    #[test]
     #[ignore = "native dense-kernel selection experiment"]
     fn profile_dense() {
         use std::hint::black_box;
