@@ -10,6 +10,7 @@ const QUEUED_DENSE_MIN: usize = 8 * 1024;
 pub(super) const COMPACT_PRE_SIEVE: bool = true;
 const WIDE_PRE_SIEVE: bool = true;
 const OVERLAP_PRE_SIEVE_TAIL: bool = true;
+const MIXED_PRE_SIEVE_PASSES: bool = true;
 // Balance periods so each three-input pass keeps its cyclic tables in L1.
 static COMPACT_0: [u8; 23 * 167] = super::pre_sieve([23, 167]);
 static COMPACT_1: [u8; 13 * 17 * 19] = super::pre_sieve([13, 17, 19]);
@@ -71,6 +72,19 @@ unsafe fn fill_compact512(low: usize, output: &mut [u8]) {
 #[inline(always)]
 unsafe fn compact_passes<const WIDE: bool>(low: usize, output: &mut [u8]) {
     let p = COMPACT_PATTERNS;
+    if MIXED_PRE_SIEVE_PASSES {
+        // Two four-input groups and three three-input groups reduce bitmap
+        // passes. Each group's table bytes plus one period of output fit 32 KiB.
+        // SAFETY: the caller enables the selected ISA; every group has N inputs.
+        unsafe {
+            compact_cyclic::<4, true, WIDE>(low, output, p[..4].try_into().unwrap());
+            compact_cyclic::<4, false, WIDE>(low, output, p[4..8].try_into().unwrap());
+            compact_cyclic::<3, false, WIDE>(low, output, [p[8], p[10], p[11]]);
+            compact_cyclic::<3, false, WIDE>(low, output, [p[12], p[13], p[14]]);
+            compact_cyclic::<3, false, WIDE>(low, output, [p[9], p[15], p[16]]);
+        }
+        return;
+    }
     // SAFETY: the selected ISA is enabled by the caller, and groups have N inputs.
     unsafe {
         compact_cyclic::<3, true, WIDE>(low, output, p[..3].try_into().unwrap());
