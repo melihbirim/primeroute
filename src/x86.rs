@@ -3,6 +3,7 @@ use super::{DECODED_WORDS, DecodedWord, RESIDUES};
 use std::arch::x86_64::*;
 
 const CACHE_BLOCK: usize = 32 * 1024;
+const VECTOR_STATE_ADVANCE: bool = true;
 
 #[target_feature(enable = "avx2")]
 pub(super) unsafe fn rotate_offsets(offsets: &mut [u32; 8], first: usize) {
@@ -292,8 +293,76 @@ impl DenseGroups {
 }
 #[inline(never)]
 fn mark_dense_group<const CLASS: usize>(states: &mut [super::SievingPrime], sieve: &mut [u8]) {
+    if VECTOR_STATE_ADVANCE && std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 detected for this group.
+        unsafe { mark_dense_group_avx2::<CLASS>(states, sieve) };
+        return;
+    }
     for state in states {
         mark_dense_class::<CLASS>(state, sieve);
+    }
+}
+
+#[target_feature(enable = "avx2")]
+unsafe fn mark_dense_group_avx2<const CLASS: usize>(
+    states: &mut [super::SievingPrime],
+    sieve: &mut [u8],
+) {
+    let lanes = _mm256_setr_epi32(0, 1, 2, 3, 4, 5, 6, 7);
+    let seven = _mm256_set1_epi32(7);
+    let len = sieve.len();
+    let [ma, mb, mc, md, me, mf, mg, mh] = super::WHEEL_MASKS[CLASS];
+    for state in states {
+        let p = state.prime as usize;
+        let first = (state.first as usize) & 7;
+        let offsets = state.next;
+        // SAFETY: offsets contains exactly eight 32-bit entries.
+        let original = unsafe { _mm256_loadu_si256(offsets.as_ptr().cast()) };
+        let [a, b, c, d, e, f, g, h] = offsets.map(|n| n as usize);
+        let max = offsets[(first + 7) & 7] as usize;
+        let end = len.saturating_sub(max);
+        let mut advance = 0usize;
+        while advance < end {
+            // SAFETY: the predecessor of first is the maximum stream offset.
+            // advance < len - max bounds all eight accesses simultaneously.
+            unsafe {
+                *sieve.get_unchecked_mut(advance + a) &= ma;
+                *sieve.get_unchecked_mut(advance + b) &= mb;
+                *sieve.get_unchecked_mut(advance + c) &= mc;
+                *sieve.get_unchecked_mut(advance + d) &= md;
+                *sieve.get_unchecked_mut(advance + e) &= me;
+                *sieve.get_unchecked_mut(advance + f) &= mf;
+                *sieve.get_unchecked_mut(advance + g) &= mg;
+                *sieve.get_unchecked_mut(advance + h) &= mh;
+            }
+            advance += p;
+        }
+        let mut next = first;
+        let mut marked = 0;
+        while offsets[next] as usize + advance < len {
+            let index = offsets[next] as usize + advance;
+            sieve[index] &= super::WHEEL_MASKS[CLASS][next];
+            next = (next + 1) & 7;
+            marked += 1;
+        }
+        // The failed full-wheel condition guarantees at least one unmarked
+        // stream, so the tail never revisits a lane. The marked lanes are the
+        // cyclic prefix starting at first; add p only to those lanes.
+        debug_assert!(marked < 8);
+        let distances = _mm256_and_si256(
+            _mm256_sub_epi32(lanes, _mm256_set1_epi32(first as i32)),
+            seven,
+        );
+        let marked_lanes = _mm256_cmpgt_epi32(_mm256_set1_epi32(marked), distances);
+        let delta = (advance as u32).wrapping_sub(len as u32);
+        let adjusted = _mm256_add_epi32(
+            _mm256_add_epi32(original, _mm256_set1_epi32(delta as i32)),
+            _mm256_and_si256(marked_lanes, _mm256_set1_epi32(p as i32)),
+        );
+        // SAFETY: state.next provides 32 writable bytes. Intermediate vector
+        // subtraction wraps intentionally; every exposed next offset is < p.
+        unsafe { _mm256_storeu_si256(state.next.as_mut_ptr().cast(), adjusted) };
+        state.first = next as u8;
     }
 }
 
@@ -765,6 +834,20 @@ mod tests {
                             );
                             assert_eq!(actual.next, expected.next);
                             assert_eq!(actual.first, expected.first);
+                            let mut groups = DenseGroups::new();
+                            groups.activate(initial);
+                            let mut grouped = vec![255; len];
+                            groups.mark(&mut grouped);
+                            assert_eq!(grouped, b);
+                            let grouped_state = groups
+                                .groups
+                                .iter()
+                                .chain(groups.larger.iter())
+                                .flatten()
+                                .next()
+                                .unwrap();
+                            assert_eq!(grouped_state.next, expected.next);
+                            assert_eq!(grouped_state.first, expected.first);
                         }
                     }
                 }
