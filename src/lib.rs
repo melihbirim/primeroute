@@ -176,8 +176,15 @@ fn fill_short(low: usize, mut sieve: &mut [u8]) {
     }
 }
 
-// Expanded masks are prepared once for long requests; short requests retain
-// the compact cyclic fill to avoid paying for these allocations.
+// Long requests prepare one pre-sieve engine for the call. Fixed-size headers
+// retain the existing query-local stack storage without an extra allocation.
+#[allow(clippy::large_enum_variant)]
+enum PreparedPreSieve {
+    Expanded([Vec<u8>; 17]),
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    Compact,
+}
+
 fn repeat_pattern(pattern: &[u8], size: usize) -> Vec<u8> {
     let mut repeated = vec![0; size + pattern.len()];
     for chunk in repeated.chunks_mut(pattern.len()) {
@@ -907,7 +914,13 @@ fn sieve_segments_with_seeds(
         return;
     }
 
-    let expanded = (span >= 8 * 128 * 1024).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
+    let expanded = (span >= 8 * 128 * 1024).then(|| {
+        #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+        if x86::COMPACT_PRE_SIEVE && std::arch::is_x86_feature_detected!("avx2") {
+            return PreparedPreSieve::Compact;
+        }
+        PreparedPreSieve::Expanded(PATTERNS.map(|p| repeat_pattern(p, capacity)))
+    });
     let dense_limit = DENSE_PRIME_LIMIT.min(span);
     let mut primes = Vec::new();
     let mut medium = Vec::new();
@@ -950,10 +963,14 @@ fn sieve_segments_with_seeds(
     while low < total_bytes {
         let len = SEGMENT_SIZE.min(total_bytes - low);
         let sieve = &mut segment[..len];
-        if let Some(ref patterns) = expanded {
-            fill_expanded(low, sieve, patterns);
-        } else {
-            fill_segment(low, sieve);
+        match &expanded {
+            Some(PreparedPreSieve::Expanded(patterns)) => fill_expanded(low, sieve, patterns),
+            #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+            Some(PreparedPreSieve::Compact) => {
+                // SAFETY: Compact is created only after runtime AVX2 detection.
+                unsafe { x86::fill_compact(low, sieve) };
+            }
+            None => fill_segment(low, sieve),
         }
 
         // Activate each prime once, then keep all marking positions relative

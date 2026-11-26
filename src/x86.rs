@@ -7,6 +7,181 @@ const CACHE_BLOCK: usize = 32 * 1024;
 const VECTOR_STATE_ADVANCE: bool = false;
 const QUEUED_DENSE_MIN: usize = 8 * 1024;
 
+pub(super) const COMPACT_PRE_SIEVE: bool = true;
+const WIDE_PRE_SIEVE: bool = true;
+// Balance periods so each three-input pass keeps its cyclic tables in L1.
+static COMPACT_0: [u8; 23 * 167] = super::pre_sieve([23, 167]);
+static COMPACT_1: [u8; 13 * 17 * 19] = super::pre_sieve([13, 17, 19]);
+static COMPACT_2: [u8; 29 * 163] = super::pre_sieve([29, 163]);
+static COMPACT_3: [u8; 31 * 157] = super::pre_sieve([31, 157]);
+static COMPACT_4: [u8; 37 * 151] = super::pre_sieve([37, 151]);
+static COMPACT_5: [u8; 43 * 139] = super::pre_sieve([43, 139]);
+static COMPACT_6: [u8; 41 * 149] = super::pre_sieve([41, 149]);
+static COMPACT_7: [u8; 7 * 11 * 83] = super::pre_sieve([7, 11, 83]);
+static COMPACT_8: [u8; 47 * 137] = super::pre_sieve([47, 137]);
+static COMPACT_9: [u8; 61 * 113] = super::pre_sieve([61, 113]);
+static COMPACT_10: [u8; 53 * 131] = super::pre_sieve([53, 131]);
+static COMPACT_11: [u8; 67 * 109] = super::pre_sieve([67, 109]);
+static COMPACT_12: [u8; 59 * 127] = super::pre_sieve([59, 127]);
+static COMPACT_13: [u8; 73 * 103] = super::pre_sieve([73, 103]);
+static COMPACT_14: [u8; 71 * 107] = super::pre_sieve([71, 107]);
+static COMPACT_15: [u8; 79 * 101] = super::pre_sieve([79, 101]);
+static COMPACT_16: [u8; 89 * 97] = super::pre_sieve([89, 97]);
+const COMPACT_PATTERNS: [&[u8]; 17] = [
+    &COMPACT_0,
+    &COMPACT_1,
+    &COMPACT_2,
+    &COMPACT_3,
+    &COMPACT_4,
+    &COMPACT_5,
+    &COMPACT_6,
+    &COMPACT_7,
+    &COMPACT_8,
+    &COMPACT_9,
+    &COMPACT_10,
+    &COMPACT_11,
+    &COMPACT_12,
+    &COMPACT_13,
+    &COMPACT_14,
+    &COMPACT_15,
+    &COMPACT_16,
+];
+
+#[target_feature(enable = "avx2")]
+pub(super) unsafe fn fill_compact(low: usize, output: &mut [u8]) {
+    if WIDE_PRE_SIEVE && std::arch::is_x86_feature_detected!("avx512f") {
+        // SAFETY: AVX-512F detected; no BW operations are used.
+        unsafe { fill_compact512(low, output) };
+    } else {
+        // SAFETY: AVX2 is enabled for this entry point.
+        unsafe { fill_compact256(low, output) };
+    }
+}
+#[target_feature(enable = "avx2")]
+unsafe fn fill_compact256(low: usize, output: &mut [u8]) {
+    // SAFETY: callers enable AVX2; cyclic helpers split at every input wrap.
+    unsafe { compact_passes::<false>(low, output) };
+}
+#[target_feature(enable = "avx512f")]
+unsafe fn fill_compact512(low: usize, output: &mut [u8]) {
+    // SAFETY: callers enable AVX-512F; all 512-bit operations need only F.
+    unsafe { compact_passes::<true>(low, output) };
+}
+#[inline(always)]
+unsafe fn compact_passes<const WIDE: bool>(low: usize, output: &mut [u8]) {
+    let p = COMPACT_PATTERNS;
+    // SAFETY: the selected ISA is enabled by the caller, and groups have N inputs.
+    unsafe {
+        compact_cyclic::<3, true, WIDE>(low, output, p[..3].try_into().unwrap());
+        compact_cyclic::<3, false, WIDE>(low, output, p[3..6].try_into().unwrap());
+        compact_cyclic::<3, false, WIDE>(low, output, p[6..9].try_into().unwrap());
+        compact_cyclic::<3, false, WIDE>(low, output, p[9..12].try_into().unwrap());
+        compact_cyclic::<3, false, WIDE>(low, output, p[12..15].try_into().unwrap());
+        compact_cyclic::<2, false, WIDE>(low, output, p[15..].try_into().unwrap());
+    }
+}
+#[inline(always)]
+unsafe fn compact_cyclic<const N: usize, const INIT: bool, const WIDE: bool>(
+    low: usize,
+    mut output: &mut [u8],
+    patterns: [&[u8]; N],
+) {
+    let mut offsets: [usize; N] = std::array::from_fn(|i| low % patterns[i].len());
+    while !output.is_empty() {
+        let len = (0..N).fold(output.len(), |len, i| {
+            len.min(patterns[i].len() - offsets[i])
+        });
+        let inputs = std::array::from_fn(|i| &patterns[i][offsets[i]..offsets[i] + len]);
+        let (chunk, tail) = output.split_at_mut(len);
+        // SAFETY: every input has chunk.len() bytes; caller enables the chosen ISA.
+        unsafe {
+            if WIDE {
+                compact_combine512::<N, INIT>(chunk, inputs);
+            } else {
+                compact_combine256::<N, INIT>(chunk, inputs);
+            }
+        }
+        for i in 0..N {
+            offsets[i] += len;
+            if offsets[i] == patterns[i].len() {
+                offsets[i] = 0;
+            }
+        }
+        output = tail;
+    }
+}
+#[target_feature(enable = "avx2")]
+#[inline]
+unsafe fn compact_combine256<const N: usize, const INIT: bool>(
+    output: &mut [u8],
+    inputs: [&[u8]; N],
+) {
+    let vectors = output.len() / 32 * 32;
+    for offset in (0..vectors).step_by(32) {
+        // SAFETY: all slices contain offset + 32 bytes; AVX2 enabled.
+        unsafe {
+            let mut bits = if INIT {
+                _mm256_set1_epi8(-1)
+            } else {
+                _mm256_loadu_si256(output.as_ptr().add(offset).cast())
+            };
+            for input in inputs {
+                bits =
+                    _mm256_and_si256(bits, _mm256_loadu_si256(input.as_ptr().add(offset).cast()));
+            }
+            _mm256_storeu_si256(output.as_mut_ptr().add(offset).cast(), bits);
+        }
+    }
+    compact_tail::<N, INIT>(output, inputs, vectors);
+}
+#[target_feature(enable = "avx512f")]
+#[inline]
+unsafe fn compact_combine512<const N: usize, const INIT: bool>(
+    output: &mut [u8],
+    inputs: [&[u8]; N],
+) {
+    let vectors = output.len() / 64 * 64;
+    for offset in (0..vectors).step_by(64) {
+        // SAFETY: all slices contain offset + 64 bytes; only AVX-512F is used.
+        unsafe {
+            let mut bits = if INIT {
+                _mm512_set1_epi32(-1)
+            } else {
+                _mm512_loadu_si512(output.as_ptr().add(offset).cast())
+            };
+            let mut source = 0;
+            while source + 1 < N {
+                let a = _mm512_loadu_si512(inputs[source].as_ptr().add(offset).cast());
+                let b = _mm512_loadu_si512(inputs[source + 1].as_ptr().add(offset).cast());
+                bits = _mm512_ternarylogic_epi32::<0x80>(bits, a, b);
+                source += 2;
+            }
+            if source < N {
+                bits = _mm512_and_si512(
+                    bits,
+                    _mm512_loadu_si512(inputs[source].as_ptr().add(offset).cast()),
+                );
+            }
+            _mm512_storeu_si512(output.as_mut_ptr().add(offset).cast(), bits);
+        }
+    }
+    compact_tail::<N, INIT>(output, inputs, vectors);
+}
+#[inline]
+fn compact_tail<const N: usize, const INIT: bool>(
+    output: &mut [u8],
+    inputs: [&[u8]; N],
+    start: usize,
+) {
+    for offset in start..output.len() {
+        let mut bits = if INIT { 255 } else { output[offset] };
+        for input in inputs {
+            bits &= input[offset];
+        }
+        output[offset] = bits;
+    }
+}
+
 #[target_feature(enable = "avx2")]
 pub(super) unsafe fn rotate_offsets(offsets: &mut [u32; 8], first: usize) {
     let indices = _mm256_add_epi32(
@@ -650,6 +825,47 @@ fn mark_classes(states: &mut [super::SievingPrime], bitmap: &mut [u8]) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn balanced_compact_masks_match_original_tables_and_guard_bytes() {
+        if !std::arch::is_x86_feature_detected!("avx2") {
+            return;
+        }
+        for low in [0, 1, 3839, 10_000_003, usize::MAX / 30 - 131_072] {
+            for len in [
+                0, 1, 31, 32, 33, 63, 64, 65, 511, 4095, 32_767, 131_071, 524_288,
+            ] {
+                let mut expected = vec![0; len];
+                super::super::fill_segment(low, &mut expected);
+                let mut storage = vec![0xa5; 17 + len + 33];
+                // SAFETY: AVX2 checked and the output slice has exactly len bytes.
+                unsafe {
+                    fill_compact256(low, &mut storage[17..17 + len]);
+                }
+                assert_eq!(&storage[17..17 + len], expected);
+                assert!(
+                    storage[..17]
+                        .iter()
+                        .chain(storage[17 + len..].iter())
+                        .all(|&b| b == 0xa5)
+                );
+                if std::arch::is_x86_feature_detected!("avx512f") {
+                    storage.fill(0xa5);
+                    // SAFETY: AVX-512F checked; guards must remain unchanged.
+                    unsafe {
+                        fill_compact512(low, &mut storage[17..17 + len]);
+                    }
+                    assert_eq!(&storage[17..17 + len], expected);
+                    assert!(
+                        storage[..17]
+                            .iter()
+                            .chain(storage[17 + len..].iter())
+                            .all(|&b| b == 0xa5)
+                    );
+                }
+            }
+        }
+    }
 
     #[test]
     fn counts_match_scalar_for_unaligned_inputs_and_tails() {
