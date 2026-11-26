@@ -919,10 +919,15 @@ fn sieve_segments_with_seeds(
         return;
     }
 
-    let expanded = (span >= 8 * 128 * 1024).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
+    let grouped = span >= 8 * 128 * 1024;
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    let compact = grouped && x86::COMPACT_FILL && std::arch::is_x86_feature_detected!("avx2");
+    #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
+    let compact = false;
+    let expanded = (grouped && !compact).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
     let dense_limit = DENSE_PRIME_LIMIT.min(span);
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-    let dense_limit = if expanded.is_some() {
+    let dense_limit = if grouped {
         x86::DENSE_LIMIT.min(span)
     } else {
         dense_limit
@@ -960,7 +965,7 @@ fn sieve_segments_with_seeds(
     let mut window = 0;
     let mut active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-    let mut dense_groups = expanded.as_ref().map(|_| x86::DenseGroups::new());
+    let mut dense_groups = grouped.then(x86::DenseGroups::new);
     let mut medium_active = 0;
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
     let mut medium_groups: Option<x86::MediumGroups> = None;
@@ -968,11 +973,7 @@ fn sieve_segments_with_seeds(
     while low < total_bytes {
         let len = SEGMENT_SIZE.min(total_bytes - low);
         let sieve = &mut segment[..len];
-        if let Some(ref patterns) = expanded {
-            fill_expanded(low, sieve, patterns);
-        } else {
-            fill_segment(low, sieve);
-        }
+        fill_window(low, sieve, expanded.as_ref(), compact);
 
         // Activate each prime once, then keep all marking positions relative
         // to the current window. Inactive dense offsets refer to the first window;
@@ -1005,7 +1006,7 @@ fn sieve_segments_with_seeds(
         for state in &mut medium[medium_active..next_medium_active] {
             state.next -= low;
             #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-            if expanded.is_some() {
+            if grouped {
                 medium_groups
                     .get_or_insert_with(x86::MediumGroups::new)
                     .activate(state);
@@ -1066,6 +1067,22 @@ fn sieve_segments_with_seeds(
         visit(low, sieve);
         low += len;
         window += 1;
+    }
+}
+
+fn fill_window(low: usize, sieve: &mut [u8], expanded: Option<&[Vec<u8>; 17]>, compact: bool) {
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if compact {
+        // SAFETY: compact is set only after runtime AVX2 detection.
+        unsafe { x86::fill_compact(low, sieve) };
+        return;
+    }
+    #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
+    let _ = compact;
+    if let Some(patterns) = expanded {
+        fill_expanded(low, sieve, patterns);
+    } else {
+        fill_segment(low, sieve);
     }
 }
 
