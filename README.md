@@ -1,5 +1,7 @@
 # primeroute
 
+Version **0.1.1**. See the [release notes](CHANGELOG.md).
+
 A single-threaded Rust library and CLI for counting primes, listing primes in
 ranges, and finding the next prime after each number in a batch.
 
