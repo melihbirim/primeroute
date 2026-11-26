@@ -5,6 +5,7 @@ use std::arch::x86_64::*;
 pub(super) const SEGMENT_BYTES: usize = 128 * 1024;
 pub(super) const DENSE_LIMIT: usize = 128 * 1024;
 const CACHE_BLOCK: usize = 32 * 1024;
+const CACHE_DENSE_LIMIT: usize = 32 * 1024;
 const FILL_GROUP: usize = 6;
 pub(super) const AVX_FILL: bool = false;
 pub(super) const COMPACT_FILL: bool = true;
@@ -356,18 +357,25 @@ struct DensePrime {
 }
 pub(super) struct DenseGroups {
     groups: [Vec<DensePrime>; 8],
+    larger: [Vec<DensePrime>; 8],
 }
 impl DenseGroups {
     pub(super) fn new() -> Self {
         Self {
             groups: std::array::from_fn(|_| Vec::new()),
+            larger: std::array::from_fn(|_| Vec::new()),
         }
     }
     pub(super) fn activate(&mut self, state: super::SievingPrime) {
         let class = super::RESIDUE_INDEX[state.prime as usize % 30];
         let next = state.next[state.first as usize];
         debug_assert!(next <= DENSE_OFFSET_MASK);
-        self.groups[class].push(DensePrime {
+        let groups = if state.prime as usize <= CACHE_DENSE_LIMIT {
+            &mut self.groups
+        } else {
+            &mut self.larger
+        };
+        groups[class].push(DensePrime {
             quotient: state.prime / 30,
             next_wheel: next | ((state.first as u32) << 29),
         });
@@ -383,6 +391,16 @@ impl DenseGroups {
             mark_dense_group::<6>(&mut self.groups[6], bytes);
             mark_dense_group::<7>(&mut self.groups[7], bytes);
         }
+        // Few-hit primes advance once per outer window. Compact in-place
+        // states avoid queue moves while the small-prime work stays in L1.
+        mark_dense_group::<0>(&mut self.larger[0], sieve);
+        mark_dense_group::<1>(&mut self.larger[1], sieve);
+        mark_dense_group::<2>(&mut self.larger[2], sieve);
+        mark_dense_group::<3>(&mut self.larger[3], sieve);
+        mark_dense_group::<4>(&mut self.larger[4], sieve);
+        mark_dense_group::<5>(&mut self.larger[5], sieve);
+        mark_dense_group::<6>(&mut self.larger[6], sieve);
+        mark_dense_group::<7>(&mut self.larger[7], sieve);
     }
 }
 #[inline(never)]
@@ -1122,8 +1140,10 @@ mod tests {
                 let mut states: Vec<_> = groups
                     .groups
                     .iter()
+                    .chain(groups.larger.iter())
                     .enumerate()
                     .flat_map(|(class, states)| {
+                        let class = class % 8;
                         states.iter().map(move |s| {
                             (
                                 30 * s.quotient + RESIDUES[class] as u32,
