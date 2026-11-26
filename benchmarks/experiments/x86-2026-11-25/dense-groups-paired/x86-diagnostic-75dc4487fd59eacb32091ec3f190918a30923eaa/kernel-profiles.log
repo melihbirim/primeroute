@@ -1,0 +1,162 @@
+
+running 4 tests
+test x86::tests::profile_dense ... dense start=1000000000 round=0 variant=0 ns=345489
+dense start=1000000000 round=0 variant=1 ns=347692
+dense start=1000000000 round=0 variant=2 ns=354604
+dense start=1000000000 round=0 variant=3 ns=369258
+dense start=1000000000 round=1 variant=1 ns=347539
+dense start=1000000000 round=1 variant=2 ns=354231
+dense start=1000000000 round=1 variant=3 ns=360441
+dense start=1000000000 round=1 variant=0 ns=345223
+dense start=1000000000 round=2 variant=2 ns=356667
+dense start=1000000000 round=2 variant=3 ns=363529
+dense start=1000000000 round=2 variant=0 ns=345668
+dense start=1000000000 round=2 variant=1 ns=347331
+dense start=1000000000 round=3 variant=3 ns=360914
+dense start=1000000000 round=3 variant=0 ns=343639
+dense start=1000000000 round=3 variant=1 ns=347509
+dense start=1000000000 round=3 variant=2 ns=353821
+dense start=1000000000 round=4 variant=0 ns=345061
+dense start=1000000000 round=4 variant=1 ns=346702
+dense start=1000000000 round=4 variant=2 ns=353723
+dense start=1000000000 round=4 variant=3 ns=358915
+dense start=1000000000 round=5 variant=1 ns=348474
+dense start=1000000000 round=5 variant=2 ns=353957
+dense start=1000000000 round=5 variant=3 ns=362527
+dense start=1000000000 round=5 variant=0 ns=343856
+dense start=1000000000 round=6 variant=2 ns=353879
+dense start=1000000000 round=6 variant=3 ns=361302
+dense start=1000000000 round=6 variant=0 ns=344722
+dense start=1000000000 round=6 variant=1 ns=346426
+dense start=1000000000000 round=0 variant=0 ns=496682
+dense start=1000000000000 round=0 variant=1 ns=514377
+dense start=1000000000000 round=0 variant=2 ns=737617
+dense start=1000000000000 round=0 variant=3 ns=1040756
+dense start=1000000000000 round=1 variant=1 ns=515220
+dense start=1000000000000 round=1 variant=2 ns=737493
+dense start=1000000000000 round=1 variant=3 ns=1033900
+dense start=1000000000000 round=1 variant=0 ns=496552
+dense start=1000000000000 round=2 variant=2 ns=741980
+dense start=1000000000000 round=2 variant=3 ns=1033569
+dense start=1000000000000 round=2 variant=0 ns=497777
+dense start=1000000000000 round=2 variant=1 ns=514673
+dense start=1000000000000 round=3 variant=3 ns=1028764
+dense start=1000000000000 round=3 variant=0 ns=499179
+dense start=1000000000000 round=3 variant=1 ns=512993
+dense start=1000000000000 round=3 variant=2 ns=737741
+dense start=1000000000000 round=4 variant=0 ns=497932
+dense start=1000000000000 round=4 variant=1 ns=512322
+dense start=1000000000000 round=4 variant=2 ns=737668
+dense start=1000000000000 round=4 variant=3 ns=1032500
+dense start=1000000000000 round=5 variant=1 ns=514913
+dense start=1000000000000 round=5 variant=2 ns=736988
+dense start=1000000000000 round=5 variant=3 ns=1028123
+dense start=1000000000000 round=5 variant=0 ns=496489
+dense start=1000000000000 round=6 variant=2 ns=737585
+dense start=1000000000000 round=6 variant=3 ns=1029880
+dense start=1000000000000 round=6 variant=0 ns=496266
+dense start=1000000000000 round=6 variant=1 ns=513871
+ok
+test x86::tests::profile_grouped_dense ... grouped_dense start=1000000000 round=0 variant=0 ns=351042
+grouped_dense start=1000000000 round=0 variant=1 ns=363928
+grouped_dense start=1000000000 round=0 variant=2 ns=335334
+grouped_dense start=1000000000 round=1 variant=1 ns=364176
+grouped_dense start=1000000000 round=1 variant=2 ns=334217
+grouped_dense start=1000000000 round=1 variant=0 ns=350836
+grouped_dense start=1000000000 round=2 variant=2 ns=334770
+grouped_dense start=1000000000 round=2 variant=0 ns=350147
+grouped_dense start=1000000000 round=2 variant=1 ns=364869
+grouped_dense start=1000000000 round=3 variant=0 ns=350247
+grouped_dense start=1000000000 round=3 variant=1 ns=363242
+grouped_dense start=1000000000 round=3 variant=2 ns=338022
+grouped_dense start=1000000000 round=4 variant=1 ns=364749
+grouped_dense start=1000000000 round=4 variant=2 ns=333735
+grouped_dense start=1000000000 round=4 variant=0 ns=350841
+grouped_dense start=1000000000 round=5 variant=2 ns=337092
+grouped_dense start=1000000000 round=5 variant=0 ns=351590
+grouped_dense start=1000000000 round=5 variant=1 ns=363947
+grouped_dense start=1000000000 round=6 variant=0 ns=350032
+grouped_dense start=1000000000 round=6 variant=1 ns=363866
+grouped_dense start=1000000000 round=6 variant=2 ns=334274
+grouped_dense start=1000000000000 round=0 variant=0 ns=497291
+grouped_dense start=1000000000000 round=0 variant=1 ns=731512
+grouped_dense start=1000000000000 round=0 variant=2 ns=699192
+grouped_dense start=1000000000000 round=1 variant=1 ns=738141
+grouped_dense start=1000000000000 round=1 variant=2 ns=699799
+grouped_dense start=1000000000000 round=1 variant=0 ns=496880
+grouped_dense start=1000000000000 round=2 variant=2 ns=699190
+grouped_dense start=1000000000000 round=2 variant=0 ns=498613
+grouped_dense start=1000000000000 round=2 variant=1 ns=730158
+grouped_dense start=1000000000000 round=3 variant=0 ns=497364
+grouped_dense start=1000000000000 round=3 variant=1 ns=730029
+grouped_dense start=1000000000000 round=3 variant=2 ns=699164
+grouped_dense start=1000000000000 round=4 variant=1 ns=729840
+grouped_dense start=1000000000000 round=4 variant=2 ns=699601
+grouped_dense start=1000000000000 round=4 variant=0 ns=496673
+grouped_dense start=1000000000000 round=5 variant=2 ns=700847
+grouped_dense start=1000000000000 round=5 variant=0 ns=496496
+grouped_dense start=1000000000000 round=5 variant=1 ns=730801
+grouped_dense start=1000000000000 round=6 variant=0 ns=495770
+grouped_dense start=1000000000000 round=6 variant=1 ns=731735
+grouped_dense start=1000000000000 round=6 variant=2 ns=699198
+ok
+test x86::tests::profile_kernels ... decoder start=1000000000 round=0 variant=0 ns=43709
+decoder start=1000000000 round=0 variant=1 ns=25474
+decoder start=1000000000 round=1 variant=1 ns=25274
+decoder start=1000000000 round=1 variant=0 ns=43392
+decoder start=1000000000 round=2 variant=0 ns=43157
+decoder start=1000000000 round=2 variant=1 ns=25294
+decoder start=1000000000 round=3 variant=1 ns=25242
+decoder start=1000000000 round=3 variant=0 ns=43328
+decoder start=1000000000 round=4 variant=0 ns=43558
+decoder start=1000000000 round=4 variant=1 ns=25271
+decoder start=1000000000 round=5 variant=1 ns=25212
+decoder start=1000000000 round=5 variant=0 ns=43637
+decoder start=1000000000 round=6 variant=0 ns=43630
+decoder start=1000000000 round=6 variant=1 ns=25422
+decoder start=1000000000 round=7 variant=1 ns=25275
+decoder start=1000000000 round=7 variant=0 ns=43499
+decoder start=1000000000 round=8 variant=0 ns=43503
+decoder start=1000000000 round=8 variant=1 ns=25287
+decoder start=1000000000000 round=0 variant=0 ns=39127
+decoder start=1000000000000 round=0 variant=1 ns=20710
+decoder start=1000000000000 round=1 variant=1 ns=20636
+decoder start=1000000000000 round=1 variant=0 ns=40225
+decoder start=1000000000000 round=2 variant=0 ns=39567
+decoder start=1000000000000 round=2 variant=1 ns=20593
+decoder start=1000000000000 round=3 variant=1 ns=20587
+decoder start=1000000000000 round=3 variant=0 ns=39419
+decoder start=1000000000000 round=4 variant=0 ns=39602
+decoder start=1000000000000 round=4 variant=1 ns=20613
+decoder start=1000000000000 round=5 variant=1 ns=20601
+decoder start=1000000000000 round=5 variant=0 ns=39834
+decoder start=1000000000000 round=6 variant=0 ns=40326
+decoder start=1000000000000 round=6 variant=1 ns=20597
+decoder start=1000000000000 round=7 variant=1 ns=20583
+decoder start=1000000000000 round=7 variant=0 ns=38918
+decoder start=1000000000000 round=8 variant=0 ns=39986
+decoder start=1000000000000 round=8 variant=1 ns=20661
+ok
+test x86::tests::profile_medium ... medium round=0 variant=0 ns=514932
+medium round=0 variant=1 ns=270257
+medium round=1 variant=1 ns=257547
+medium round=1 variant=0 ns=513077
+medium round=2 variant=0 ns=513780
+medium round=2 variant=1 ns=258745
+medium round=3 variant=1 ns=257243
+medium round=3 variant=0 ns=515638
+medium round=4 variant=0 ns=513223
+medium round=4 variant=1 ns=257144
+medium round=5 variant=1 ns=256594
+medium round=5 variant=0 ns=511686
+medium round=6 variant=0 ns=513337
+medium round=6 variant=1 ns=257230
+ok
+
+test result: ok. 4 passed; 0 failed; 0 ignored; 0 measured; 34 filtered out; finished in 2.46s
+
+
+running 0 tests
+
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+

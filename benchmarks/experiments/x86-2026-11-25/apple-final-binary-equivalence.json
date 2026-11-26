@@ -1,0 +1,100 @@
+{
+  "status": "verified",
+  "checked_at_utc": "2026-11-25T22:19:40.789335+00:00",
+  "measurement_source_commit": "d41e7d0cfab6382249be57196b2e268ff10b0e3e",
+  "final_source_commit": "ecc12a2c4a3d1b864d67bc8c0f6ad75d2c5803f6",
+  "measured_report": "apple-hybrid-paired-results.json",
+  "measured_report_sha256": "7a4ccce7b14196b77960b2a4e28422939b2fd131247468e18a1885aad8892f07",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "rustc": "rustc 1.94.1 (e408947bf 2026-03-25) (Homebrew)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: aarch64-apple-darwin\nrelease: 1.94.1\nLLVM version: 21.1.8\n",
+  "final_source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "ac46a78f2b1cbaa86e0f346f8f4cde1a21e5799380dcf7f5f0bca812a6ddccc4",
+    "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "src/x86.rs": "7502f8a1662b3607e2c476491b266c7d0aef18975ae9d27e731d5eec4cc34b5e"
+  },
+  "build_commands": [
+    [
+      "cargo",
+      "build",
+      "--release",
+      "--locked",
+      "--bin",
+      "primeroute",
+      "--example",
+      "range_bench"
+    ],
+    [
+      "cargo",
+      "build",
+      "--offline",
+      "--release",
+      "--locked",
+      "--manifest-path",
+      "benchmarks/primal/Cargo.toml",
+      "--bins"
+    ]
+  ],
+  "build_environment": {
+    "RUSTFLAGS": "unset, portable target",
+    "CARGO_HOME_for_helper_build": "/private/tmp/prime-numbers-benchmark-cargo"
+  },
+  "binary_hashes": {
+    "cpp": {
+      "measured_sha256": "39b671e1368a94877eda4346f7de4fc88ea0e18e6bb25ecd20e3847cc5c96118",
+      "final_build_sha256": "39b671e1368a94877eda4346f7de4fc88ea0e18e6bb25ecd20e3847cc5c96118"
+    },
+    "cpp_range": {
+      "measured_sha256": "20345cf34de0e653305863911e2e79b6d345b5437f8708b40e0b858ab14516d2",
+      "final_build_sha256": "20345cf34de0e653305863911e2e79b6d345b5437f8708b40e0b858ab14516d2"
+    },
+    "cpp_batch": {
+      "measured_sha256": "8f3210c435136020193ff630d436091c7ec71ee41fb71ec46a25752ed1c3b482",
+      "final_build_sha256": "8f3210c435136020193ff630d436091c7ec71ee41fb71ec46a25752ed1c3b482"
+    },
+    "primal_count": {
+      "measured_sha256": "9a08dcd85cd9c2a0440a24a8a1723f9a6b5afcd564f88e7570b6d13948ea82e3",
+      "final_build_sha256": "9a08dcd85cd9c2a0440a24a8a1723f9a6b5afcd564f88e7570b6d13948ea82e3"
+    },
+    "primal_range": {
+      "measured_sha256": "b47776d85ca0f1996041ee19f921a1f5be462e75674cfabed4ce9e709cf29943",
+      "final_build_sha256": "b47776d85ca0f1996041ee19f921a1f5be462e75674cfabed4ce9e709cf29943"
+    },
+    "primal_batch": {
+      "measured_sha256": "be2bf0347d63baafb8a692e6b941f62cd8f3b9b6539dc7d4f1f4d09cb56174ec",
+      "final_build_sha256": "be2bf0347d63baafb8a692e6b941f62cd8f3b9b6539dc7d4f1f4d09cb56174ec"
+    },
+    "baseline_count": {
+      "measured_sha256": "b9023a9fb02565c46145f72a7812a6036ab54681b651a84759d72d5f655699df",
+      "final_build_sha256": "b9023a9fb02565c46145f72a7812a6036ab54681b651a84759d72d5f655699df"
+    },
+    "baseline_range": {
+      "measured_sha256": "98eb488f0bb8d362bea455348717e1bbec75f2419b8bcf184db8a739f8b4f353",
+      "final_build_sha256": "98eb488f0bb8d362bea455348717e1bbec75f2419b8bcf184db8a739f8b4f353"
+    },
+    "baseline_batch": {
+      "measured_sha256": "662b5f8a1f3334cd7cbdb6474ff4819b57c2c98291e020dc3cc3c606f0c86311",
+      "final_build_sha256": "662b5f8a1f3334cd7cbdb6474ff4819b57c2c98291e020dc3cc3c606f0c86311"
+    },
+    "ours_count": {
+      "measured_sha256": "da70b159aeef9ec53502b03f84bbea9e498d7f5485baa320b24e55f64595f643",
+      "final_build_sha256": "da70b159aeef9ec53502b03f84bbea9e498d7f5485baa320b24e55f64595f643"
+    },
+    "ours_range": {
+      "measured_sha256": "71864a8fcf87e3900d74cf2e3aa4d2db038029ff945c72fcfc0a8729e171d5a5",
+      "final_build_sha256": "71864a8fcf87e3900d74cf2e3aa4d2db038029ff945c72fcfc0a8729e171d5a5"
+    },
+    "ours_batch": {
+      "measured_sha256": "be2bf0347d63baafb8a692e6b941f62cd8f3b9b6539dc7d4f1f4d09cb56174ec",
+      "final_build_sha256": "be2bf0347d63baafb8a692e6b941f62cd8f3b9b6539dc7d4f1f4d09cb56174ec"
+    }
+  },
+  "explanation": "The short-request fallback changes are cfg-gated to x86. After rebuilding the final source on ARM, every executable used in the measured M2 suite is byte-for-byte identical. The earlier raw source hashes are preserved, not replaced.",
+  "additional_measured_reports": {
+    "apple-short-results.json": "499d226efa1d79f7a0472d0364bab255afcb77835da4adf32aec1a4f04da3140",
+    "apple-holdout-results.json": "c61eaa61868999fbb37b83474cd1c0dd94c386d6edd22f5fb5d8cb0e38a63ca7",
+    "apple-short-confirmation-results.json": "065c5189fab5c5770e6f14ca8068160f7980107916df4798255c18d0f664efff"
+  }
+}

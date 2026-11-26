@@ -27,8 +27,16 @@ jobs:
       - name: Rust toolchain
         run: rustup toolchain install "$RUST_VERSION" --profile minimal -c clippy,rustfmt && rustup default "$RUST_VERSION"
       - uses: Swatinem/rust-cache@v2
+        with:
+          workspaces: |
+            .
+            benchmarks/primal
       - run: cargo fmt --check
+      - run: cargo fmt --manifest-path benchmarks/primal/Cargo.toml --check
       - run: cargo clippy --all-targets --locked -- -D warnings
+      - run: cargo clippy --manifest-path benchmarks/primal/Cargo.toml --all-targets --locked -- -D warnings
+      - name: Benchmark summary regression tests
+        run: python3 -m unittest discover -s benchmarks -p 'test_*.py'
       - run: cargo test --locked
       - run: cargo test --release --locked
 

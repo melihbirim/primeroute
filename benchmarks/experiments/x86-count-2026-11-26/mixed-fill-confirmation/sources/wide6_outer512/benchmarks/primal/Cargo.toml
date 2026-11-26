@@ -1,0 +1,13 @@
+[package]
+name = "primal-benchmark"
+version = "0.1.0"
+edition = "2024"
+publish = false
+
+[dependencies]
+primal = "=0.3.3"
+primeroute = { path = "../.." }
+
+[profile.release]
+lto = true
+codegen-units = 1

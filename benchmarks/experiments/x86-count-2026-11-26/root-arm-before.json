@@ -1,0 +1,17 @@
+{
+  "ours_count": {
+    "path": "/Users/melihbirim/code/prime-numbers/target/release/primeroute",
+    "sha256": "55cc5e1184e16d63882f28b2d0238e465c148ce8b14941db9207ccd6a4c67898",
+    "matches_previous_measured_binary": true
+  },
+  "ours_range": {
+    "path": "/Users/melihbirim/code/prime-numbers/target/release/examples/range_bench",
+    "sha256": "9cfca0e913c32e54d6ac59d39fc331037128b3804d3595676e6930699080b3ab",
+    "matches_previous_measured_binary": true
+  },
+  "ours_batch": {
+    "path": "/Users/melihbirim/code/prime-numbers/benchmarks/primal/target/release/batch_next",
+    "sha256": "1902958337b1f677bffc66a41f4fdbd772ddf6a461ae141f162fef1f2cf1727a",
+    "matches_previous_measured_binary": true
+  }
+}

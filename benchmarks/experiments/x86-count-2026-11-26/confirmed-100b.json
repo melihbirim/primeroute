@@ -1,0 +1,145 @@
+[
+  {
+    "report": "canonical-confirmation/paired-results.json",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "candidate": "canonical16_32",
+    "baseline_ms": 17859.733858,
+    "ours_ms": 19308.752454,
+    "cpp_best_ms": 15188.45538,
+    "primal_ms": 32420.054248,
+    "change_percent": 8.113326925926923,
+    "vs_cpp": 1.2712782156522358
+  },
+  {
+    "report": "compact-confirmation/paired-results.json",
+    "cpu": "Intel(R) Xeon(R) 6973P-C",
+    "candidate": "wide8_outer512",
+    "baseline_ms": 13833.45492,
+    "ours_ms": 12011.577336,
+    "cpp_best_ms": 11232.464621,
+    "primal_ms": 23160.126102,
+    "change_percent": -13.170083645308184,
+    "vs_cpp": 1.0693625790321553
+  },
+  {
+    "report": "cycle-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "candidate": "compact16",
+    "baseline_ms": 20044.83751,
+    "ours_ms": 20476.255039,
+    "cpp_best_ms": 15469.785047,
+    "primal_ms": 30905.663887,
+    "change_percent": 2.152262540341243,
+    "vs_cpp": 1.3236289306405642
+  },
+  {
+    "report": "first-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "candidate": "fill17",
+    "baseline_ms": 14509.376076,
+    "ours_ms": 14821.645009,
+    "cpp_best_ms": 11285.442285,
+    "primal_ms": 26141.706416,
+    "change_percent": 2.1521871882315136,
+    "vs_cpp": 1.3133419705402358
+  },
+  {
+    "report": "hybrid-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 7763 64-Core Processor",
+    "candidate": "hybrid32_outer512",
+    "baseline_ms": 18948.664519,
+    "ours_ms": 17824.095612,
+    "cpp_best_ms": 15195.601713,
+    "primal_ms": 30689.722404,
+    "change_percent": -5.934818814657805,
+    "vs_cpp": 1.1729772830747003
+  },
+  {
+    "report": "medium-confirmation/paired-results.json",
+    "cpu": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz",
+    "candidate": "queue8",
+    "baseline_ms": 16558.191907,
+    "ours_ms": 15204.980136,
+    "cpp_best_ms": 13517.368764,
+    "primal_ms": 31415.639348,
+    "change_percent": -8.172460970378825,
+    "vs_cpp": 1.1248476239321452
+  },
+  {
+    "report": "medium-window-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "candidate": "queue8_outer512",
+    "baseline_ms": 13715.298993,
+    "ours_ms": 11019.169332,
+    "cpp_best_ms": 10724.822937,
+    "primal_ms": 24838.782373,
+    "change_percent": -19.65782636146721,
+    "vs_cpp": 1.0274453384199491
+  },
+  {
+    "report": "mixed-fill-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "candidate": "wide8_oldpasses_outer512",
+    "baseline_ms": 13717.629077,
+    "ours_ms": 10753.563857,
+    "cpp_best_ms": 10695.358754,
+    "primal_ms": 24958.687713,
+    "change_percent": -21.60770788714337,
+    "vs_cpp": 1.0054420898203373
+  },
+  {
+    "report": "overlap-confirmation/paired-results.json",
+    "cpu": "INTEL(R) XEON(R) PLATINUM 8573C",
+    "candidate": "compact8_outer512",
+    "baseline_ms": 18019.747662,
+    "ours_ms": 17121.465816,
+    "cpp_best_ms": 15275.950362,
+    "primal_ms": 32744.881745,
+    "change_percent": -4.984985710395362,
+    "vs_cpp": 1.1208118257958504
+  },
+  {
+    "report": "statevec-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "candidate": "vector48",
+    "baseline_ms": 13703.170035,
+    "ours_ms": 13559.396181,
+    "cpp_best_ms": 10737.795779,
+    "primal_ms": 24783.353728,
+    "change_percent": -1.0492014156781138,
+    "vs_cpp": 1.262772775723508
+  },
+  {
+    "report": "streams-confirmation/paired-results.json",
+    "cpu": "Intel(R) Xeon(R) 6975P-C",
+    "candidate": "hybrid32_dense256_outer512",
+    "baseline_ms": 14384.036426,
+    "ours_ms": 15331.984839,
+    "cpp_best_ms": 11637.689215,
+    "primal_ms": 24655.305946,
+    "change_percent": 6.590280954006245,
+    "vs_cpp": 1.3174423681325296
+  },
+  {
+    "report": "tail-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 9V45 96-Core Processor",
+    "candidate": "tail48",
+    "baseline_ms": 9734.251028,
+    "ours_ms": 11590.007846,
+    "cpp_best_ms": 7631.714268,
+    "primal_ms": 20889.911374,
+    "change_percent": 19.064197262450122,
+    "vs_cpp": 1.5186637548259951
+  },
+  {
+    "report": "window-confirmation/paired-results.json",
+    "cpu": "AMD EPYC 9V74 80-Core Processor",
+    "candidate": "hybrid32_dense256_outer1024",
+    "baseline_ms": 13702.555837,
+    "ours_ms": 13463.291756,
+    "cpp_best_ms": 10742.539954,
+    "primal_ms": 24733.098671,
+    "change_percent": -1.7461273929198828,
+    "vs_cpp": 1.2532689488380189
+  }
+]

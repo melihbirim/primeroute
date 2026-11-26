@@ -85,6 +85,10 @@ covers the options and routing policy.
 **25 November 2026. Apple M2 Pro. One thread.** Compared with C++ primesieve
 12.18 and Rust primal 0.3.3. All tables show medians.
 
+These are the original frozen M2 measurements. The current code has separate
+[100-billion platform results](benchmarks/X86_COUNT_100B.md). The earlier
+[platform report](benchmarks/X86.md) remains available with its original data.
+
 ### Short ranges
 
 Each interval contains one million numbers. Times are milliseconds per fresh
@@ -163,10 +167,58 @@ a second query seed, direct/sieve controls and reproduction commands.
 These results cover one ARM machine. Wider ranges and some high-start list
 queries still favor primesieve. Other CPUs need their own measurements.
 
-On x86-64 (GitHub Linux runner, one thread) primeroute is currently slower than
-primesieve in most cases: about 1.7–1.9× for counting and up to 2× for lists.
-The speed-ups are NEON-only and tuned on Apple Silicon. Batch queries with
-isolated inputs still win. CI benchmarks every commit on both platforms.
+### Current platform checks — 26 November
+
+At **100 billion**, with one thread and complete interval sieving:
+
+| CPU | Previous Rust | Current Rust | primesieve | primal |
+| --- | ---: | ---: | ---: | ---: |
+| AMD EPYC 9V74 VM | 13.718 s | 10.754 s | 10.695 s | 24.959 s |
+| Apple M2 Pro | 8.982 s | 8.992 s | 9.730 s | 23.924 s |
+
+Rust counting improves **21.6%** on x86. It remains **0.54% slower than
+primesieve**, within the shared 3% tie band. We have not beaten primesieve
+at 100 billion on x86. C++ gets the fastest measured median of default, 256 KiB and
+1024 KiB settings. The M2 retains its 100-billion win, taking **7.6% less time**
+than primesieve.
+
+The Linux 26-case suite has **10 wins, 2 ties and 14 losses** against primesieve,
+and **26/26 wins against primal**. Fourteen cases improve against the previous
+Rust, eleven tie, and one scattered batch regresses by 7.5% while retaining its
+C++ win. M2 has **19 wins, 3 ties and 4 losses**, and **26/26 wins against primal**.
+The final short checks retain **24/24** wins and the unaligned holdout **19/24**.
+
+The [report](benchmarks/X86_COUNT_100B.md) includes the remaining losses, a
+borderline ARM batch repeat, every rejected experiment, source identity and raw
+samples. Original benchmark results and hashes remain unchanged.
+
+### Earlier platform checks — 25–26 November
+
+The tables above retain the original M2 measurements and their original hashes.
+The earlier [platform report](benchmarks/X86.md) measures revision `4daa474`
+against its preserved baseline, primesieve and primal. At **100 billion**, one thread:
+
+| CPU | Previous Rust | Current Rust | primesieve | primal |
+| --- | ---: | ---: | ---: | ---: |
+| AMD EPYC 9V74 VM, AVX2 | 22.883 s | 17.668 s | 13.887 s | 31.934 s |
+| Apple M2 Pro | 9.385 s | 9.375 s | 10.369 s | 24.794 s |
+
+On x86, counting improves 22–34% and range listing improves 33–46% against the
+baseline. Primesieve still leads most full-sieve workloads. The paired 26-case
+suite gives Rust **6 wins, 1 tie and 19 losses** against primesieve, and **25/26
+wins against primal**. The one-billion count is within the 3% tie band.
+
+The M2 retains all twenty baseline wins: **20 wins, 2 ties and 4 losses** against
+primesieve, and **26/26 wins against primal**. Final short checks retain **24/24**
+and the unaligned holdout **19/24**. A few M2 cases are modestly slower than the
+baseline; the report lists them.
+
+Main paired measurements were made on 25 November; final M2 short checks on
+26 November. These are separate experiments with their own hashes. The
+[CI workflow](.github/workflows/benchmark.yml) runs a reduced benchmark suite
+of twenty cases on both platforms for pushes and pull requests. Its total is
+different from the 26-case paired suite. Shared runners are useful for
+finding regressions; close timings need repeated measurements.
 
 ## How it works
 
@@ -179,7 +231,8 @@ Larger candidates use Montgomery arithmetic. Checked increments handle the
 end of the integer range.
 
 **Range sieving.** Store eight candidates per byte using a mod-30 bitmap.
-Process windows of up to 128 KiB. Static patterns remove factors 7 through 167.
+Process windows of up to 128 KiB on the portable path and 512 KiB on x86-64.
+Static patterns remove factors 7 through 167.
 Dense primes use eight marking streams. Medium primes use rotating wheel steps.
 Large primes wait in buckets until the next window they hit.
 
@@ -188,13 +241,26 @@ using fixed seed metadata and exact integer reciprocal corrections. On Apple
 Silicon, NEON table lookups rotate the streams into increasing order. Final-window
 marking discards state updates that no later window will use.
 
-**Long requests.** Prepare expanded masks once when the request spans at least
-eight windows. The prepared set is about 2.4 MB. Reuse it across the request.
-Counting uses NEON population counts where supported. List and seed decoding
-also use NEON. Portable fallbacks remain.
+**Long requests.** The portable path prepares about 2.4 MB of expanded masks
+once per long call. On AVX2-capable x86 CPUs, balanced cyclic tables use 108,497
+bytes of static pattern data and avoid those expanded allocations. Runtime
+detection can also select AVX-512F filling. Overlapping final vector stores use
+idempotent AND to avoid scalar cleanup at most pattern boundaries.
+
+Counting and decoding retain NEON on Apple Silicon. On x86-64, runtime detection
+selects AVX2 population counts, stream rotation and list decoding, with POPCNT
+and portable alternatives. Default builds require no explicit CPU flag.
+
+The x86 long-range path marks primes through 8,192 in 32 KiB chunks. Larger
+active primes use compact wheel queues and eight shared class kernels, crossing
+off eight multiples per full cycle. Outer windows are 512 KiB. ARM marking,
+NEON and router algorithms retain their existing paths. Short calls avoid the
+extra grouping setup.
 
 Batch sieve groups read answers directly from the bitmap and share one seed
-table per call. They do not materialize the full interval prime list.
+table per call. Roots through 2²⁰ copy a prefix of the existing static seed
+metadata; larger tables are generated for the call. They do not materialize
+the full interval prime list.
 
 ## Tradeoffs and limits
 
@@ -231,11 +297,18 @@ strategy and limits.
 cargo test --locked
 cargo test --release --locked
 cargo fmt --check
-cargo clippy --all-targets -- -D warnings
+cargo fmt --manifest-path benchmarks/primal/Cargo.toml --check
+cargo clippy --all-targets --locked -- -D warnings
+cargo clippy --manifest-path benchmarks/primal/Cargo.toml --all-targets --locked -- -D warnings
+python3 -m unittest discover -s benchmarks -p 'test_*.py'
 ```
 
-All **28 tests** pass in debug and release on the measured ARM machine.
+All **29 tests** pass in debug and release on the measured ARM machine.
+The native x86 jobs pass **38 correctness tests** in both profiles; four ignored
+kernel profiles run separately in the experiment workflow.
 Formatting and Clippy pass for the main crate and benchmark crate.
+Summary regression tests check threshold boundaries and consistent win totals
+across count, range and batch reports.
 
 Coverage includes independent sieve comparisons, known counts, deterministic
 primality checks, prime-gap and integer endpoints, batch ordering and limits,
@@ -247,9 +320,13 @@ Range benchmarks compare counts and wrapping-u64 checksums. Batch benchmarks
 compare full answer arrays. A separate helper cross-checks primality and
 next-prime results against primal.
 
-The code matches the completed [benchmark manifest](benchmarks/measurement-2026-11-25.json).
-It records source and binary hashes, commands and the source snapshot. Previous
-executables, reports and experiments are retained in the
+The published M2 Pro measurements come from the pre-rename `prime-numbers`
+build in the [benchmark manifest](benchmarks/measurement-2026-11-25.json).
+The x86 additions and subsequent package, CLI and benchmark changes are not part
+of that historical build. Its original source and binary hashes remain intact.
+The current [counting report](benchmarks/X86_COUNT_100B.md) records its own
+source and binary hashes. Previous executables,
+reports and experiments are retained in the
 [archive](benchmarks/experiments/short-range-2026-11-25/README.md).
 
 Reproduce the [counting](benchmarks/README.md#reproduce),

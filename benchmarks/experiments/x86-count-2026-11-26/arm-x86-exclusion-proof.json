@@ -1,0 +1,31 @@
+{
+  "kind": "Controlled ARM rebuild changing only the cfg-excluded x86 source file",
+  "before_source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+    "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "src/x86.rs": "3eb148f96f44911e299b8e3b94ac79438bde343c78afcb850e12f10fe548ebb5"
+  },
+  "before_binaries": {
+    "target/release/primeroute": "55cc5e1184e16d63882f28b2d0238e465c148ce8b14941db9207ccd6a4c67898",
+    "target/release/examples/range_bench": "9cfca0e913c32e54d6ac59d39fc331037128b3804d3595676e6930699080b3ab",
+    "benchmarks/primal/target/release/batch_next": "9d8ad9927c34fa19fb82654db076c26334e0fef690df32200043b35080d3581f"
+  },
+  "after_source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+    "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153"
+  },
+  "after_binaries": {
+    "target/release/primeroute": "55cc5e1184e16d63882f28b2d0238e465c148ce8b14941db9207ccd6a4c67898",
+    "target/release/examples/range_bench": "9cfca0e913c32e54d6ac59d39fc331037128b3804d3595676e6930699080b3ab",
+    "benchmarks/primal/target/release/batch_next": "9d8ad9927c34fa19fb82654db076c26334e0fef690df32200043b35080d3581f"
+  },
+  "x86_module_absent_from_arm_dependencies": true,
+  "all_three_arm_binaries_unchanged": true
+}

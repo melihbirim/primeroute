@@ -1,0 +1,851 @@
+{
+  "kind": "kernel selection pilot; final comparison is paired-results.json",
+  "started_at_utc": "2026-11-26T14:09:46.200536+00:00",
+  "status": "screened",
+  "threads": 1,
+  "lscpu": "{\n   \"lscpu\": [\n      {\n         \"field\": \"Architecture:\",\n         \"data\": \"x86_64\"\n      },{\n         \"field\": \"CPU op-mode(s):\",\n         \"data\": \"32-bit, 64-bit\"\n      },{\n         \"field\": \"Address sizes:\",\n         \"data\": \"48 bits physical, 48 bits virtual\"\n      },{\n         \"field\": \"Byte Order:\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU(s):\",\n         \"data\": \"4\"\n      },{\n         \"field\": \"On-line CPU(s) list:\",\n         \"data\": \"0-3\"\n      },{\n         \"field\": \"Vendor ID:\",\n         \"data\": \"AuthenticAMD\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"AMD EPYC 9V74 80-Core Processor\"\n      },{\n         \"field\": \"CPU family:\",\n         \"data\": \"25\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"17\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"5192.26\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves user_shstk avx512_bf16 clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload avx512vbmi umip avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid fsrm\"\n      },{\n         \"field\": \"Virtualization:\",\n         \"data\": \"AMD-V\"\n      },{\n         \"field\": \"Hypervisor vendor:\",\n         \"data\": \"Microsoft\"\n      },{\n         \"field\": \"Virtualization type:\",\n         \"data\": \"full\"\n      },{\n         \"field\": \"L1d cache:\",\n         \"data\": \"64 KiB (2 instances)\"\n      },{\n         \"field\": \"L1i cache:\",\n         \"data\": \"64 KiB (2 instances)\"\n      },{\n         \"field\": \"L2 cache:\",\n         \"data\": \"2 MiB (2 instances)\"\n      },{\n         \"field\": \"L3 cache:\",\n         \"data\": \"32 MiB (1 instance)\"\n      },{\n         \"field\": \"NUMA node(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"NUMA node0 CPU(s):\",\n         \"data\": \"0-3\"\n      },{\n         \"field\": \"Vulnerability Gather data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Ghostwrite:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Indirect target selection:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mmio stale data:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Old microcode:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Reg file data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Retbleed:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec rstack overflow:\",\n         \"data\": \"Vulnerable: Safe RET, no microcode\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Vulnerable\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; usercopy/swapgs barriers and __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsa:\",\n         \"data\": \"Vulnerable: No microcode\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Vmscape:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n",
+  "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-unknown-linux-gnu\nrelease: 1.94.1\nLLVM version: 21.1.8\n",
+  "driver_sha256": "a07e174c450560e0a48c3ad0e9115deabbad5ca235ef7f6b276469acf24d5da2",
+  "variants": {
+    "baseline": {
+      "dense_kib": null,
+      "block_kib": null,
+      "fill_group": null,
+      "compact_dense": false,
+      "cache_dense_kib": null,
+      "dense_backend": null,
+      "compact_fill": null,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "98712ddf7584d0ee3114ed19152d1bf825197216317ebd38db4a03802ef649a7"
+    },
+    "hybrid32_outer512": {
+      "dense_kib": 128,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 512,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "21362ea7585a1215a71f57c76ea575eb9e9f909c7d9403eda5619c03ca6979a6",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "162aaf4507155a2a3d8899dc2fe67605547cb44525f518c7bace00215ce93822"
+    },
+    "hybrid16_block16_outer512": {
+      "dense_kib": 128,
+      "block_kib": 16,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 16,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 512,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "1d619a65d46079710a0d164190ba128dc5e2826ed7c9f3cc34d05dd512155a80",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "fdac5903e8d756f2ce4196c7a95c0317d368096b9193d54463512dbe1df375ec"
+    },
+    "hybrid16_block16_outer1024": {
+      "dense_kib": 128,
+      "block_kib": 16,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 16,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "e4d735f9847945330bb21b474fcc50f21bf0a3f90ab7486e5e77ef4b6d642530",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "847bae667980e9da5d58eaae7cd2cdda32e1681a7eee885eeba7d027bb90c535"
+    },
+    "hybrid32_outer1024": {
+      "dense_kib": 128,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "3428e94ee013744ab08659793991f215775c72f11764ee98b7ce7710ad179a1c",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "887a90534acddde74f46adc85552d3e1864609c7a85f5f300cd91303fbf54add"
+    },
+    "hybrid32_dense256_outer256": {
+      "dense_kib": 256,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 256,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "bfc10bae57e5c1aa1006efab831e1f1108231be6a8e4becced7600244eaf299d",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "317696ff3242ca289ee918863c612c22e41964a30d92cf7889d60d426f7b0fb1"
+    },
+    "hybrid32_dense256_outer512": {
+      "dense_kib": 256,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 512,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "5350224c92a03ae1edc5feee4c065306b374153c76a5c46fba177e079e306b8f",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "91bf9c499bccc0eac67ed7baba4315b2de5ca8188715b27300780172f6887e2a"
+    },
+    "hybrid32_dense192_outer1024": {
+      "dense_kib": 192,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "a26c7a083a95f1aac819cd0cce11b6a2c508eba05c0426e3cecb7d3ab367f407",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "389a587a878762e58f123bcdf1d39971c54a65a33e81d24fb3629eb6e0fa346a"
+    },
+    "hybrid32_dense256_outer1024": {
+      "dense_kib": 256,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "56fb1cb445d8f6acca21b303eac1b126455c717bb0a701b248247c2405fc7701",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "14fbaf9d172f3fd1ca3af583757e9bd0a03b29d1201e4343c0f0341dfdff4186"
+    },
+    "hybrid32_dense256_block24_outer1024": {
+      "dense_kib": 256,
+      "block_kib": 24,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 32,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "ef6ac566326c4ba9463e9f163b1dbd4005bad4e71674bbb97729b1991c3a0d99",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "da24e4aa32ba08b6e418edd2c40b2ac233c852745cf72e2b5447d0fce83b9bc9"
+    },
+    "hybrid16_dense256_block16_outer1024": {
+      "dense_kib": 256,
+      "block_kib": 16,
+      "fill_group": 17,
+      "compact_dense": true,
+      "cache_dense_kib": 16,
+      "dense_backend": "canonical_hybrid_in_place",
+      "compact_fill": true,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+        "src/x86.rs": "a40d896746d697e4747b838d487ed9386b7bd64df23dae4690da5cec96a882d6",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "130d31712ce30a710cb3dc204e1ca31e4c55fa0060bb389861725cc89d2b733d"
+    }
+  },
+  "screening": [
+    {
+      "label": "1B screening",
+      "limit": 1000000000,
+      "prime_count": 50847534,
+      "runs": 3,
+      "warmups": 1,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_outer512/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid16_block16_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_block16_outer512/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid16_block16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_block16_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_dense256_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer256/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_dense256_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer512/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_dense192_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense192_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_dense256_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid32_dense256_block24_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_block24_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "hybrid16_dense256_block16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_dense256_block16_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "1000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 82.246684,
+          "samples_ms": [
+            82.246684,
+            83.718693,
+            82.010987
+          ]
+        },
+        "hybrid32_outer512": {
+          "median_ms": 87.813832,
+          "samples_ms": [
+            87.813832,
+            87.720872,
+            88.096488
+          ]
+        },
+        "hybrid16_block16_outer512": {
+          "median_ms": 105.427525,
+          "samples_ms": [
+            105.48952,
+            105.355357,
+            105.427525
+          ]
+        },
+        "hybrid16_block16_outer1024": {
+          "median_ms": 106.330909,
+          "samples_ms": [
+            106.330909,
+            106.295074,
+            106.368614
+          ]
+        },
+        "hybrid32_outer1024": {
+          "median_ms": 88.444333,
+          "samples_ms": [
+            88.350933,
+            88.594821,
+            88.444333
+          ]
+        },
+        "hybrid32_dense256_outer256": {
+          "median_ms": 87.704948,
+          "samples_ms": [
+            87.704948,
+            87.273257,
+            87.740631
+          ]
+        },
+        "hybrid32_dense256_outer512": {
+          "median_ms": 87.834995,
+          "samples_ms": [
+            87.713681,
+            87.834995,
+            87.886781
+          ]
+        },
+        "hybrid32_dense192_outer1024": {
+          "median_ms": 88.450773,
+          "samples_ms": [
+            88.450773,
+            88.450843,
+            88.207205
+          ]
+        },
+        "hybrid32_dense256_outer1024": {
+          "median_ms": 88.360156,
+          "samples_ms": [
+            88.874523,
+            88.360156,
+            88.279605
+          ]
+        },
+        "hybrid32_dense256_block24_outer1024": {
+          "median_ms": 99.175413,
+          "samples_ms": [
+            99.175413,
+            99.218898,
+            99.119649
+          ]
+        },
+        "hybrid16_dense256_block16_outer1024": {
+          "median_ms": 106.194342,
+          "samples_ms": [
+            106.27216,
+            105.918135,
+            106.194342
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 83.150797,
+          "samples_ms": [
+            83.150797,
+            83.094472,
+            83.276847
+          ]
+        }
+      }
+    },
+    {
+      "label": "10B screening",
+      "limit": 10000000000,
+      "prime_count": 455052511,
+      "runs": 5,
+      "warmups": 1,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_outer512/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid16_block16_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_block16_outer512/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid16_block16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_block16_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_dense256_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer256/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_dense256_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer512/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_dense192_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense192_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_dense256_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid32_dense256_block24_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_block24_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "hybrid16_dense256_block16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_dense256_block16_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "10000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 1066.352897,
+          "samples_ms": [
+            1065.629251,
+            1067.279615,
+            1067.267958,
+            1066.352897,
+            1065.418442
+          ]
+        },
+        "hybrid32_outer512": {
+          "median_ms": 1149.840222,
+          "samples_ms": [
+            1151.936372,
+            1149.121367,
+            1149.840222,
+            1150.129296,
+            1147.748038
+          ]
+        },
+        "hybrid16_block16_outer512": {
+          "median_ms": 1241.95295,
+          "samples_ms": [
+            1243.804498,
+            1243.995716,
+            1241.95295,
+            1240.291257,
+            1240.892992
+          ]
+        },
+        "hybrid16_block16_outer1024": {
+          "median_ms": 1253.832526,
+          "samples_ms": [
+            1252.669842,
+            1253.832526,
+            1256.43551,
+            1252.594347,
+            1263.832282
+          ]
+        },
+        "hybrid32_outer1024": {
+          "median_ms": 1155.671163,
+          "samples_ms": [
+            1155.589293,
+            1155.671163,
+            1155.732601,
+            1154.197303,
+            1155.718016
+          ]
+        },
+        "hybrid32_dense256_outer256": {
+          "median_ms": 1155.593719,
+          "samples_ms": [
+            1152.372149,
+            1152.446499,
+            1157.568005,
+            1155.593719,
+            1165.783863
+          ]
+        },
+        "hybrid32_dense256_outer512": {
+          "median_ms": 1147.961544,
+          "samples_ms": [
+            1146.122439,
+            1150.871733,
+            1147.997637,
+            1147.961544,
+            1145.301842
+          ]
+        },
+        "hybrid32_dense192_outer1024": {
+          "median_ms": 1154.206346,
+          "samples_ms": [
+            1154.041616,
+            1154.370831,
+            1163.923202,
+            1154.206346,
+            1153.503585
+          ]
+        },
+        "hybrid32_dense256_outer1024": {
+          "median_ms": 1154.892,
+          "samples_ms": [
+            1154.892,
+            1158.762448,
+            1154.626057,
+            1154.536625,
+            1154.940333
+          ]
+        },
+        "hybrid32_dense256_block24_outer1024": {
+          "median_ms": 1326.702764,
+          "samples_ms": [
+            1329.111161,
+            1325.043323,
+            1324.129205,
+            1326.702764,
+            1329.023944
+          ]
+        },
+        "hybrid16_dense256_block16_outer1024": {
+          "median_ms": 1254.203303,
+          "samples_ms": [
+            1256.124994,
+            1252.910989,
+            1255.897893,
+            1252.537131,
+            1254.203303
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 885.947667,
+          "samples_ms": [
+            885.349018,
+            886.266919,
+            885.947667,
+            885.3631,
+            887.551223
+          ]
+        }
+      }
+    },
+    {
+      "label": "100B screening; one sample is selection evidence only",
+      "limit": 100000000000,
+      "prime_count": 4118054813,
+      "runs": 1,
+      "warmups": 0,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_outer512/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid16_block16_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_block16_outer512/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid16_block16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_block16_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_dense256_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer256/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_dense256_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer512/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_dense192_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense192_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_dense256_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid32_dense256_block24_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid32_dense256_block24_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "hybrid16_dense256_block16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/hybrid16_dense256_block16_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "100000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 13639.699907,
+          "samples_ms": [
+            13639.699907
+          ]
+        },
+        "hybrid32_outer512": {
+          "median_ms": 13573.634662,
+          "samples_ms": [
+            13573.634662
+          ]
+        },
+        "hybrid16_block16_outer512": {
+          "median_ms": 14473.807627,
+          "samples_ms": [
+            14473.807627
+          ]
+        },
+        "hybrid16_block16_outer1024": {
+          "median_ms": 14590.492614,
+          "samples_ms": [
+            14590.492614
+          ]
+        },
+        "hybrid32_outer1024": {
+          "median_ms": 13608.280133,
+          "samples_ms": [
+            13608.280133
+          ]
+        },
+        "hybrid32_dense256_outer256": {
+          "median_ms": 14518.589656,
+          "samples_ms": [
+            14518.589656
+          ]
+        },
+        "hybrid32_dense256_outer512": {
+          "median_ms": 13604.858261,
+          "samples_ms": [
+            13604.858261
+          ]
+        },
+        "hybrid32_dense192_outer1024": {
+          "median_ms": 13511.107175,
+          "samples_ms": [
+            13511.107175
+          ]
+        },
+        "hybrid32_dense256_outer1024": {
+          "median_ms": 13441.990079,
+          "samples_ms": [
+            13441.990079
+          ]
+        },
+        "hybrid32_dense256_block24_outer1024": {
+          "median_ms": 15252.942008,
+          "samples_ms": [
+            15252.942008
+          ]
+        },
+        "hybrid16_dense256_block16_outer1024": {
+          "median_ms": 14339.500156,
+          "samples_ms": [
+            14339.500156
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 10723.132122,
+          "samples_ms": [
+            10723.132122
+          ]
+        }
+      }
+    }
+  ],
+  "allowed_cpus_before": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "affinity": [
+    0
+  ],
+  "cpu_info": "AMD EPYC 9V74 80-Core Processor\nLogical CPU cores: 4\nHas AVX2: yes\nHas AVX512 BW: yes\nHas AVX512 VBMI2: yes\nL1 cache size: 32 KiB\nL2 cache size: 1024 KiB\nL3 cache size: 32 MiB\nL1 cache sharing: 2 threads\nL2 cache sharing: 2 threads\nL3 cache sharing: 4 threads\n",
+  "primesieve_version": "primesieve 12.18, <https://github.com/kimwalisch/primesieve>\nCopyright (C) 2010 - 2026 Kim Walisch\nBSD 2-Clause License <https://opensource.org/licenses/BSD-2-Clause>\n",
+  "instrumented_baseline": {
+    "kind": "instrumented component selection evidence, not final timing",
+    "stage_names": [
+      "setup",
+      "fill",
+      "dense",
+      "medium",
+      "buckets",
+      "finish_and_count"
+    ],
+    "source_sha256": {
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/lib.rs": "7adfee9ac2b614a8760d0179ffbedbf82f9babede5bca0e7757f35d006be9707",
+      "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+      "examples/profile_count.rs": "a4aee9aca257c71fba02d11451ceee4aa4485201215270c2652385bd277607cc",
+      "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+      "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+      "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+      "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+      "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+      "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+      "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+      "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+    },
+    "count": 4118054813,
+    "total_ns": 13737799462,
+    "stages_ns": [
+      1738443,
+      840222213,
+      11629217111,
+      1194053070,
+      1031461,
+      66460775
+    ],
+    "threads": 1
+  },
+  "selected_variant": "hybrid32_dense256_outer1024",
+  "selection_rule": "Fastest candidate on a one-sample 100B pilot over all variants; 10B is diagnostic only. Independent fixed-sample confirmation follows.",
+  "screen_completed_at_utc": "2026-11-26T14:19:21.652453+00:00"
+}

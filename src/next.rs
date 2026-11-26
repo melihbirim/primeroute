@@ -568,12 +568,20 @@ mod tests {
             inputs.extend_from_within(..32);
             inputs.reverse();
             let expected: Vec<_> = inputs.iter().map(|&n| next_prime(n)).collect();
+            let span = inputs.iter().max().unwrap() - inputs.iter().min().unwrap();
             for tail_padding in [0, 512] {
                 let result = batch_next_primes_with_options(
                     &inputs,
                     BatchOptions {
                         strategy: BatchStrategy::Sieve,
-                        max_cluster_gap: 16_000_000,
+                        max_cluster_gap: span,
+                        max_cluster_span: span,
+                        max_sieve_root: inputs
+                            .iter()
+                            .max()
+                            .unwrap()
+                            .saturating_add(tail_padding)
+                            .isqrt(),
                         tail_padding,
                         ..BatchOptions::default()
                     },

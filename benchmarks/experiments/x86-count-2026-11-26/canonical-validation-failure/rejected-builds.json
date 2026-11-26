@@ -1,0 +1,12 @@
+{
+  "kind": "validation failure; no timed benchmarks",
+  "workflow_run": 45830676159,
+  "built_counter_sha256": {
+    "canonical128_32_outer256": "1ba8223677734c46827f9576305f7386c5091d6388493c86d3dfb6a965a1964d",
+    "canonical128_32_fill": "0cfdc219d716c22c8e2d7ad26f00ba96543dc265291ecc6b3aedc5582631a2a1",
+    "canonical128_32": "f47b345a1204a29d9e58ed0aa406ffa4ce10d772f8f31a28fffb77517b8bb71c",
+    "baseline": "98712ddf7584d0ee3114ed19152d1bf825197216317ebd38db4a03802ef649a7",
+    "canonical192_32": "1bf4ed90df8b6fa8e43c59f66e61d47552f9115c914a563469a526551caea602",
+    "canonical64_32": "20ac46787217025b7a8bbbcaf02d6df1d6c254992c56d4a5dda074cf261a8bbb"
+  }
+}

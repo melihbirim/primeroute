@@ -1,0 +1,802 @@
+{
+  "status": "complete",
+  "expected_cases": 8,
+  "timestamp_utc": "2026-11-25T22:02:43.553931+00:00",
+  "platform": "Linux-7.0.0-1020-azure-x86_64-with-glibc2.43",
+  "threads": 1,
+  "runs": 5,
+  "warmup_batches": 1,
+  "fresh_queries_per_sample": 3,
+  "metric": "In-process milliseconds per fresh query; setup, allocation and result checksum included",
+  "cpu_info": "AMD EPYC 9V74 80-Core Processor\nLogical CPU cores: 4\nHas AVX2: yes\nHas AVX512 BW: yes\nHas AVX512 VBMI2: yes\nL1 cache size: 32 KiB\nL2 cache size: 1024 KiB\nL3 cache size: 32 MiB\nL1 cache sharing: 2 threads\nL2 cache sharing: 2 threads\nL3 cache sharing: 4 threads",
+  "primesieve_version": "primesieve 12.18, <https://github.com/kimwalisch/primesieve>",
+  "rustc_version": "rustc 1.94.1 (e408947bf 2026-03-25)",
+  "binary_sha256": {
+    "ours": "980f3d8cff1ef09cf7350431c72955d5c296650cda4ec47baec7c0225fe41e58",
+    "cpp": "ee03876d01902b6e882387c5fb40b7fcdb1fef4f672c90dd9946f0e359014141",
+    "primal": "604ef006bea21ddf6666dcfcf2c708bb2ccc8a8dd8593698b1a83f74529cea94"
+  },
+  "source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "c23c4a67eb8eac3d168047f30082c61d21de982237563510e6d75d83204ff1c3",
+    "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+    "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+    "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+    "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+    "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+    "benchmarks/range_bench.cpp": "57dcb833a9a47c17a39407545f6baad2b5767df561cb2ce877361983b4ad9386",
+    "benchmarks/ranges.py": "28c32a5bbbbb56cb604375bb6ca8679e5a3724ecfa311e08f64468c385a8e965",
+    "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+    "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+    "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3"
+  },
+  "primal_comparison": {
+    "segmented_adapter": "Independent odd-only range adapter using primal::Sieve::new(sqrt(end)); all setup included; sqrt(end) <= 2^24",
+    "direct": "Primal public is_prime test over candidates coprime to 2, 3 and 5; no cached results",
+    "native_range_api": false
+  },
+  "cases": [
+    {
+      "start": 1000000000,
+      "end": 1000999999,
+      "width": 1000000,
+      "mode": "count",
+      "count": 48155,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000",
+          "1000999999",
+          "count",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1000999999",
+          "count",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1000999999",
+          "count",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000",
+          "1000999999",
+          "count",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.27646766666666667,
+          "mean_ms": 0.2792325333333333,
+          "min_ms": 0.2731093333333333,
+          "max_ms": 0.2931396666666667,
+          "samples_ms": [
+            0.2795456666666667,
+            0.2739003333333333,
+            0.2931396666666667,
+            0.27646766666666667,
+            0.2731093333333333
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.18037566666666666,
+          "mean_ms": 0.1865372,
+          "min_ms": 0.17537833333333333,
+          "max_ms": 0.21424366666666667,
+          "samples_ms": [
+            0.17638333333333334,
+            0.18037566666666666,
+            0.186305,
+            0.21424366666666667,
+            0.17537833333333333
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.18015866666666666,
+          "mean_ms": 0.1789758,
+          "min_ms": 0.174644,
+          "max_ms": 0.18177466666666667,
+          "samples_ms": [
+            0.18177466666666667,
+            0.18015866666666666,
+            0.174644,
+            0.177041,
+            0.18126066666666665
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.7502903333333334,
+          "mean_ms": 0.7614685333333333,
+          "min_ms": 0.7421513333333334,
+          "max_ms": 0.788872,
+          "samples_ms": [
+            0.779628,
+            0.7421513333333334,
+            0.7502903333333334,
+            0.746401,
+            0.788872
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000,
+      "end": 1000999999,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 48155,
+      "checksum": 48179107682461,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000",
+          "1000999999",
+          "generate",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.4738023333333333,
+          "mean_ms": 0.47998046666666666,
+          "min_ms": 0.4728276666666667,
+          "max_ms": 0.50308,
+          "samples_ms": [
+            0.4738023333333333,
+            0.4728276666666667,
+            0.47314833333333334,
+            0.50308,
+            0.477044
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.23784266666666665,
+          "mean_ms": 0.23727453333333332,
+          "min_ms": 0.227624,
+          "max_ms": 0.24173533333333333,
+          "samples_ms": [
+            0.24173533333333333,
+            0.237726,
+            0.227624,
+            0.23784266666666665,
+            0.24144466666666667
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.24165166666666665,
+          "mean_ms": 0.24048273333333334,
+          "min_ms": 0.23431733333333335,
+          "max_ms": 0.24809166666666665,
+          "samples_ms": [
+            0.23431733333333335,
+            0.23601333333333335,
+            0.24809166666666665,
+            0.24233966666666665,
+            0.24165166666666665
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 1.19132,
+          "mean_ms": 1.1857074666666667,
+          "min_ms": 1.1630806666666667,
+          "max_ms": 1.1941473333333332,
+          "samples_ms": [
+            1.1878146666666667,
+            1.19132,
+            1.1921746666666668,
+            1.1630806666666667,
+            1.1941473333333332
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000,
+      "end": 1099999999,
+      "width": 100000000,
+      "mode": "count",
+      "count": 4814936,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000",
+          "1099999999",
+          "count",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1099999999",
+          "count",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1099999999",
+          "count",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000",
+          "1099999999",
+          "count",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 13.546997666666666,
+          "mean_ms": 14.2227572,
+          "min_ms": 13.451169666666667,
+          "max_ms": 17.007082,
+          "samples_ms": [
+            13.451169666666667,
+            13.636983333333333,
+            17.007082,
+            13.471553333333334,
+            13.546997666666666
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 8.528689,
+          "mean_ms": 8.8289454,
+          "min_ms": 8.500373,
+          "max_ms": 10.049366666666666,
+          "samples_ms": [
+            8.528689,
+            8.544376,
+            10.049366666666666,
+            8.500373,
+            8.521922333333334
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 8.534668,
+          "mean_ms": 8.585408600000001,
+          "min_ms": 8.487793666666667,
+          "max_ms": 8.844279,
+          "samples_ms": [
+            8.534668,
+            8.487793666666667,
+            8.844279,
+            8.542810333333334,
+            8.517492
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 74.216664,
+          "mean_ms": 74.37002913333333,
+          "min_ms": 73.68455033333333,
+          "max_ms": 75.53441833333333,
+          "samples_ms": [
+            74.19050466666667,
+            74.22400833333333,
+            73.68455033333333,
+            74.216664,
+            75.53441833333333
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000,
+      "end": 1099999999,
+      "width": 100000000,
+      "mode": "generate",
+      "count": 4814936,
+      "checksum": 5055517966037714,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000",
+          "1099999999",
+          "generate",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1099999999",
+          "generate",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000",
+          "1099999999",
+          "generate",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000",
+          "1099999999",
+          "generate",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 51.479169,
+          "mean_ms": 51.6260178,
+          "min_ms": 50.952934,
+          "max_ms": 52.90732633333334,
+          "samples_ms": [
+            51.23816,
+            52.90732633333334,
+            51.55249966666666,
+            51.479169,
+            50.952934
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 29.23842666666667,
+          "mean_ms": 29.190293333333333,
+          "min_ms": 29.038237666666667,
+          "max_ms": 29.29006133333333,
+          "samples_ms": [
+            29.038237666666667,
+            29.29006133333333,
+            29.249707,
+            29.135034,
+            29.23842666666667
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 29.53055833333333,
+          "mean_ms": 29.605855933333334,
+          "min_ms": 29.30008666666667,
+          "max_ms": 30.20943366666667,
+          "samples_ms": [
+            29.30008666666667,
+            29.53055833333333,
+            29.35119033333333,
+            29.638010666666666,
+            30.20943366666667
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 129.85348433333334,
+          "mean_ms": 129.8537598,
+          "min_ms": 129.12655766666668,
+          "max_ms": 130.708019,
+          "samples_ms": [
+            129.12655766666668,
+            130.21689,
+            129.363848,
+            130.708019,
+            129.85348433333334
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000,
+      "end": 1000000999999,
+      "width": 1000000,
+      "mode": "count",
+      "count": 36249,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "count",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 1.6218333333333332,
+          "mean_ms": 1.6315887999999998,
+          "min_ms": 1.615978,
+          "max_ms": 1.6535443333333333,
+          "samples_ms": [
+            1.615978,
+            1.6180143333333332,
+            1.6535443333333333,
+            1.648574,
+            1.6218333333333332
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 1.1166803333333333,
+          "mean_ms": 1.1183302,
+          "min_ms": 1.104295,
+          "max_ms": 1.1375453333333332,
+          "samples_ms": [
+            1.1175883333333332,
+            1.1375453333333332,
+            1.115542,
+            1.104295,
+            1.1166803333333333
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 1.1195113333333333,
+          "mean_ms": 1.1175997333333334,
+          "min_ms": 1.104799,
+          "max_ms": 1.1340666666666668,
+          "samples_ms": [
+            1.120466,
+            1.1195113333333333,
+            1.1340666666666668,
+            1.1091556666666667,
+            1.104799
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 2.489908,
+          "mean_ms": 2.4863620666666666,
+          "min_ms": 2.4600596666666665,
+          "max_ms": 2.512489,
+          "samples_ms": [
+            2.489908,
+            2.4650203333333334,
+            2.4600596666666665,
+            2.5043333333333333,
+            2.512489
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000,
+      "end": 1000000999999,
+      "width": 1000000,
+      "mode": "generate",
+      "count": 36249,
+      "checksum": 36249018122131905,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000000",
+          "1000000999999",
+          "generate",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 1.8376526666666668,
+          "mean_ms": 1.8421889333333334,
+          "min_ms": 1.8173756666666667,
+          "max_ms": 1.8665963333333333,
+          "samples_ms": [
+            1.8665963333333333,
+            1.8173756666666667,
+            1.852492,
+            1.8376526666666668,
+            1.836828
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 1.159161,
+          "mean_ms": 1.1626143333333334,
+          "min_ms": 1.1521606666666668,
+          "max_ms": 1.1723776666666668,
+          "samples_ms": [
+            1.1713193333333332,
+            1.159161,
+            1.158053,
+            1.1521606666666668,
+            1.1723776666666668
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 1.1695466666666667,
+          "mean_ms": 1.1686895333333334,
+          "min_ms": 1.163441,
+          "max_ms": 1.1729486666666666,
+          "samples_ms": [
+            1.163441,
+            1.1695466666666667,
+            1.172872,
+            1.1646393333333334,
+            1.1729486666666666
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 2.8183576666666665,
+          "mean_ms": 2.816814733333333,
+          "min_ms": 2.7961276666666666,
+          "max_ms": 2.8349426666666666,
+          "samples_ms": [
+            2.8183576666666665,
+            2.7961276666666666,
+            2.8270606666666667,
+            2.8349426666666666,
+            2.807585
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000,
+      "end": 1000099999999,
+      "width": 100000000,
+      "mode": "count",
+      "count": 3618282,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000000",
+          "1000099999999",
+          "count",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000099999999",
+          "count",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000099999999",
+          "count",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000000",
+          "1000099999999",
+          "count",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 31.693305,
+          "mean_ms": 31.82404633333333,
+          "min_ms": 31.61064633333333,
+          "max_ms": 32.224401,
+          "samples_ms": [
+            32.224401,
+            31.693305,
+            31.67584833333333,
+            31.916031,
+            31.61064633333333
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 15.546974333333335,
+          "mean_ms": 15.572470066666668,
+          "min_ms": 15.515265,
+          "max_ms": 15.635166,
+          "samples_ms": [
+            15.545140666666667,
+            15.546974333333335,
+            15.619804333333335,
+            15.635166,
+            15.515265
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 15.4192,
+          "mean_ms": 15.5039142,
+          "min_ms": 15.351731666666666,
+          "max_ms": 15.868635333333334,
+          "samples_ms": [
+            15.4192,
+            15.351731666666666,
+            15.508045666666666,
+            15.371958333333334,
+            15.868635333333334
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 181.38553666666667,
+          "mean_ms": 181.80451993333335,
+          "min_ms": 180.377041,
+          "max_ms": 183.46488233333335,
+          "samples_ms": [
+            181.38553666666667,
+            183.07746433333335,
+            183.46488233333335,
+            180.71767533333335,
+            180.377041
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000000000000,
+      "end": 1000099999999,
+      "width": 100000000,
+      "mode": "generate",
+      "count": 3618282,
+      "checksum": 3618462937841283382,
+      "commands": {
+        "ours": [
+          "/home/runner/work/_temp/x86-source-default/target/release/examples/range_bench",
+          "1000000000000",
+          "1000099999999",
+          "generate",
+          "3"
+        ],
+        "cpp_default": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000099999999",
+          "generate",
+          "3",
+          "0"
+        ],
+        "cpp_1024k": [
+          "target/release/range-bench-cpp",
+          "1000000000000",
+          "1000099999999",
+          "generate",
+          "3",
+          "1024"
+        ],
+        "primal_segmented_adapter": [
+          "benchmarks/primal/target/release/range_bench",
+          "1000000000000",
+          "1000099999999",
+          "generate",
+          "3",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 62.497506333333334,
+          "mean_ms": 62.317394533333335,
+          "min_ms": 61.780712666666666,
+          "max_ms": 62.58536566666666,
+          "samples_ms": [
+            62.527771333333334,
+            62.58536566666666,
+            62.497506333333334,
+            62.195616666666666,
+            61.780712666666666
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 30.927096666666667,
+          "mean_ms": 30.984686533333335,
+          "min_ms": 30.734181666666668,
+          "max_ms": 31.288516,
+          "samples_ms": [
+            31.288516,
+            31.058918,
+            30.91472033333333,
+            30.927096666666667,
+            30.734181666666668
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 31.09459533333333,
+          "mean_ms": 31.231937533333333,
+          "min_ms": 30.651283,
+          "max_ms": 32.251667,
+          "samples_ms": [
+            31.10652466666667,
+            31.055617666666667,
+            31.09459533333333,
+            30.651283,
+            32.251667
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 223.36114866666665,
+          "mean_ms": 223.59561853333332,
+          "min_ms": 221.539716,
+          "max_ms": 225.67245333333335,
+          "samples_ms": [
+            221.80193966666667,
+            223.36114866666665,
+            221.539716,
+            225.67245333333335,
+            225.602835
+          ]
+        }
+      }
+    }
+  ],
+  "completed_at_utc": "2026-11-25T22:03:06.924143+00:00"
+}

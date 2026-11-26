@@ -1,0 +1,41 @@
+name: Native x86 counting experiments
+
+on:
+  push:
+    branches: ['bench/x86-native-*']
+
+concurrency:
+  group: x86-experiments-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  diagnostic:
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install recorded Rust version
+        run: rustup toolchain install 1.94.1 --profile minimal -c clippy,rustfmt && rustup default 1.94.1
+      - uses: Swatinem/rust-cache@v2
+      - name: Build primesieve
+        run: |
+          git clone --depth 1 --branch v12.18 https://github.com/kimwalisch/primesieve "$RUNNER_TEMP/primesieve"
+          cmake -S "$RUNNER_TEMP/primesieve" -B "$RUNNER_TEMP/primesieve/build" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
+          cmake --build "$RUNNER_TEMP/primesieve/build" --parallel 2
+      - name: Screen counting kernels
+        run: python3 benchmarks/counting26.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results" --screen-only
+      - name: Upload selection evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: x86-count-pilot-${{ github.sha }}
+          path: ${{ runner.temp }}/x86-results/pilot.json
+      - name: Independent paired confirmation
+        run: python3 benchmarks/confirm_count26.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: x86-diagnostic-${{ github.sha }}
+          path: ${{ runner.temp }}/x86-results

@@ -1,0 +1,4748 @@
+{
+  "status": "complete",
+  "expected_cases": 24,
+  "timestamp_utc": "2026-11-26T14:24:27.634635+00:00",
+  "platform": "macOS-26.5.1-arm64-arm-64bit-Mach-O",
+  "threads": 1,
+  "runs": 15,
+  "warmup_batches": 3,
+  "fresh_queries_per_sample": 2,
+  "metric": "In-process milliseconds per fresh query; setup, allocation and result checksum included",
+  "cpu_info": "Apple M2 Pro\nLogical CPU cores: 12\nL1 cache size: 64 KiB\nL2 cache size: 4096 KiB\nL1 cache sharing: 1 thread\nL2 cache sharing: 4 threads",
+  "primesieve_version": "primesieve 12.18, <https://github.com/kimwalisch/primesieve>",
+  "rustc_version": "rustc 1.94.1 (e408947bf 2026-03-25) (Homebrew)",
+  "binary_sha256": {
+    "ours": "8f453640b64275279741d9231e9a6ad7248381d13a04c927cdabc2a5a258326a",
+    "cpp": "20345cf34de0e653305863911e2e79b6d345b5437f8708b40e0b858ab14516d2",
+    "ours_baseline": "9cfca0e913c32e54d6ac59d39fc331037128b3804d3595676e6930699080b3ab",
+    "primal": "814a004f80dd35aa2b93d4f68a84b2bd48c92a7cea1f0ba4a727d58962497e8e"
+  },
+  "source_sha256": {
+    "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+    "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+    "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+    "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+    "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+    "src/x86.rs": "bcd19072c5e46716c620556f0f4d693fcc1ef966f2988fafeedc9b923a729d26",
+    "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+    "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+    "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+    "benchmarks/range_bench.cpp": "57dcb833a9a47c17a39407545f6baad2b5767df561cb2ce877361983b4ad9386",
+    "benchmarks/ranges.py": "28c32a5bbbbb56cb604375bb6ca8679e5a3724ecfa311e08f64468c385a8e965",
+    "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+    "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+    "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3"
+  },
+  "primal_comparison": {
+    "segmented_adapter": "Independent odd-only range adapter using primal::Sieve::new(sqrt(end)); all setup included; sqrt(end) <= 2^24",
+    "direct": "Primal public is_prime test over candidates coprime to 2, 3 and 5; no cached results",
+    "native_range_api": false
+  },
+  "cases": [
+    {
+      "start": 1001234567,
+      "end": 1001234703,
+      "width": 137,
+      "mode": "count",
+      "count": 8,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1001234703",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001234703",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001234703",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001234703",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1001234703",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1001234703",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.008146,
+          "mean_ms": 0.008144533333333334,
+          "min_ms": 0.007771,
+          "max_ms": 0.008854,
+          "samples_ms": [
+            0.00825,
+            0.0078125,
+            0.0084375,
+            0.007875,
+            0.008271,
+            0.008146,
+            0.0080625,
+            0.008646,
+            0.0079165,
+            0.0079795,
+            0.007771,
+            0.0082085,
+            0.008854,
+            0.008146,
+            0.007792
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.0144375,
+          "mean_ms": 0.017579166666666667,
+          "min_ms": 0.0135415,
+          "max_ms": 0.0481045,
+          "samples_ms": [
+            0.0135415,
+            0.013896,
+            0.016583,
+            0.0189375,
+            0.0144375,
+            0.0155415,
+            0.013708,
+            0.0144585,
+            0.022479,
+            0.0135835,
+            0.0142295,
+            0.0166875,
+            0.0138955,
+            0.0481045,
+            0.0136045
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.0145625,
+          "mean_ms": 0.016209766666666667,
+          "min_ms": 0.0136045,
+          "max_ms": 0.03275,
+          "samples_ms": [
+            0.0136045,
+            0.0165835,
+            0.0145,
+            0.014646,
+            0.013979,
+            0.0142295,
+            0.03275,
+            0.0145,
+            0.01425,
+            0.0155835,
+            0.0145625,
+            0.015375,
+            0.0194585,
+            0.0149165,
+            0.014208
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.0149375,
+          "mean_ms": 0.018105533333333333,
+          "min_ms": 0.013354,
+          "max_ms": 0.0486665,
+          "samples_ms": [
+            0.0186665,
+            0.020604,
+            0.0160625,
+            0.0148125,
+            0.0149375,
+            0.014792,
+            0.014729,
+            0.0141875,
+            0.014146,
+            0.0193125,
+            0.0164165,
+            0.0164585,
+            0.0144375,
+            0.013354,
+            0.0486665
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.007979,
+          "mean_ms": 0.0083444,
+          "min_ms": 0.0075415,
+          "max_ms": 0.0136665,
+          "samples_ms": [
+            0.0075415,
+            0.008625,
+            0.00775,
+            0.007979,
+            0.0080625,
+            0.0082915,
+            0.0080625,
+            0.0078335,
+            0.0136665,
+            0.007979,
+            0.0080835,
+            0.007729,
+            0.0077915,
+            0.007729,
+            0.008042
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.0128125,
+          "mean_ms": 0.013597266666666667,
+          "min_ms": 0.012125,
+          "max_ms": 0.0173545,
+          "samples_ms": [
+            0.017,
+            0.0126455,
+            0.013125,
+            0.0126875,
+            0.0131665,
+            0.012771,
+            0.017125,
+            0.0124375,
+            0.0128545,
+            0.012125,
+            0.013271,
+            0.0124375,
+            0.0173545,
+            0.012146,
+            0.0128125
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1001234703,
+      "width": 137,
+      "mode": "generate",
+      "count": 8,
+      "checksum": 8009876996,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1001234703",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001234703",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001234703",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001234703",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1001234703",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1001234703",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.0079165,
+          "mean_ms": 0.008297233333333334,
+          "min_ms": 0.007625,
+          "max_ms": 0.009833,
+          "samples_ms": [
+            0.0078335,
+            0.0097295,
+            0.0077295,
+            0.007625,
+            0.0078545,
+            0.009833,
+            0.0079165,
+            0.007833,
+            0.008146,
+            0.0081045,
+            0.00825,
+            0.007875,
+            0.007833,
+            0.0093955,
+            0.0085
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.0142915,
+          "mean_ms": 0.017938933333333334,
+          "min_ms": 0.013021,
+          "max_ms": 0.0684375,
+          "samples_ms": [
+            0.0138335,
+            0.0151875,
+            0.0147915,
+            0.014104,
+            0.013021,
+            0.0150625,
+            0.015292,
+            0.0153335,
+            0.013729,
+            0.0684375,
+            0.014021,
+            0.0135835,
+            0.0143335,
+            0.0140625,
+            0.0142915
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.014021,
+          "mean_ms": 0.014300033333333333,
+          "min_ms": 0.01275,
+          "max_ms": 0.0158955,
+          "samples_ms": [
+            0.013917,
+            0.0157915,
+            0.0153335,
+            0.015375,
+            0.012792,
+            0.013271,
+            0.015396,
+            0.014729,
+            0.0137915,
+            0.0144375,
+            0.014021,
+            0.01275,
+            0.0135625,
+            0.0158955,
+            0.0134375
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.0150835,
+          "mean_ms": 0.015959833333333333,
+          "min_ms": 0.012792,
+          "max_ms": 0.0223125,
+          "samples_ms": [
+            0.0164585,
+            0.0168335,
+            0.013625,
+            0.012896,
+            0.014792,
+            0.012792,
+            0.019,
+            0.0145,
+            0.0150835,
+            0.0169795,
+            0.0223125,
+            0.0164375,
+            0.0144795,
+            0.014,
+            0.019208
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.0077915,
+          "mean_ms": 0.007906966666666666,
+          "min_ms": 0.007667,
+          "max_ms": 0.0084375,
+          "samples_ms": [
+            0.008167,
+            0.008375,
+            0.00825,
+            0.0077085,
+            0.00775,
+            0.007875,
+            0.007875,
+            0.007729,
+            0.007729,
+            0.0084375,
+            0.0076875,
+            0.007771,
+            0.0077915,
+            0.007667,
+            0.0077915
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.0128335,
+          "mean_ms": 0.014051366666666667,
+          "min_ms": 0.012208,
+          "max_ms": 0.0170625,
+          "samples_ms": [
+            0.0128335,
+            0.0168335,
+            0.012521,
+            0.0170625,
+            0.016354,
+            0.012208,
+            0.016375,
+            0.012375,
+            0.012625,
+            0.0124375,
+            0.0141665,
+            0.0157915,
+            0.012521,
+            0.012229,
+            0.0144375
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1001300103,
+      "width": 65537,
+      "mode": "count",
+      "count": 3146,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1001300103",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001300103",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001300103",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001300103",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1001300103",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1001300103",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.032396,
+          "mean_ms": 0.0332375,
+          "min_ms": 0.0288125,
+          "max_ms": 0.0486665,
+          "samples_ms": [
+            0.0290415,
+            0.0298335,
+            0.0338955,
+            0.0330415,
+            0.032396,
+            0.031875,
+            0.0288125,
+            0.03725,
+            0.029104,
+            0.0486665,
+            0.033479,
+            0.0333335,
+            0.0304795,
+            0.037646,
+            0.0297085
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.0531665,
+          "mean_ms": 0.0551042,
+          "min_ms": 0.0442085,
+          "max_ms": 0.07575,
+          "samples_ms": [
+            0.0442085,
+            0.0491875,
+            0.051771,
+            0.07575,
+            0.0603125,
+            0.0736875,
+            0.0538545,
+            0.0531665,
+            0.049854,
+            0.0524585,
+            0.0477085,
+            0.0540625,
+            0.053625,
+            0.054604,
+            0.0523125
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.051729,
+          "mean_ms": 0.0552611,
+          "min_ms": 0.047375,
+          "max_ms": 0.076729,
+          "samples_ms": [
+            0.054729,
+            0.047375,
+            0.048625,
+            0.053771,
+            0.050146,
+            0.0501045,
+            0.048833,
+            0.0502295,
+            0.051979,
+            0.0746455,
+            0.076729,
+            0.051729,
+            0.0646875,
+            0.0536665,
+            0.051667
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.0504375,
+          "mean_ms": 0.05302913333333333,
+          "min_ms": 0.0442915,
+          "max_ms": 0.100396,
+          "samples_ms": [
+            0.054458,
+            0.0481875,
+            0.0470625,
+            0.0478125,
+            0.100396,
+            0.0442915,
+            0.050521,
+            0.052604,
+            0.0510835,
+            0.0504375,
+            0.0536875,
+            0.051625,
+            0.047333,
+            0.0483335,
+            0.047604
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.0294585,
+          "mean_ms": 0.045716733333333336,
+          "min_ms": 0.0277295,
+          "max_ms": 0.2178545,
+          "samples_ms": [
+            0.032875,
+            0.0807915,
+            0.0317705,
+            0.028625,
+            0.02775,
+            0.0277295,
+            0.2178545,
+            0.0323545,
+            0.03175,
+            0.02825,
+            0.0294585,
+            0.0292085,
+            0.027875,
+            0.0289585,
+            0.0305
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.0590625,
+          "mean_ms": 0.06208336666666667,
+          "min_ms": 0.0531665,
+          "max_ms": 0.0792295,
+          "samples_ms": [
+            0.0779585,
+            0.0792295,
+            0.0612295,
+            0.0575415,
+            0.060229,
+            0.0579375,
+            0.058104,
+            0.0608545,
+            0.0531665,
+            0.0590625,
+            0.0582085,
+            0.0568335,
+            0.057771,
+            0.071479,
+            0.0616455
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1001300103,
+      "width": 65537,
+      "mode": "generate",
+      "count": 3146,
+      "checksum": 3149986896398,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1001300103",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001300103",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001300103",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1001300103",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1001300103",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1001300103",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.033,
+          "mean_ms": 0.03366246666666667,
+          "min_ms": 0.030229,
+          "max_ms": 0.03975,
+          "samples_ms": [
+            0.030229,
+            0.033917,
+            0.0320625,
+            0.035125,
+            0.03425,
+            0.033,
+            0.0338125,
+            0.0309375,
+            0.0312705,
+            0.0315625,
+            0.032125,
+            0.036208,
+            0.03975,
+            0.037875,
+            0.0328125
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.052583,
+          "mean_ms": 0.0532903,
+          "min_ms": 0.050021,
+          "max_ms": 0.065625,
+          "samples_ms": [
+            0.0550625,
+            0.0527915,
+            0.0517915,
+            0.053021,
+            0.0504585,
+            0.0517295,
+            0.0562915,
+            0.052583,
+            0.052292,
+            0.050021,
+            0.0500415,
+            0.050271,
+            0.054021,
+            0.065625,
+            0.053354
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.0526665,
+          "mean_ms": 0.0523904,
+          "min_ms": 0.047625,
+          "max_ms": 0.0571045,
+          "samples_ms": [
+            0.047625,
+            0.0496045,
+            0.0531875,
+            0.051729,
+            0.0550835,
+            0.054771,
+            0.0526665,
+            0.049146,
+            0.0519795,
+            0.051771,
+            0.053375,
+            0.0571045,
+            0.052792,
+            0.0532915,
+            0.0517295
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.0536045,
+          "mean_ms": 0.05234576666666667,
+          "min_ms": 0.046979,
+          "max_ms": 0.0570625,
+          "samples_ms": [
+            0.0565205,
+            0.054917,
+            0.047104,
+            0.0570625,
+            0.054604,
+            0.048104,
+            0.046979,
+            0.050583,
+            0.055042,
+            0.056271,
+            0.0487915,
+            0.050354,
+            0.0539165,
+            0.051333,
+            0.0536045
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.033375,
+          "mean_ms": 0.03409023333333334,
+          "min_ms": 0.0299165,
+          "max_ms": 0.04175,
+          "samples_ms": [
+            0.032021,
+            0.0343955,
+            0.0381045,
+            0.0327915,
+            0.0344165,
+            0.03325,
+            0.04175,
+            0.035875,
+            0.0312915,
+            0.033375,
+            0.0299165,
+            0.034583,
+            0.0325625,
+            0.0323335,
+            0.0346875
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.0824585,
+          "mean_ms": 0.08270283333333334,
+          "min_ms": 0.0748955,
+          "max_ms": 0.095604,
+          "samples_ms": [
+            0.0824585,
+            0.086,
+            0.084167,
+            0.081375,
+            0.079875,
+            0.084771,
+            0.0749585,
+            0.0748955,
+            0.087625,
+            0.095604,
+            0.0781045,
+            0.079896,
+            0.082396,
+            0.08425,
+            0.0841665
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1002234599,
+      "width": 1000033,
+      "mode": "count",
+      "count": 48145,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1002234599",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1002234599",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1002234599",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1002234599",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1002234599",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1002234599",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.07425,
+          "mean_ms": 0.0757695,
+          "min_ms": 0.068167,
+          "max_ms": 0.099125,
+          "samples_ms": [
+            0.068167,
+            0.074458,
+            0.084208,
+            0.074917,
+            0.070271,
+            0.099125,
+            0.0690625,
+            0.073729,
+            0.071375,
+            0.0728545,
+            0.068521,
+            0.083021,
+            0.074375,
+            0.07425,
+            0.0782085
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.098875,
+          "mean_ms": 0.1020306,
+          "min_ms": 0.092771,
+          "max_ms": 0.1190625,
+          "samples_ms": [
+            0.095208,
+            0.1080415,
+            0.092771,
+            0.0984585,
+            0.0947295,
+            0.106,
+            0.097458,
+            0.108521,
+            0.095521,
+            0.096354,
+            0.1162085,
+            0.1190625,
+            0.1027085,
+            0.098875,
+            0.100542
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.0975625,
+          "mean_ms": 0.1065347,
+          "min_ms": 0.0925625,
+          "max_ms": 0.1635835,
+          "samples_ms": [
+            0.1022915,
+            0.0993955,
+            0.0975625,
+            0.1012915,
+            0.1394585,
+            0.1170205,
+            0.0953335,
+            0.0925625,
+            0.118125,
+            0.093354,
+            0.0941665,
+            0.0938125,
+            0.0967295,
+            0.1635835,
+            0.0933335
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.1000835,
+          "mean_ms": 0.10183333333333333,
+          "min_ms": 0.091979,
+          "max_ms": 0.1316665,
+          "samples_ms": [
+            0.103896,
+            0.102646,
+            0.1007915,
+            0.0983125,
+            0.108667,
+            0.0995205,
+            0.1316665,
+            0.1065625,
+            0.1004375,
+            0.09775,
+            0.09975,
+            0.092979,
+            0.1000835,
+            0.0924585,
+            0.091979
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.0739165,
+          "mean_ms": 0.07559303333333334,
+          "min_ms": 0.067625,
+          "max_ms": 0.097375,
+          "samples_ms": [
+            0.068354,
+            0.076104,
+            0.0716665,
+            0.0690625,
+            0.087646,
+            0.07575,
+            0.0791665,
+            0.0731875,
+            0.071875,
+            0.074875,
+            0.067625,
+            0.0715,
+            0.097375,
+            0.0739165,
+            0.075792
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.5481875,
+          "mean_ms": 0.5525972333333333,
+          "min_ms": 0.511667,
+          "max_ms": 0.6321875,
+          "samples_ms": [
+            0.563646,
+            0.514625,
+            0.5415415,
+            0.5457085,
+            0.5232705,
+            0.511667,
+            0.580771,
+            0.538146,
+            0.6321875,
+            0.5481875,
+            0.5218125,
+            0.553375,
+            0.578458,
+            0.555125,
+            0.5804375
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1002234599,
+      "width": 1000033,
+      "mode": "generate",
+      "count": 48145,
+      "checksum": 48228504739669,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1002234599",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1002234599",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1002234599",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1002234599",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1002234599",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1002234599",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.117625,
+          "mean_ms": 0.11941393333333333,
+          "min_ms": 0.1040835,
+          "max_ms": 0.134646,
+          "samples_ms": [
+            0.1281875,
+            0.134646,
+            0.1291875,
+            0.106146,
+            0.108729,
+            0.109375,
+            0.1079375,
+            0.133917,
+            0.117625,
+            0.106375,
+            0.1332705,
+            0.133021,
+            0.1040835,
+            0.133,
+            0.1057085
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.127667,
+          "mean_ms": 0.12969856666666665,
+          "min_ms": 0.1173335,
+          "max_ms": 0.153229,
+          "samples_ms": [
+            0.153229,
+            0.127667,
+            0.117625,
+            0.1324165,
+            0.127125,
+            0.121333,
+            0.145604,
+            0.1290415,
+            0.1265835,
+            0.1323335,
+            0.137354,
+            0.1314165,
+            0.1254165,
+            0.121,
+            0.1173335
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.1283125,
+          "mean_ms": 0.13694166666666666,
+          "min_ms": 0.119917,
+          "max_ms": 0.1976875,
+          "samples_ms": [
+            0.155479,
+            0.128729,
+            0.1283125,
+            0.119917,
+            0.128729,
+            0.122729,
+            0.1602705,
+            0.124375,
+            0.1976875,
+            0.1203335,
+            0.141896,
+            0.1262295,
+            0.1508335,
+            0.125833,
+            0.122771
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.134833,
+          "mean_ms": 0.13313053333333333,
+          "min_ms": 0.115833,
+          "max_ms": 0.1535835,
+          "samples_ms": [
+            0.14675,
+            0.1363125,
+            0.149875,
+            0.1535835,
+            0.117729,
+            0.115833,
+            0.12075,
+            0.1229585,
+            0.127375,
+            0.1460415,
+            0.1188125,
+            0.1515625,
+            0.134833,
+            0.11875,
+            0.135792
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.121792,
+          "mean_ms": 0.1272389,
+          "min_ms": 0.1075,
+          "max_ms": 0.1696045,
+          "samples_ms": [
+            0.133396,
+            0.1188955,
+            0.1552915,
+            0.130354,
+            0.112104,
+            0.1337085,
+            0.1160625,
+            0.129896,
+            0.118479,
+            0.121792,
+            0.1201665,
+            0.1696045,
+            0.1177915,
+            0.123542,
+            0.1075
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.913771,
+          "mean_ms": 0.9328625333333334,
+          "min_ms": 0.8731875,
+          "max_ms": 1.0036045,
+          "samples_ms": [
+            1.0036045,
+            0.9081665,
+            0.959896,
+            0.8731875,
+            0.9136875,
+            0.8758125,
+            0.911146,
+            0.979625,
+            0.926021,
+            0.9004375,
+            0.98725,
+            0.913771,
+            0.9902915,
+            0.960875,
+            0.8891665
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1005428885,
+      "width": 4194319,
+      "mode": "count",
+      "count": 202454,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1005428885",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1005428885",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1005428885",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1005428885",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1005428885",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1005428885",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.3205,
+          "mean_ms": 0.31882086666666665,
+          "min_ms": 0.295125,
+          "max_ms": 0.34575,
+          "samples_ms": [
+            0.296375,
+            0.3173335,
+            0.3304375,
+            0.3097085,
+            0.299146,
+            0.2980415,
+            0.330375,
+            0.3205,
+            0.323604,
+            0.334708,
+            0.331292,
+            0.34575,
+            0.3198335,
+            0.3300835,
+            0.295125
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.3625,
+          "mean_ms": 0.3556667,
+          "min_ms": 0.326354,
+          "max_ms": 0.3968125,
+          "samples_ms": [
+            0.336729,
+            0.327375,
+            0.374125,
+            0.341042,
+            0.3968125,
+            0.3758125,
+            0.3300835,
+            0.3688545,
+            0.337875,
+            0.3635835,
+            0.3601875,
+            0.326354,
+            0.3640415,
+            0.3625,
+            0.369625
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.3669375,
+          "mean_ms": 0.3672820333333333,
+          "min_ms": 0.3389585,
+          "max_ms": 0.418354,
+          "samples_ms": [
+            0.3803545,
+            0.374417,
+            0.3389585,
+            0.377146,
+            0.3414795,
+            0.418354,
+            0.3648125,
+            0.3591875,
+            0.375625,
+            0.3669375,
+            0.362042,
+            0.3565415,
+            0.3669585,
+            0.3761875,
+            0.350229
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.3682085,
+          "mean_ms": 0.36778753333333336,
+          "min_ms": 0.3409795,
+          "max_ms": 0.3906455,
+          "samples_ms": [
+            0.385146,
+            0.3872085,
+            0.374729,
+            0.3906455,
+            0.3883335,
+            0.3588335,
+            0.374896,
+            0.3542705,
+            0.3409795,
+            0.3682085,
+            0.366083,
+            0.371771,
+            0.3584585,
+            0.3539165,
+            0.3433335
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.3169165,
+          "mean_ms": 0.32094296666666666,
+          "min_ms": 0.293896,
+          "max_ms": 0.3518955,
+          "samples_ms": [
+            0.293896,
+            0.312125,
+            0.3353335,
+            0.316708,
+            0.339125,
+            0.317958,
+            0.3518955,
+            0.3008125,
+            0.3142085,
+            0.32775,
+            0.3233125,
+            0.333958,
+            0.3155,
+            0.3169165,
+            0.3146455
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 2.1901455,
+          "mean_ms": 2.183175,
+          "min_ms": 2.09375,
+          "max_ms": 2.277125,
+          "samples_ms": [
+            2.09375,
+            2.098771,
+            2.1901455,
+            2.277125,
+            2.1817085,
+            2.2007085,
+            2.146604,
+            2.238,
+            2.2409585,
+            2.2201665,
+            2.267854,
+            2.2143335,
+            2.10675,
+            2.130896,
+            2.139854
+          ]
+        }
+      }
+    },
+    {
+      "start": 1001234567,
+      "end": 1005428885,
+      "width": 4194319,
+      "mode": "generate",
+      "count": 202454,
+      "checksum": 203129106798566,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1001234567",
+          "1005428885",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1005428885",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1005428885",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1001234567",
+          "1005428885",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1001234567",
+          "1005428885",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1001234567",
+          "1005428885",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.4793955,
+          "mean_ms": 0.4873708333333333,
+          "min_ms": 0.4545,
+          "max_ms": 0.6243335,
+          "samples_ms": [
+            0.4881045,
+            0.4623125,
+            0.6243335,
+            0.489625,
+            0.511729,
+            0.4670625,
+            0.457979,
+            0.4620835,
+            0.4545,
+            0.467583,
+            0.4962085,
+            0.4852085,
+            0.4793955,
+            0.499167,
+            0.4652705
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.466542,
+          "mean_ms": 0.47504446666666666,
+          "min_ms": 0.444021,
+          "max_ms": 0.570729,
+          "samples_ms": [
+            0.4894585,
+            0.4595415,
+            0.444021,
+            0.46825,
+            0.495708,
+            0.472542,
+            0.4605625,
+            0.5148125,
+            0.466542,
+            0.4504375,
+            0.4457705,
+            0.4704375,
+            0.570729,
+            0.458146,
+            0.4587085
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.475292,
+          "mean_ms": 0.4731819666666667,
+          "min_ms": 0.441021,
+          "max_ms": 0.50675,
+          "samples_ms": [
+            0.4829375,
+            0.441021,
+            0.484625,
+            0.49375,
+            0.4667085,
+            0.50675,
+            0.5014585,
+            0.4775625,
+            0.45425,
+            0.458229,
+            0.481625,
+            0.4604165,
+            0.4623125,
+            0.4507915,
+            0.475292
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.4754375,
+          "mean_ms": 0.48231536666666663,
+          "min_ms": 0.4451875,
+          "max_ms": 0.564271,
+          "samples_ms": [
+            0.4754375,
+            0.45925,
+            0.564271,
+            0.537646,
+            0.477271,
+            0.4871875,
+            0.4646665,
+            0.5151045,
+            0.4451875,
+            0.4762085,
+            0.4677085,
+            0.459,
+            0.447125,
+            0.5082295,
+            0.4504375
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.491646,
+          "mean_ms": 0.49224993333333333,
+          "min_ms": 0.4484375,
+          "max_ms": 0.548833,
+          "samples_ms": [
+            0.484354,
+            0.499104,
+            0.4578335,
+            0.458146,
+            0.548833,
+            0.462604,
+            0.489875,
+            0.469354,
+            0.491646,
+            0.4484375,
+            0.5049165,
+            0.528458,
+            0.492,
+            0.526,
+            0.5221875
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 3.8042085,
+          "mean_ms": 3.8042000666666667,
+          "min_ms": 3.726,
+          "max_ms": 3.8594585,
+          "samples_ms": [
+            3.7635625,
+            3.801125,
+            3.726,
+            3.7872085,
+            3.8382085,
+            3.8402705,
+            3.8594585,
+            3.7414585,
+            3.8102915,
+            3.7806875,
+            3.8042085,
+            3.786917,
+            3.8453335,
+            3.833875,
+            3.844396
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100007654457,
+      "width": 137,
+      "mode": "count",
+      "count": 4,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100007654457",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007654457",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007654457",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007654457",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100007654457",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100007654457",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.058458,
+          "mean_ms": 0.05896666666666667,
+          "min_ms": 0.0541875,
+          "max_ms": 0.0703125,
+          "samples_ms": [
+            0.0593125,
+            0.0703125,
+            0.0578125,
+            0.0541875,
+            0.060729,
+            0.0592915,
+            0.0558125,
+            0.06525,
+            0.0590415,
+            0.0579795,
+            0.059396,
+            0.0543335,
+            0.058458,
+            0.0579585,
+            0.054625
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.0868125,
+          "mean_ms": 0.09573473333333334,
+          "min_ms": 0.079104,
+          "max_ms": 0.148667,
+          "samples_ms": [
+            0.079104,
+            0.100396,
+            0.096146,
+            0.079604,
+            0.0877085,
+            0.0825415,
+            0.0868125,
+            0.0868125,
+            0.082604,
+            0.087,
+            0.085021,
+            0.148667,
+            0.086083,
+            0.1467085,
+            0.1008125
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.083771,
+          "mean_ms": 0.08375826666666666,
+          "min_ms": 0.0777705,
+          "max_ms": 0.092729,
+          "samples_ms": [
+            0.07825,
+            0.081417,
+            0.077833,
+            0.083771,
+            0.092729,
+            0.0784375,
+            0.0887705,
+            0.0840205,
+            0.079625,
+            0.085875,
+            0.0890625,
+            0.0777705,
+            0.081896,
+            0.086979,
+            0.0899375
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.0846875,
+          "mean_ms": 0.08522363333333334,
+          "min_ms": 0.0791875,
+          "max_ms": 0.093021,
+          "samples_ms": [
+            0.0886875,
+            0.0827085,
+            0.083875,
+            0.088021,
+            0.088896,
+            0.093021,
+            0.0798125,
+            0.0791875,
+            0.0845,
+            0.0886875,
+            0.08075,
+            0.0866875,
+            0.0846875,
+            0.0831665,
+            0.0856665
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.055979,
+          "mean_ms": 0.056183366666666665,
+          "min_ms": 0.054,
+          "max_ms": 0.060229,
+          "samples_ms": [
+            0.054,
+            0.060229,
+            0.056125,
+            0.057521,
+            0.055646,
+            0.0574585,
+            0.055979,
+            0.0580625,
+            0.054979,
+            0.054,
+            0.054042,
+            0.0550625,
+            0.057375,
+            0.0580835,
+            0.0541875
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.084208,
+          "mean_ms": 0.0838305,
+          "min_ms": 0.078479,
+          "max_ms": 0.092083,
+          "samples_ms": [
+            0.0785415,
+            0.089771,
+            0.0786875,
+            0.092083,
+            0.0847085,
+            0.084208,
+            0.082375,
+            0.0856665,
+            0.0805835,
+            0.078479,
+            0.083208,
+            0.078917,
+            0.0891455,
+            0.086729,
+            0.0843545
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100007654457,
+      "width": 137,
+      "mode": "generate",
+      "count": 4,
+      "checksum": 400030617526,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100007654457",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007654457",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007654457",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007654457",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100007654457",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100007654457",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.0564375,
+          "mean_ms": 0.057151466666666664,
+          "min_ms": 0.0540205,
+          "max_ms": 0.066479,
+          "samples_ms": [
+            0.0572295,
+            0.0540205,
+            0.054292,
+            0.054229,
+            0.0564375,
+            0.0605,
+            0.0585835,
+            0.056375,
+            0.0543545,
+            0.058083,
+            0.060667,
+            0.056646,
+            0.066479,
+            0.0552295,
+            0.054146
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.066208,
+          "mean_ms": 0.06763743333333333,
+          "min_ms": 0.0616665,
+          "max_ms": 0.078,
+          "samples_ms": [
+            0.0616665,
+            0.065875,
+            0.064125,
+            0.078,
+            0.0685,
+            0.0693335,
+            0.0703955,
+            0.062771,
+            0.063,
+            0.070729,
+            0.0723125,
+            0.0731455,
+            0.0654375,
+            0.0630625,
+            0.066208
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.0647915,
+          "mean_ms": 0.0661611,
+          "min_ms": 0.0598955,
+          "max_ms": 0.076604,
+          "samples_ms": [
+            0.0598955,
+            0.0607295,
+            0.064583,
+            0.076604,
+            0.060729,
+            0.0647915,
+            0.063458,
+            0.0655835,
+            0.065167,
+            0.0640625,
+            0.072896,
+            0.0714375,
+            0.0645835,
+            0.0709375,
+            0.0669585
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.0680625,
+          "mean_ms": 0.0693293,
+          "min_ms": 0.0625835,
+          "max_ms": 0.0863335,
+          "samples_ms": [
+            0.066021,
+            0.068292,
+            0.066625,
+            0.0680625,
+            0.0645625,
+            0.081125,
+            0.0701875,
+            0.0700835,
+            0.069542,
+            0.070479,
+            0.0863335,
+            0.0642295,
+            0.0678335,
+            0.0625835,
+            0.0639795
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.054458,
+          "mean_ms": 0.0560639,
+          "min_ms": 0.0538955,
+          "max_ms": 0.0637915,
+          "samples_ms": [
+            0.054104,
+            0.054458,
+            0.0559165,
+            0.057021,
+            0.059375,
+            0.05575,
+            0.0538955,
+            0.054292,
+            0.0539795,
+            0.059604,
+            0.0539795,
+            0.0544375,
+            0.0637915,
+            0.0560835,
+            0.054271
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.0825625,
+          "mean_ms": 0.08486253333333334,
+          "min_ms": 0.078833,
+          "max_ms": 0.0975,
+          "samples_ms": [
+            0.0975,
+            0.085625,
+            0.082542,
+            0.081,
+            0.082479,
+            0.0848335,
+            0.0806875,
+            0.0925205,
+            0.0843125,
+            0.0792085,
+            0.078833,
+            0.083667,
+            0.08175,
+            0.095417,
+            0.0825625
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100007719857,
+      "width": 65537,
+      "mode": "count",
+      "count": 2595,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100007719857",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007719857",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007719857",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007719857",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100007719857",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100007719857",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.1386875,
+          "mean_ms": 0.1399763,
+          "min_ms": 0.129521,
+          "max_ms": 0.161208,
+          "samples_ms": [
+            0.1333125,
+            0.129521,
+            0.1429375,
+            0.1328125,
+            0.1501455,
+            0.137125,
+            0.1432085,
+            0.143458,
+            0.138229,
+            0.1359165,
+            0.132708,
+            0.161208,
+            0.141521,
+            0.138854,
+            0.1386875
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.2668955,
+          "mean_ms": 0.2682235666666667,
+          "min_ms": 0.247521,
+          "max_ms": 0.3055415,
+          "samples_ms": [
+            0.248854,
+            0.247521,
+            0.2795835,
+            0.2640835,
+            0.2720625,
+            0.2668955,
+            0.277021,
+            0.2676875,
+            0.2653335,
+            0.247958,
+            0.284604,
+            0.262958,
+            0.2643125,
+            0.3055415,
+            0.2689375
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.2645,
+          "mean_ms": 0.27147496666666665,
+          "min_ms": 0.245729,
+          "max_ms": 0.384958,
+          "samples_ms": [
+            0.271896,
+            0.384958,
+            0.268375,
+            0.2645,
+            0.24575,
+            0.2478335,
+            0.2890415,
+            0.258604,
+            0.250625,
+            0.291854,
+            0.2666665,
+            0.26525,
+            0.262146,
+            0.258896,
+            0.245729
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.2765,
+          "mean_ms": 0.27529986666666667,
+          "min_ms": 0.2471455,
+          "max_ms": 0.2959165,
+          "samples_ms": [
+            0.2751875,
+            0.2809375,
+            0.2765,
+            0.2531455,
+            0.2847915,
+            0.2959165,
+            0.2678125,
+            0.270458,
+            0.264479,
+            0.2891455,
+            0.2471455,
+            0.295271,
+            0.293,
+            0.255083,
+            0.280625
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.131604,
+          "mean_ms": 0.13661383333333332,
+          "min_ms": 0.1280205,
+          "max_ms": 0.1542915,
+          "samples_ms": [
+            0.150979,
+            0.1280205,
+            0.1289585,
+            0.129604,
+            0.1281875,
+            0.1294165,
+            0.143521,
+            0.1419165,
+            0.131604,
+            0.1424585,
+            0.1445625,
+            0.137,
+            0.129271,
+            0.1542915,
+            0.1294165
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.21575,
+          "mean_ms": 0.21826106666666667,
+          "min_ms": 0.204875,
+          "max_ms": 0.2495,
+          "samples_ms": [
+            0.2219585,
+            0.234875,
+            0.2077915,
+            0.212458,
+            0.2273125,
+            0.2495,
+            0.221125,
+            0.21575,
+            0.205146,
+            0.2366665,
+            0.206125,
+            0.204875,
+            0.216229,
+            0.2060415,
+            0.2080625
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100007719857,
+      "width": 65537,
+      "mode": "generate",
+      "count": 2595,
+      "checksum": 259519947414557,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100007719857",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007719857",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007719857",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100007719857",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100007719857",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100007719857",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.13625,
+          "mean_ms": 0.1389486,
+          "min_ms": 0.1282915,
+          "max_ms": 0.1542295,
+          "samples_ms": [
+            0.135833,
+            0.139375,
+            0.1358955,
+            0.146625,
+            0.1282915,
+            0.136,
+            0.1428335,
+            0.1328955,
+            0.1458335,
+            0.1347915,
+            0.13625,
+            0.14025,
+            0.1354795,
+            0.139646,
+            0.1542295
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.25125,
+          "mean_ms": 0.2586833666666667,
+          "min_ms": 0.236896,
+          "max_ms": 0.294271,
+          "samples_ms": [
+            0.2719585,
+            0.25125,
+            0.294271,
+            0.263396,
+            0.2423545,
+            0.236896,
+            0.2446875,
+            0.250625,
+            0.2408955,
+            0.2577705,
+            0.258479,
+            0.291875,
+            0.2884375,
+            0.2449375,
+            0.242417
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.2486875,
+          "mean_ms": 0.24885143333333334,
+          "min_ms": 0.2297295,
+          "max_ms": 0.268083,
+          "samples_ms": [
+            0.2574585,
+            0.261625,
+            0.268083,
+            0.23325,
+            0.2297295,
+            0.2486875,
+            0.2487085,
+            0.2466665,
+            0.264771,
+            0.231146,
+            0.2526665,
+            0.242375,
+            0.2658125,
+            0.2373545,
+            0.2444375
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.250625,
+          "mean_ms": 0.25267636666666665,
+          "min_ms": 0.2340625,
+          "max_ms": 0.2879165,
+          "samples_ms": [
+            0.2441875,
+            0.2879165,
+            0.2568125,
+            0.2340625,
+            0.2404375,
+            0.243042,
+            0.238104,
+            0.237375,
+            0.250625,
+            0.263104,
+            0.257646,
+            0.2493955,
+            0.269146,
+            0.2593125,
+            0.258979
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.1407085,
+          "mean_ms": 0.14082633333333333,
+          "min_ms": 0.1312705,
+          "max_ms": 0.1508125,
+          "samples_ms": [
+            0.1417915,
+            0.136521,
+            0.1312705,
+            0.138208,
+            0.1448125,
+            0.1486875,
+            0.142458,
+            0.1508125,
+            0.1356665,
+            0.141396,
+            0.1491665,
+            0.1371875,
+            0.1407085,
+            0.1361875,
+            0.137521
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.2411875,
+          "mean_ms": 0.23957773333333332,
+          "min_ms": 0.2228125,
+          "max_ms": 0.2509375,
+          "samples_ms": [
+            0.2306045,
+            0.232625,
+            0.2485835,
+            0.2410835,
+            0.2420205,
+            0.2457705,
+            0.232083,
+            0.2409375,
+            0.2375,
+            0.2411875,
+            0.2435625,
+            0.2509375,
+            0.2412915,
+            0.2426665,
+            0.2228125
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100008654353,
+      "width": 1000033,
+      "mode": "count",
+      "count": 39549,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100008654353",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100008654353",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100008654353",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100008654353",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100008654353",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100008654353",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.255896,
+          "mean_ms": 0.2565346333333333,
+          "min_ms": 0.2441455,
+          "max_ms": 0.2721875,
+          "samples_ms": [
+            0.25525,
+            0.2624165,
+            0.2721875,
+            0.2498955,
+            0.2585625,
+            0.270125,
+            0.2495625,
+            0.2536875,
+            0.258104,
+            0.251458,
+            0.256104,
+            0.2441455,
+            0.2657915,
+            0.2448335,
+            0.255896
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.3143955,
+          "mean_ms": 0.31992360000000003,
+          "min_ms": 0.3043125,
+          "max_ms": 0.346854,
+          "samples_ms": [
+            0.346854,
+            0.3415,
+            0.3043125,
+            0.312521,
+            0.3172915,
+            0.3115625,
+            0.3095625,
+            0.338104,
+            0.334021,
+            0.320875,
+            0.3063125,
+            0.3222295,
+            0.3143955,
+            0.31125,
+            0.3080625
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.345229,
+          "mean_ms": 0.34534723333333334,
+          "min_ms": 0.328146,
+          "max_ms": 0.370875,
+          "samples_ms": [
+            0.3393125,
+            0.3365,
+            0.32925,
+            0.3586665,
+            0.347104,
+            0.370875,
+            0.345229,
+            0.330979,
+            0.3472295,
+            0.33725,
+            0.328146,
+            0.356104,
+            0.331,
+            0.365542,
+            0.357021
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.316521,
+          "mean_ms": 0.31835563333333333,
+          "min_ms": 0.301646,
+          "max_ms": 0.3517085,
+          "samples_ms": [
+            0.3104585,
+            0.31525,
+            0.318271,
+            0.319646,
+            0.305042,
+            0.311396,
+            0.304208,
+            0.301646,
+            0.3517085,
+            0.3313955,
+            0.332375,
+            0.329042,
+            0.302146,
+            0.326229,
+            0.316521
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.254,
+          "mean_ms": 0.2557472,
+          "min_ms": 0.24225,
+          "max_ms": 0.2788125,
+          "samples_ms": [
+            0.2516665,
+            0.254,
+            0.258104,
+            0.245646,
+            0.2485415,
+            0.24225,
+            0.254979,
+            0.269854,
+            0.261,
+            0.27225,
+            0.2434585,
+            0.2788125,
+            0.2465835,
+            0.2579165,
+            0.251146
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 1.086396,
+          "mean_ms": 1.0856305666666666,
+          "min_ms": 1.03325,
+          "max_ms": 1.1441665,
+          "samples_ms": [
+            1.059667,
+            1.086396,
+            1.1441665,
+            1.057125,
+            1.1140415,
+            1.058083,
+            1.03325,
+            1.1356875,
+            1.0972085,
+            1.1035,
+            1.0753125,
+            1.06875,
+            1.1077085,
+            1.097604,
+            1.0459585
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100008654353,
+      "width": 1000033,
+      "mode": "generate",
+      "count": 39549,
+      "checksum": 3955222495746135,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100008654353",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100008654353",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100008654353",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100008654353",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100008654353",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100008654353",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.302333,
+          "mean_ms": 0.29856523333333335,
+          "min_ms": 0.2731665,
+          "max_ms": 0.3166665,
+          "samples_ms": [
+            0.3166665,
+            0.294521,
+            0.3163545,
+            0.289625,
+            0.2903125,
+            0.3122915,
+            0.2731665,
+            0.3066455,
+            0.304167,
+            0.306333,
+            0.293854,
+            0.302333,
+            0.304021,
+            0.2830625,
+            0.285125
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.355979,
+          "mean_ms": 0.35302913333333336,
+          "min_ms": 0.3261455,
+          "max_ms": 0.381,
+          "samples_ms": [
+            0.327646,
+            0.355979,
+            0.3653955,
+            0.340896,
+            0.327021,
+            0.3261455,
+            0.340979,
+            0.3606455,
+            0.3721875,
+            0.356708,
+            0.3508125,
+            0.3664585,
+            0.381,
+            0.3733335,
+            0.3502295
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.377125,
+          "mean_ms": 0.38534033333333334,
+          "min_ms": 0.3603125,
+          "max_ms": 0.435125,
+          "samples_ms": [
+            0.376458,
+            0.373042,
+            0.3825625,
+            0.3750835,
+            0.3603125,
+            0.363896,
+            0.363042,
+            0.3833125,
+            0.4095625,
+            0.428479,
+            0.377125,
+            0.3850835,
+            0.405792,
+            0.361229,
+            0.435125
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.3540205,
+          "mean_ms": 0.3638514,
+          "min_ms": 0.328125,
+          "max_ms": 0.4820835,
+          "samples_ms": [
+            0.3638335,
+            0.362708,
+            0.3476455,
+            0.328125,
+            0.334417,
+            0.377646,
+            0.3513335,
+            0.3415835,
+            0.366625,
+            0.3681875,
+            0.349271,
+            0.4820835,
+            0.34175,
+            0.3885415,
+            0.3540205
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.297625,
+          "mean_ms": 0.2968750333333333,
+          "min_ms": 0.2731875,
+          "max_ms": 0.3355,
+          "samples_ms": [
+            0.2976875,
+            0.288854,
+            0.2854375,
+            0.2731875,
+            0.283021,
+            0.287104,
+            0.307625,
+            0.292646,
+            0.30825,
+            0.3355,
+            0.297625,
+            0.3019375,
+            0.276167,
+            0.31775,
+            0.3003335
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 1.437208,
+          "mean_ms": 1.4533374333333333,
+          "min_ms": 1.3482085,
+          "max_ms": 1.8485625,
+          "samples_ms": [
+            1.4724585,
+            1.437208,
+            1.449479,
+            1.382229,
+            1.436729,
+            1.3960625,
+            1.438083,
+            1.4565,
+            1.4765835,
+            1.420125,
+            1.3482085,
+            1.8485625,
+            1.3911455,
+            1.388896,
+            1.4577915
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100011848639,
+      "width": 4194319,
+      "mode": "count",
+      "count": 165859,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100011848639",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100011848639",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100011848639",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100011848639",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100011848639",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100011848639",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.775875,
+          "mean_ms": 0.9259430333333333,
+          "min_ms": 0.715125,
+          "max_ms": 2.116729,
+          "samples_ms": [
+            0.791625,
+            0.775875,
+            0.732833,
+            0.7470625,
+            0.769229,
+            2.116729,
+            1.804979,
+            0.7395,
+            0.7659585,
+            0.7928335,
+            0.839625,
+            0.7335835,
+            0.715125,
+            0.7835835,
+            0.780604
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.6064375,
+          "mean_ms": 0.7118014,
+          "min_ms": 0.5590625,
+          "max_ms": 1.5035,
+          "samples_ms": [
+            0.634375,
+            0.5683545,
+            0.5841665,
+            0.603604,
+            0.617625,
+            1.5035,
+            1.351375,
+            0.6100835,
+            0.629833,
+            0.6064375,
+            0.5778335,
+            0.6034585,
+            0.5590625,
+            0.603625,
+            0.6236875
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.7853335,
+          "mean_ms": 0.8244388666666667,
+          "min_ms": 0.7471875,
+          "max_ms": 1.2616665,
+          "samples_ms": [
+            0.7853335,
+            0.7776665,
+            0.7729165,
+            0.7471875,
+            0.768729,
+            0.8380835,
+            1.2616665,
+            0.76175,
+            0.817708,
+            0.8025625,
+            0.788875,
+            0.7783125,
+            0.758521,
+            0.8312085,
+            0.8760625
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.5894795,
+          "mean_ms": 0.5909292,
+          "min_ms": 0.562292,
+          "max_ms": 0.6260625,
+          "samples_ms": [
+            0.5639165,
+            0.5937085,
+            0.5941875,
+            0.586229,
+            0.598625,
+            0.6260625,
+            0.6142915,
+            0.5796875,
+            0.606167,
+            0.5627915,
+            0.562292,
+            0.5874165,
+            0.6209375,
+            0.5894795,
+            0.578146
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.7622705,
+          "mean_ms": 0.8586819333333333,
+          "min_ms": 0.7137085,
+          "max_ms": 2.232979,
+          "samples_ms": [
+            0.762479,
+            0.798271,
+            0.7556045,
+            0.7622705,
+            0.817,
+            0.8019585,
+            2.232979,
+            0.7792915,
+            0.7364375,
+            0.7137085,
+            0.753625,
+            0.73925,
+            0.7770415,
+            0.7255,
+            0.7248125
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 4.1240835,
+          "mean_ms": 4.237599966666667,
+          "min_ms": 3.9710415,
+          "max_ms": 5.732979,
+          "samples_ms": [
+            4.0952085,
+            4.127021,
+            4.1240835,
+            3.978604,
+            4.1279375,
+            4.2554375,
+            5.732979,
+            4.116896,
+            4.192604,
+            3.9710415,
+            4.0880835,
+            4.3665625,
+            4.1130415,
+            4.0866665,
+            4.187833
+          ]
+        }
+      }
+    },
+    {
+      "start": 100007654321,
+      "end": 100011848639,
+      "width": 4194319,
+      "mode": "generate",
+      "count": 165859,
+      "checksum": 16587517532564307,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "100007654321",
+          "100011848639",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100011848639",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100011848639",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "100007654321",
+          "100011848639",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "100007654321",
+          "100011848639",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "100007654321",
+          "100011848639",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.9362915,
+          "mean_ms": 0.9593708333333333,
+          "min_ms": 0.855479,
+          "max_ms": 1.156542,
+          "samples_ms": [
+            1.14,
+            1.0270625,
+            0.948125,
+            0.9362915,
+            1.156542,
+            0.8575,
+            0.9172085,
+            1.0491875,
+            0.9275,
+            0.939625,
+            0.9235835,
+            0.943354,
+            0.855479,
+            0.86675,
+            0.902354
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.7351875,
+          "mean_ms": 0.7653444666666667,
+          "min_ms": 0.692,
+          "max_ms": 0.949167,
+          "samples_ms": [
+            0.726771,
+            0.793167,
+            0.692,
+            0.8208955,
+            0.707875,
+            0.949167,
+            0.8191875,
+            0.715604,
+            0.723771,
+            0.7562085,
+            0.8495625,
+            0.693604,
+            0.7284165,
+            0.76875,
+            0.7351875
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.9367295,
+          "mean_ms": 1.0068445,
+          "min_ms": 0.853792,
+          "max_ms": 1.7698125,
+          "samples_ms": [
+            1.079354,
+            0.919875,
+            0.939729,
+            1.0404795,
+            0.853792,
+            0.9367295,
+            0.918,
+            0.9155835,
+            1.006146,
+            0.857458,
+            1.7698125,
+            0.9070835,
+            0.93925,
+            1.145854,
+            0.873521
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.7300625,
+          "mean_ms": 0.8265402666666667,
+          "min_ms": 0.660708,
+          "max_ms": 1.9363125,
+          "samples_ms": [
+            0.783354,
+            0.7300625,
+            0.8175835,
+            0.6803125,
+            0.7120625,
+            0.6653125,
+            0.9066875,
+            0.7098335,
+            0.710646,
+            0.71375,
+            1.9363125,
+            0.8546045,
+            0.660708,
+            0.731708,
+            0.7851665
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.946083,
+          "mean_ms": 1.0688473,
+          "min_ms": 0.8353335,
+          "max_ms": 2.8772295,
+          "samples_ms": [
+            0.8721665,
+            0.946083,
+            0.8645,
+            1.0109585,
+            0.9647085,
+            0.9729795,
+            0.96725,
+            1.0281455,
+            0.9300835,
+            0.8353335,
+            2.8772295,
+            1.188042,
+            0.8422085,
+            0.8460835,
+            0.8869375
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 5.6282085,
+          "mean_ms": 5.7303278,
+          "min_ms": 5.4766875,
+          "max_ms": 6.459042,
+          "samples_ms": [
+            5.62725,
+            5.573354,
+            5.536417,
+            6.459042,
+            5.964604,
+            5.642146,
+            5.488979,
+            6.2379165,
+            5.4766875,
+            5.6282085,
+            5.7074375,
+            5.5185205,
+            5.58625,
+            5.666042,
+            5.8420625
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000023456925,
+      "width": 137,
+      "mode": "count",
+      "count": 4,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023456925",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023456925",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023456925",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023456925",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023456925",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000023456925",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.1658125,
+          "mean_ms": 0.16662913333333335,
+          "min_ms": 0.153875,
+          "max_ms": 0.181875,
+          "samples_ms": [
+            0.1648335,
+            0.154396,
+            0.181875,
+            0.165604,
+            0.1617085,
+            0.153875,
+            0.167854,
+            0.1780835,
+            0.1812915,
+            0.1663335,
+            0.1658125,
+            0.166083,
+            0.1744165,
+            0.1602915,
+            0.156979
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.2513545,
+          "mean_ms": 0.25041946666666665,
+          "min_ms": 0.2281665,
+          "max_ms": 0.2908955,
+          "samples_ms": [
+            0.229625,
+            0.2316045,
+            0.2402915,
+            0.2908955,
+            0.256625,
+            0.2347915,
+            0.26375,
+            0.259875,
+            0.252875,
+            0.243854,
+            0.250896,
+            0.2281665,
+            0.262646,
+            0.2513545,
+            0.259042
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.245125,
+          "mean_ms": 0.2446417,
+          "min_ms": 0.226167,
+          "max_ms": 0.2748545,
+          "samples_ms": [
+            0.23475,
+            0.228979,
+            0.2378545,
+            0.2461875,
+            0.2295,
+            0.257354,
+            0.260583,
+            0.2299375,
+            0.2748545,
+            0.248396,
+            0.226167,
+            0.2614375,
+            0.245875,
+            0.242625,
+            0.245125
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.24875,
+          "mean_ms": 0.2521986666666667,
+          "min_ms": 0.2274585,
+          "max_ms": 0.28525,
+          "samples_ms": [
+            0.247208,
+            0.241542,
+            0.2431455,
+            0.280104,
+            0.24875,
+            0.28525,
+            0.258125,
+            0.2432085,
+            0.2561045,
+            0.2274585,
+            0.255896,
+            0.262917,
+            0.25625,
+            0.2468125,
+            0.2302085
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.1607915,
+          "mean_ms": 0.1604096,
+          "min_ms": 0.1526665,
+          "max_ms": 0.170271,
+          "samples_ms": [
+            0.155,
+            0.155646,
+            0.1532705,
+            0.162333,
+            0.165625,
+            0.1607915,
+            0.1644165,
+            0.1526665,
+            0.15325,
+            0.1649375,
+            0.1698955,
+            0.170271,
+            0.164604,
+            0.1602705,
+            0.1531665
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.3152295,
+          "mean_ms": 0.3149056333333333,
+          "min_ms": 0.288167,
+          "max_ms": 0.3320835,
+          "samples_ms": [
+            0.3018955,
+            0.288167,
+            0.307167,
+            0.3049375,
+            0.306,
+            0.310875,
+            0.3152295,
+            0.323583,
+            0.3320835,
+            0.3263335,
+            0.3295625,
+            0.310542,
+            0.3227085,
+            0.3190625,
+            0.3254375
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000023456925,
+      "width": 137,
+      "mode": "generate",
+      "count": 4,
+      "checksum": 4000093827312,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023456925",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023456925",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023456925",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023456925",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023456925",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000023456925",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.1664165,
+          "mean_ms": 0.16817506666666665,
+          "min_ms": 0.1541045,
+          "max_ms": 0.190792,
+          "samples_ms": [
+            0.1541045,
+            0.1651875,
+            0.167729,
+            0.1685625,
+            0.164708,
+            0.167521,
+            0.190792,
+            0.176292,
+            0.1664165,
+            0.165979,
+            0.1613335,
+            0.1603335,
+            0.175875,
+            0.1624585,
+            0.1753335
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.1843545,
+          "mean_ms": 0.19036813333333333,
+          "min_ms": 0.1690205,
+          "max_ms": 0.219625,
+          "samples_ms": [
+            0.183229,
+            0.1825,
+            0.178875,
+            0.2137085,
+            0.1690205,
+            0.184396,
+            0.219625,
+            0.190271,
+            0.1825625,
+            0.179896,
+            0.1843545,
+            0.2140415,
+            0.175021,
+            0.213417,
+            0.1846045
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.1748335,
+          "mean_ms": 0.17983193333333333,
+          "min_ms": 0.1606045,
+          "max_ms": 0.2250415,
+          "samples_ms": [
+            0.1771875,
+            0.1854375,
+            0.167375,
+            0.1850625,
+            0.1823125,
+            0.17025,
+            0.2250415,
+            0.1976665,
+            0.1748335,
+            0.1744375,
+            0.180104,
+            0.1606045,
+            0.1721875,
+            0.174708,
+            0.170271
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.182146,
+          "mean_ms": 0.18762363333333335,
+          "min_ms": 0.1689165,
+          "max_ms": 0.236854,
+          "samples_ms": [
+            0.180875,
+            0.224896,
+            0.1897085,
+            0.19225,
+            0.1883125,
+            0.1699375,
+            0.183125,
+            0.1689165,
+            0.172146,
+            0.183604,
+            0.182146,
+            0.1794585,
+            0.180375,
+            0.18175,
+            0.236854
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.164417,
+          "mean_ms": 0.1634083,
+          "min_ms": 0.1526665,
+          "max_ms": 0.1856875,
+          "samples_ms": [
+            0.164417,
+            0.1856875,
+            0.1617915,
+            0.153792,
+            0.153229,
+            0.1526665,
+            0.1535205,
+            0.1721665,
+            0.178583,
+            0.165146,
+            0.165542,
+            0.1578125,
+            0.1531665,
+            0.1658125,
+            0.1677915
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.310354,
+          "mean_ms": 0.31652786666666666,
+          "min_ms": 0.287875,
+          "max_ms": 0.454021,
+          "samples_ms": [
+            0.310354,
+            0.300771,
+            0.3155,
+            0.288542,
+            0.319875,
+            0.3473125,
+            0.288042,
+            0.2987085,
+            0.2927915,
+            0.287875,
+            0.312542,
+            0.3166665,
+            0.298042,
+            0.316875,
+            0.454021
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000023522325,
+      "width": 65537,
+      "mode": "count",
+      "count": 2379,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023522325",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023522325",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023522325",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023522325",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023522325",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000023522325",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.2670625,
+          "mean_ms": 0.26807916666666665,
+          "min_ms": 0.250625,
+          "max_ms": 0.2994375,
+          "samples_ms": [
+            0.2889375,
+            0.2670625,
+            0.26925,
+            0.2565,
+            0.2513125,
+            0.250625,
+            0.2558125,
+            0.273521,
+            0.2994375,
+            0.2884165,
+            0.2811665,
+            0.2524375,
+            0.252271,
+            0.283125,
+            0.2513125
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.5069585,
+          "mean_ms": 0.5122277333333334,
+          "min_ms": 0.473,
+          "max_ms": 0.566,
+          "samples_ms": [
+            0.5296875,
+            0.5350205,
+            0.490625,
+            0.47375,
+            0.5025205,
+            0.480104,
+            0.5411665,
+            0.4884165,
+            0.566,
+            0.473,
+            0.514229,
+            0.5473545,
+            0.5069585,
+            0.5535835,
+            0.481
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.5090415,
+          "mean_ms": 0.5517458,
+          "min_ms": 0.46425,
+          "max_ms": 1.1153125,
+          "samples_ms": [
+            0.5090415,
+            1.1153125,
+            0.54225,
+            0.48875,
+            0.5885,
+            0.5287705,
+            0.4734585,
+            0.4875835,
+            0.569021,
+            0.46425,
+            0.5007915,
+            0.464729,
+            0.5235625,
+            0.487104,
+            0.5330625
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.4894375,
+          "mean_ms": 0.5038014666666667,
+          "min_ms": 0.4656665,
+          "max_ms": 0.5608545,
+          "samples_ms": [
+            0.4803335,
+            0.5608545,
+            0.5476045,
+            0.517146,
+            0.5277915,
+            0.542667,
+            0.486042,
+            0.4894375,
+            0.4710625,
+            0.5260415,
+            0.5073335,
+            0.4656665,
+            0.467104,
+            0.4868335,
+            0.481104
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.263333,
+          "mean_ms": 0.28528746666666666,
+          "min_ms": 0.250146,
+          "max_ms": 0.4224165,
+          "samples_ms": [
+            0.292125,
+            0.261354,
+            0.2620625,
+            0.344646,
+            0.2526875,
+            0.2936665,
+            0.257125,
+            0.3026875,
+            0.2626875,
+            0.250146,
+            0.263333,
+            0.2953335,
+            0.4224165,
+            0.250229,
+            0.2688125
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.486854,
+          "mean_ms": 0.48757216666666664,
+          "min_ms": 0.460229,
+          "max_ms": 0.527458,
+          "samples_ms": [
+            0.4975205,
+            0.4811665,
+            0.4912295,
+            0.5005625,
+            0.486854,
+            0.460229,
+            0.4669585,
+            0.4684375,
+            0.512833,
+            0.527458,
+            0.474625,
+            0.46225,
+            0.470625,
+            0.4998335,
+            0.513
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000023522325,
+      "width": 65537,
+      "mode": "generate",
+      "count": 2379,
+      "checksum": 2379055880659363,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023522325",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023522325",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023522325",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000023522325",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000023522325",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000023522325",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.290396,
+          "mean_ms": 0.3149846666666667,
+          "min_ms": 0.2716665,
+          "max_ms": 0.581792,
+          "samples_ms": [
+            0.3246875,
+            0.304229,
+            0.289104,
+            0.31175,
+            0.297833,
+            0.2716665,
+            0.581792,
+            0.28525,
+            0.2722705,
+            0.290396,
+            0.2805,
+            0.366625,
+            0.279167,
+            0.296458,
+            0.2730415
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.453958,
+          "mean_ms": 0.5012847333333333,
+          "min_ms": 0.422771,
+          "max_ms": 0.982875,
+          "samples_ms": [
+            0.457833,
+            0.5382085,
+            0.447229,
+            0.4668545,
+            0.982875,
+            0.453958,
+            0.612021,
+            0.4564585,
+            0.448792,
+            0.446646,
+            0.4449165,
+            0.4839165,
+            0.4291665,
+            0.422771,
+            0.427625
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.4664375,
+          "mean_ms": 0.48161943333333335,
+          "min_ms": 0.4221665,
+          "max_ms": 0.6055415,
+          "samples_ms": [
+            0.4448955,
+            0.4443125,
+            0.5007915,
+            0.442375,
+            0.6055415,
+            0.501083,
+            0.4474165,
+            0.4434585,
+            0.5081875,
+            0.5835835,
+            0.488521,
+            0.4509795,
+            0.4221665,
+            0.474542,
+            0.4664375
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.4765835,
+          "mean_ms": 0.4839639,
+          "min_ms": 0.4465835,
+          "max_ms": 0.546354,
+          "samples_ms": [
+            0.546354,
+            0.530042,
+            0.447875,
+            0.4473125,
+            0.4765835,
+            0.4613335,
+            0.506271,
+            0.467104,
+            0.4465835,
+            0.4517915,
+            0.507979,
+            0.4870415,
+            0.4837705,
+            0.4748125,
+            0.5246045
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.277333,
+          "mean_ms": 0.3078846333333333,
+          "min_ms": 0.253729,
+          "max_ms": 0.5415625,
+          "samples_ms": [
+            0.3621665,
+            0.374896,
+            0.2725,
+            0.277333,
+            0.3185415,
+            0.271875,
+            0.274979,
+            0.286271,
+            0.2945415,
+            0.2631875,
+            0.5415625,
+            0.2717915,
+            0.253729,
+            0.2823125,
+            0.272583
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 0.514875,
+          "mean_ms": 0.545918,
+          "min_ms": 0.4923955,
+          "max_ms": 0.81025,
+          "samples_ms": [
+            0.57525,
+            0.81025,
+            0.5118955,
+            0.5002085,
+            0.6303335,
+            0.507583,
+            0.515229,
+            0.514396,
+            0.5145625,
+            0.5146875,
+            0.5345625,
+            0.4923955,
+            0.5285,
+            0.5240415,
+            0.514875
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000024456821,
+      "width": 1000033,
+      "mode": "count",
+      "count": 36227,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000024456821",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000024456821",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000024456821",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000024456821",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000024456821",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000024456821",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.7150625,
+          "mean_ms": 0.7078764,
+          "min_ms": 0.656396,
+          "max_ms": 0.762292,
+          "samples_ms": [
+            0.701604,
+            0.732979,
+            0.656396,
+            0.6804375,
+            0.722646,
+            0.7150625,
+            0.723,
+            0.736417,
+            0.7184165,
+            0.7271665,
+            0.699375,
+            0.762292,
+            0.6781665,
+            0.6674585,
+            0.696729
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.913625,
+          "mean_ms": 0.9454916333333333,
+          "min_ms": 0.8470625,
+          "max_ms": 1.540292,
+          "samples_ms": [
+            0.8505625,
+            0.913625,
+            0.926854,
+            0.8470625,
+            0.851896,
+            0.866854,
+            0.928125,
+            0.930125,
+            1.540292,
+            0.9265625,
+            0.9395625,
+            0.8940625,
+            0.894708,
+            0.9826875,
+            0.8893955
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.9196875,
+          "mean_ms": 0.930293,
+          "min_ms": 0.868125,
+          "max_ms": 1.2042295,
+          "samples_ms": [
+            0.919271,
+            0.868125,
+            0.9444585,
+            0.873625,
+            0.947083,
+            0.9320415,
+            0.937125,
+            0.8797915,
+            1.2042295,
+            0.9046875,
+            0.876125,
+            0.9316665,
+            0.9196875,
+            0.894708,
+            0.9217705
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.933729,
+          "mean_ms": 0.926818,
+          "min_ms": 0.8459375,
+          "max_ms": 1.0711455,
+          "samples_ms": [
+            0.8843125,
+            0.9392915,
+            0.9406875,
+            0.886854,
+            0.9356665,
+            0.9360625,
+            0.94325,
+            0.8853335,
+            1.0711455,
+            0.926854,
+            0.8809375,
+            0.8459375,
+            0.877521,
+            0.933729,
+            1.0146875
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.691292,
+          "mean_ms": 0.7217639,
+          "min_ms": 0.6472915,
+          "max_ms": 1.097625,
+          "samples_ms": [
+            0.691292,
+            0.649104,
+            0.6914585,
+            0.743125,
+            0.6472915,
+            0.6675,
+            0.710146,
+            0.7304165,
+            0.76625,
+            0.690417,
+            0.6813335,
+            0.7149165,
+            0.680958,
+            0.664625,
+            1.097625
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 1.9382295,
+          "mean_ms": 1.9486667333333334,
+          "min_ms": 1.8274585,
+          "max_ms": 2.23325,
+          "samples_ms": [
+            1.8274585,
+            1.95225,
+            1.9382295,
+            1.843375,
+            1.8356665,
+            1.9300625,
+            1.8351045,
+            2.0192295,
+            2.23325,
+            1.96975,
+            1.9296665,
+            2.075979,
+            1.9924585,
+            1.906167,
+            1.941354
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000024456821,
+      "width": 1000033,
+      "mode": "generate",
+      "count": 36227,
+      "checksum": 36227867856379203,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000024456821",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000024456821",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000024456821",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000024456821",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000024456821",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000024456821",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 0.7059375,
+          "mean_ms": 0.7341859666666667,
+          "min_ms": 0.67175,
+          "max_ms": 0.870833,
+          "samples_ms": [
+            0.7626455,
+            0.7038955,
+            0.699083,
+            0.6992915,
+            0.6899375,
+            0.690354,
+            0.758625,
+            0.7250835,
+            0.8026665,
+            0.67175,
+            0.870833,
+            0.7059375,
+            0.6925205,
+            0.753083,
+            0.7870835
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 0.916479,
+          "mean_ms": 0.9200736,
+          "min_ms": 0.8680415,
+          "max_ms": 1.009021,
+          "samples_ms": [
+            0.940104,
+            0.900625,
+            0.9107085,
+            0.9362085,
+            0.8996875,
+            0.9023955,
+            0.8931665,
+            0.9289375,
+            0.8931045,
+            0.9300415,
+            0.8680415,
+            0.916479,
+            0.935146,
+            1.009021,
+            0.9374375
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 0.9275835,
+          "mean_ms": 0.9887222666666666,
+          "min_ms": 0.8714585,
+          "max_ms": 1.7370835,
+          "samples_ms": [
+            0.908396,
+            0.9301875,
+            0.9610415,
+            0.8714585,
+            0.8831455,
+            0.876771,
+            0.909625,
+            1.013792,
+            0.8877915,
+            1.7370835,
+            0.979083,
+            0.9275835,
+            0.8988125,
+            0.9944795,
+            1.0515835
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 0.9257705,
+          "mean_ms": 0.9395624666666667,
+          "min_ms": 0.8897705,
+          "max_ms": 1.0226665,
+          "samples_ms": [
+            0.915521,
+            1.0226665,
+            0.909625,
+            0.8897705,
+            0.947125,
+            0.94125,
+            0.8950835,
+            0.918646,
+            0.9757915,
+            0.9779375,
+            0.963875,
+            0.9817295,
+            0.9098125,
+            0.918833,
+            0.9257705
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 0.7099585,
+          "mean_ms": 0.7168166,
+          "min_ms": 0.66675,
+          "max_ms": 0.809333,
+          "samples_ms": [
+            0.7163335,
+            0.7025415,
+            0.7099585,
+            0.7332085,
+            0.689229,
+            0.7381455,
+            0.704875,
+            0.6931665,
+            0.6731875,
+            0.765458,
+            0.66675,
+            0.6704375,
+            0.809333,
+            0.7448335,
+            0.7347915
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 2.3110205,
+          "mean_ms": 2.3638888666666666,
+          "min_ms": 2.197104,
+          "max_ms": 3.015354,
+          "samples_ms": [
+            2.353625,
+            2.3381045,
+            2.372375,
+            2.2642915,
+            2.2916875,
+            2.3110205,
+            2.257958,
+            2.3068335,
+            2.266792,
+            2.2540625,
+            2.3862295,
+            2.5012915,
+            3.015354,
+            2.341604,
+            2.197104
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000027651107,
+      "width": 4194319,
+      "mode": "count",
+      "count": 151957,
+      "checksum": 0,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000027651107",
+          "count",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000027651107",
+          "count",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000027651107",
+          "count",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000027651107",
+          "count",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000027651107",
+          "count",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000027651107",
+          "count",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 1.3302295,
+          "mean_ms": 1.3795167,
+          "min_ms": 1.2712085,
+          "max_ms": 1.9685415,
+          "samples_ms": [
+            1.3175625,
+            1.381771,
+            1.595979,
+            1.342771,
+            1.282146,
+            1.9685415,
+            1.3323125,
+            1.2859585,
+            1.2712085,
+            1.3322915,
+            1.284375,
+            1.3384375,
+            1.3302295,
+            1.3232915,
+            1.305875
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 1.046104,
+          "mean_ms": 1.1190652666666667,
+          "min_ms": 0.9985,
+          "max_ms": 1.815729,
+          "samples_ms": [
+            1.421229,
+            1.046104,
+            1.0657915,
+            1.1219585,
+            1.0536875,
+            1.0153335,
+            1.815729,
+            1.0874375,
+            1.0287295,
+            1.0105205,
+            1.0581875,
+            1.0134585,
+            0.9985,
+            1.03675,
+            1.0125625
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 1.315542,
+          "mean_ms": 1.3549458333333333,
+          "min_ms": 1.247229,
+          "max_ms": 1.733,
+          "samples_ms": [
+            1.443875,
+            1.3015835,
+            1.4419795,
+            1.3195,
+            1.287604,
+            1.310729,
+            1.733,
+            1.3565,
+            1.3006665,
+            1.2747085,
+            1.247229,
+            1.3529165,
+            1.3099375,
+            1.3284165,
+            1.315542
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 1.0306875,
+          "mean_ms": 1.0455236,
+          "min_ms": 0.9860625,
+          "max_ms": 1.173542,
+          "samples_ms": [
+            1.0556665,
+            1.068125,
+            1.0932915,
+            1.013271,
+            1.0159375,
+            1.173542,
+            0.9916875,
+            1.074333,
+            1.0239375,
+            0.9860625,
+            1.002083,
+            1.0306875,
+            1.070271,
+            1.0119375,
+            1.072021
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 1.3246875,
+          "mean_ms": 1.3798861333333334,
+          "min_ms": 1.2804165,
+          "max_ms": 2.0154585,
+          "samples_ms": [
+            1.311792,
+            1.293604,
+            1.4983125,
+            1.3149375,
+            1.329771,
+            2.0154585,
+            1.3069375,
+            1.3089375,
+            1.3527085,
+            1.325125,
+            1.3031875,
+            1.399958,
+            1.2804165,
+            1.3246875,
+            1.3324585
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 6.518271,
+          "mean_ms": 6.885722166666667,
+          "min_ms": 6.384458,
+          "max_ms": 12.1035,
+          "samples_ms": [
+            6.5438955,
+            6.679104,
+            6.6042915,
+            6.518271,
+            6.4148545,
+            12.1035,
+            6.556104,
+            6.4385835,
+            6.548458,
+            6.496479,
+            6.384458,
+            6.4574165,
+            6.500146,
+            6.4479375,
+            6.5923335
+          ]
+        }
+      }
+    },
+    {
+      "start": 1000023456789,
+      "end": 1000027651107,
+      "width": 4194319,
+      "mode": "generate",
+      "count": 151957,
+      "checksum": 151960883045285907,
+      "commands": {
+        "ours": [
+          "/private/tmp/primeroute-apple-count26/target/release/examples/range_bench",
+          "1000023456789",
+          "1000027651107",
+          "generate",
+          "2"
+        ],
+        "cpp_default": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000027651107",
+          "generate",
+          "2",
+          "0"
+        ],
+        "cpp_64k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000027651107",
+          "generate",
+          "2",
+          "64"
+        ],
+        "cpp_1024k": [
+          "/private/tmp/primeroute-apple-range-cpp",
+          "1000023456789",
+          "1000027651107",
+          "generate",
+          "2",
+          "1024"
+        ],
+        "ours_baseline": [
+          "/Users/melihbirim/code/prime-numbers/benchmarks/experiments/x86-count-2026-11-26/baseline/target/release/examples/range_bench",
+          "1000023456789",
+          "1000027651107",
+          "generate",
+          "2"
+        ],
+        "primal_segmented_adapter": [
+          "/private/tmp/primeroute-apple-count26/benchmarks/primal/target/release/range_bench",
+          "1000023456789",
+          "1000027651107",
+          "generate",
+          "2",
+          "segmented"
+        ]
+      },
+      "results": {
+        "ours": {
+          "median_ms": 1.4232915,
+          "mean_ms": 1.4371972666666666,
+          "min_ms": 1.368042,
+          "max_ms": 1.519521,
+          "samples_ms": [
+            1.368042,
+            1.472854,
+            1.4655625,
+            1.4050415,
+            1.483917,
+            1.4232915,
+            1.3872295,
+            1.519521,
+            1.3853125,
+            1.415104,
+            1.4067915,
+            1.4471665,
+            1.5026045,
+            1.5058335,
+            1.3696875
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 1.147292,
+          "mean_ms": 1.1432722333333334,
+          "min_ms": 1.0559375,
+          "max_ms": 1.1874375,
+          "samples_ms": [
+            1.0559375,
+            1.1874375,
+            1.129771,
+            1.1536665,
+            1.1747705,
+            1.1185415,
+            1.1565835,
+            1.0988335,
+            1.122146,
+            1.1352915,
+            1.1758955,
+            1.147292,
+            1.1316875,
+            1.1773545,
+            1.183875
+          ]
+        },
+        "cpp_64k": {
+          "median_ms": 1.4243545,
+          "mean_ms": 1.4479639333333334,
+          "min_ms": 1.3217295,
+          "max_ms": 1.672875,
+          "samples_ms": [
+            1.672875,
+            1.453333,
+            1.418771,
+            1.3217295,
+            1.380396,
+            1.4455415,
+            1.5055625,
+            1.3428545,
+            1.3692915,
+            1.3696665,
+            1.494271,
+            1.573521,
+            1.4243545,
+            1.578979,
+            1.3683125
+          ]
+        },
+        "cpp_1024k": {
+          "median_ms": 1.0994165,
+          "mean_ms": 1.1167360666666666,
+          "min_ms": 1.0662705,
+          "max_ms": 1.1912915,
+          "samples_ms": [
+            1.131667,
+            1.0834165,
+            1.17725,
+            1.0994165,
+            1.181021,
+            1.0739795,
+            1.0801665,
+            1.084625,
+            1.1500835,
+            1.088729,
+            1.0662705,
+            1.08925,
+            1.1381665,
+            1.1912915,
+            1.115708
+          ]
+        },
+        "ours_baseline": {
+          "median_ms": 1.450333,
+          "mean_ms": 1.4647430333333333,
+          "min_ms": 1.3629795,
+          "max_ms": 1.680875,
+          "samples_ms": [
+            1.4068545,
+            1.439833,
+            1.491208,
+            1.3971045,
+            1.4146665,
+            1.5106455,
+            1.450333,
+            1.680875,
+            1.5227915,
+            1.465125,
+            1.402792,
+            1.5293125,
+            1.4216875,
+            1.4749375,
+            1.3629795
+          ]
+        },
+        "primal_segmented_adapter": {
+          "median_ms": 7.9746875,
+          "mean_ms": 7.961063833333333,
+          "min_ms": 7.791354,
+          "max_ms": 8.1505,
+          "samples_ms": [
+            7.9746875,
+            7.819979,
+            7.944,
+            8.0736875,
+            8.06625,
+            8.134958,
+            7.8173125,
+            7.983292,
+            7.882,
+            7.791354,
+            7.7957915,
+            8.1505,
+            7.7927915,
+            8.09525,
+            8.094104
+          ]
+        }
+      }
+    }
+  ],
+  "completed_at_utc": "2026-11-26T14:24:42.558738+00:00"
+}

@@ -1,0 +1,603 @@
+{
+  "kind": "kernel selection pilot; final comparison is paired-results.json",
+  "started_at_utc": "2026-11-26T14:47:49.251679+00:00",
+  "status": "complete",
+  "threads": 1,
+  "lscpu": "{\n   \"lscpu\": [\n      {\n         \"field\": \"Architecture:\",\n         \"data\": \"x86_64\"\n      },{\n         \"field\": \"CPU op-mode(s):\",\n         \"data\": \"32-bit, 64-bit\"\n      },{\n         \"field\": \"Address sizes:\",\n         \"data\": \"46 bits physical, 57 bits virtual\"\n      },{\n         \"field\": \"Byte Order:\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU(s):\",\n         \"data\": \"4\"\n      },{\n         \"field\": \"On-line CPU(s) list:\",\n         \"data\": \"0-3\"\n      },{\n         \"field\": \"Vendor ID:\",\n         \"data\": \"GenuineIntel\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz\"\n      },{\n         \"field\": \"CPU family:\",\n         \"data\": \"6\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"106\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"6\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"2800.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"800.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"5586.87\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ss ht syscall nx pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid aperfmperf tsc_known_freq pni pclmulqdq vmx ssse3 fma cx16 pcid sse4_1 sse4_2 x2apic movbe popcnt tsc_deadline_timer aes xsave avx f16c rdrand hypervisor lahf_lm abm 3dnowprefetch tpr_shadow ept vpid ept_ad fsgsbase tsc_adjust bmi1 hle avx2 smep bmi2 erms invpcid rtm avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves vnmi avx512vbmi umip avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq la57 rdpid fsrm arch_capabilities\"\n      },{\n         \"field\": \"Virtualization:\",\n         \"data\": \"VT-x\"\n      },{\n         \"field\": \"Hypervisor vendor:\",\n         \"data\": \"Microsoft\"\n      },{\n         \"field\": \"Virtualization type:\",\n         \"data\": \"full\"\n      },{\n         \"field\": \"L1d cache:\",\n         \"data\": \"96 KiB (2 instances)\"\n      },{\n         \"field\": \"L1i cache:\",\n         \"data\": \"64 KiB (2 instances)\"\n      },{\n         \"field\": \"L2 cache:\",\n         \"data\": \"2.5 MiB (2 instances)\"\n      },{\n         \"field\": \"L3 cache:\",\n         \"data\": \"48 MiB (1 instance)\"\n      },{\n         \"field\": \"NUMA node(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"NUMA node0 CPU(s):\",\n         \"data\": \"0-3\"\n      },{\n         \"field\": \"Vulnerability Gather data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Ghostwrite:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Indirect target selection:\",\n         \"data\": \"Mitigation; Aligned branch/return thunks\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mmio stale data:\",\n         \"data\": \"Vulnerable: Clear CPU buffers attempted, no microcode; SMT Host state unknown\"\n      },{\n         \"field\": \"Vulnerability Old microcode:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Reg file data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Retbleed:\",\n         \"data\": \"Vulnerable\"\n      },{\n         \"field\": \"Vulnerability Spec rstack overflow:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Vulnerable\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; usercopy/swapgs barriers and __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Retpoline\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsa:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Vmscape:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n",
+  "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-unknown-linux-gnu\nrelease: 1.94.1\nLLVM version: 21.1.8\n",
+  "driver_sha256": "bd29dd56a0d7eac80ab07ee8d2c679c990e1f4bc3946d7a542333f46a0907af5",
+  "variants": {
+    "baseline": {
+      "dense_kib": null,
+      "block_kib": null,
+      "fill_group": null,
+      "compact_dense": false,
+      "cache_dense_kib": null,
+      "dense_backend": null,
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "98712ddf7584d0ee3114ed19152d1bf825197216317ebd38db4a03802ef649a7"
+    },
+    "queue4": {
+      "dense_kib": 4,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "9a23404907263b438c78bb860deaea3183c1a5044c6fb7e501706d723d660949",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "1676d4478799523490640e30c276f2e33a301a2120666d86a4a492f8bed53e4d"
+    },
+    "queue6": {
+      "dense_kib": 6,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "4cfb29b2fab428d9c51271667ff18205fb06856c155a54bd4423c6aa7e836a25",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "cc2bda6689bc758a64f56d116ae3fb389aadb3bf1a0f2133d8f6bf000f73e532"
+    },
+    "queue8": {
+      "dense_kib": 8,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "3eb148f96f44911e299b8e3b94ac79438bde343c78afcb850e12f10fe548ebb5",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "26f96e34a6a2eab1d7de9ca01e2c9917400b9939d14b318a74c6091bc95f23e9"
+    },
+    "queue16": {
+      "dense_kib": 16,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "0a4b1c5fcccd745ee60fee23d1d2abb69dcf92939e1b694823c22d7336a966a6",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "bb9d4f82727400ee93d402b59808befc0b3595e861983fa83877dded533768c7"
+    },
+    "queue32": {
+      "dense_kib": 32,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "40d76a57277e5ca0dcaa5fb9de17c91a789aa3e0d1f9994210719b73f8c229ec",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "bce9a2395f8a048ab1258692bae0642ef0a70ab145f56949ab4d25534727a061"
+    },
+    "queue128": {
+      "dense_kib": 128,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "360aab41f46dcd0a05448e8d25d29032b3298801a3cfb5bbe5a1c7fa366b3cf4",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "6bff56ff58f33a1e8b336261e9976bfbde3d5614900c4905a7db34049f9a9aeb"
+    }
+  },
+  "screening": [
+    {
+      "label": "1B screening",
+      "limit": 1000000000,
+      "prime_count": 50847534,
+      "runs": 3,
+      "warmups": 1,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue4": [
+          "/home/runner/work/_temp/x86-results/sources/queue4/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue6": [
+          "/home/runner/work/_temp/x86-results/sources/queue6/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue8": [
+          "/home/runner/work/_temp/x86-results/sources/queue8/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue16": [
+          "/home/runner/work/_temp/x86-results/sources/queue16/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue32": [
+          "/home/runner/work/_temp/x86-results/sources/queue32/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue128": [
+          "/home/runner/work/_temp/x86-results/sources/queue128/target/release/primeroute",
+          "1000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "1000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 98.014681,
+          "samples_ms": [
+            98.277339,
+            98.014681,
+            97.987909
+          ]
+        },
+        "queue4": {
+          "median_ms": 92.024657,
+          "samples_ms": [
+            92.275499,
+            91.912428,
+            92.024657
+          ]
+        },
+        "queue6": {
+          "median_ms": 90.49766,
+          "samples_ms": [
+            90.321124,
+            90.681729,
+            90.49766
+          ]
+        },
+        "queue8": {
+          "median_ms": 90.313368,
+          "samples_ms": [
+            90.499379,
+            90.149749,
+            90.313368
+          ]
+        },
+        "queue16": {
+          "median_ms": 93.265919,
+          "samples_ms": [
+            93.265919,
+            93.366916,
+            93.199744
+          ]
+        },
+        "queue32": {
+          "median_ms": 97.628044,
+          "samples_ms": [
+            97.744464,
+            97.304118,
+            97.628044
+          ]
+        },
+        "queue128": {
+          "median_ms": 97.65993,
+          "samples_ms": [
+            97.65993,
+            97.385527,
+            97.76432
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 84.99541,
+          "samples_ms": [
+            85.068382,
+            84.99541,
+            84.928546
+          ]
+        }
+      }
+    },
+    {
+      "label": "10B screening",
+      "limit": 10000000000,
+      "prime_count": 455052511,
+      "runs": 5,
+      "warmups": 1,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue4": [
+          "/home/runner/work/_temp/x86-results/sources/queue4/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue6": [
+          "/home/runner/work/_temp/x86-results/sources/queue6/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue8": [
+          "/home/runner/work/_temp/x86-results/sources/queue8/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue16": [
+          "/home/runner/work/_temp/x86-results/sources/queue16/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue32": [
+          "/home/runner/work/_temp/x86-results/sources/queue32/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue128": [
+          "/home/runner/work/_temp/x86-results/sources/queue128/target/release/primeroute",
+          "10000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "10000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 1282.30902,
+          "samples_ms": [
+            1279.13842,
+            1279.286631,
+            1284.368275,
+            1367.644981,
+            1282.30902
+          ]
+        },
+        "queue4": {
+          "median_ms": 1152.164387,
+          "samples_ms": [
+            1174.950312,
+            1151.242022,
+            1150.470255,
+            1152.164387,
+            1152.62077
+          ]
+        },
+        "queue6": {
+          "median_ms": 1138.844245,
+          "samples_ms": [
+            1137.867166,
+            1138.844245,
+            1137.218229,
+            1140.268973,
+            1139.154823
+          ]
+        },
+        "queue8": {
+          "median_ms": 1137.799091,
+          "samples_ms": [
+            1137.337166,
+            1136.739543,
+            1137.799091,
+            1138.102067,
+            1139.477396
+          ]
+        },
+        "queue16": {
+          "median_ms": 1184.920504,
+          "samples_ms": [
+            1181.945361,
+            1185.185483,
+            1186.481519,
+            1183.150583,
+            1184.920504
+          ]
+        },
+        "queue32": {
+          "median_ms": 1274.025612,
+          "samples_ms": [
+            1271.176568,
+            1271.240755,
+            1284.97905,
+            1274.283548,
+            1274.025612
+          ]
+        },
+        "queue128": {
+          "median_ms": 1281.553063,
+          "samples_ms": [
+            1281.553063,
+            1276.265196,
+            1281.711959,
+            1282.691808,
+            1280.697515
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 1045.947436,
+          "samples_ms": [
+            1045.453226,
+            1046.204016,
+            1045.264952,
+            1140.96697,
+            1045.947436
+          ]
+        }
+      }
+    },
+    {
+      "label": "100B screening; one sample is selection evidence only",
+      "limit": 100000000000,
+      "prime_count": 4118054813,
+      "runs": 1,
+      "warmups": 0,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue4": [
+          "/home/runner/work/_temp/x86-results/sources/queue4/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue6": [
+          "/home/runner/work/_temp/x86-results/sources/queue6/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue8": [
+          "/home/runner/work/_temp/x86-results/sources/queue8/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue16": [
+          "/home/runner/work/_temp/x86-results/sources/queue16/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue32": [
+          "/home/runner/work/_temp/x86-results/sources/queue32/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue128": [
+          "/home/runner/work/_temp/x86-results/sources/queue128/target/release/primeroute",
+          "100000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "100000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 16535.410516,
+          "samples_ms": [
+            16535.410516
+          ]
+        },
+        "queue4": {
+          "median_ms": 15300.62173,
+          "samples_ms": [
+            15300.62173
+          ]
+        },
+        "queue6": {
+          "median_ms": 15323.608323,
+          "samples_ms": [
+            15323.608323
+          ]
+        },
+        "queue8": {
+          "median_ms": 15239.85603,
+          "samples_ms": [
+            15239.85603
+          ]
+        },
+        "queue16": {
+          "median_ms": 15709.378627,
+          "samples_ms": [
+            15709.378627
+          ]
+        },
+        "queue32": {
+          "median_ms": 16574.143099,
+          "samples_ms": [
+            16574.143099
+          ]
+        },
+        "queue128": {
+          "median_ms": 16637.093229,
+          "samples_ms": [
+            16637.093229
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 13560.960849,
+          "samples_ms": [
+            13560.960849
+          ]
+        }
+      }
+    }
+  ],
+  "allowed_cpus_before": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "affinity": [
+    0
+  ],
+  "cpu_info": "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz\nLogical CPU cores: 4\nHas AVX2: yes\nHas AVX512 BW: yes\nHas AVX512 VBMI2: yes\nL1 cache size: 48 KiB\nL2 cache size: 1280 KiB\nL3 cache size: 48 MiB\nL1 cache sharing: 2 threads\nL2 cache sharing: 2 threads\nL3 cache sharing: 4 threads\n",
+  "primesieve_version": "primesieve 12.18, <https://github.com/kimwalisch/primesieve>\nCopyright (C) 2010 - 2026 Kim Walisch\nBSD 2-Clause License <https://opensource.org/licenses/BSD-2-Clause>\n",
+  "instrumented_baseline": {
+    "kind": "instrumented component selection evidence, not final timing",
+    "stage_names": [
+      "setup",
+      "fill",
+      "dense",
+      "medium",
+      "buckets",
+      "finish_and_count"
+    ],
+    "source_sha256": {
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/lib.rs": "7adfee9ac2b614a8760d0179ffbedbf82f9babede5bca0e7757f35d006be9707",
+      "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+      "examples/profile_count.rs": "a4aee9aca257c71fba02d11451ceee4aa4485201215270c2652385bd277607cc",
+      "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+      "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+      "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+      "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+      "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+      "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+      "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+      "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+    },
+    "count": 4118054813,
+    "total_ns": 16373630000,
+    "stages_ns": [
+      1622653,
+      1704675424,
+      13045872110,
+      1395520113,
+      1132854,
+      220505405
+    ],
+    "threads": 1
+  },
+  "selected_variant": "queue8",
+  "selection_rule": "Fastest candidate on a one-sample 100B pilot over all variants; 10B is diagnostic only. Independent fixed-sample confirmation follows.",
+  "screen_completed_at_utc": "2026-11-26T14:54:43.619300+00:00",
+  "confirmation_driver_sha256": "9b14e249a9e1ac6a04757b8f0d6bb95054a21979e46a9249f317c66d076ff96f",
+  "completed_at_utc": "2026-11-26T15:08:41.185651+00:00",
+  "retained_counter_binaries_sha256": {
+    "primal": "a0a69db5a42ec3cb3912c6397c6a34812fd5e80bc730acba45d20f3586473801",
+    "selected": "26f96e34a6a2eab1d7de9ca01e2c9917400b9939d14b318a74c6091bc95f23e9",
+    "baseline": "98712ddf7584d0ee3114ed19152d1bf825197216317ebd38db4a03802ef649a7",
+    "primesieve": "12c5e639a585157f59c4490c6fe5f2b4dc47c22f5cd3b0cf01b3c8a3301689c5"
+  }
+}

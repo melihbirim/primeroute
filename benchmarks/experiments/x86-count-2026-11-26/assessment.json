@@ -1,0 +1,874 @@
+{
+  "comparison_band": {
+    "win_below": 0.97,
+    "loss_above": 1.03
+  },
+  "reports": {
+    "canonical-confirmation/paired-results.json": {
+      "sha256": "d11e36e4d63dc4b0977525bf08f8c2b4c11b6707a711cc60c8a1c87550edde79",
+      "scores": {
+        "cpp": {
+          "wins": 5,
+          "ties": 0,
+          "losses": 21
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 0,
+          "ties": 20,
+          "losses": 6
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "dbed8aa335c30fa910aa2b85374c1ff3b3dbc1b5eded4635845343dc1e8c355e",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "4ebb0846769e29854690b9dc29da94b3076bf56206f2e01e9769e1512a37cf9c",
+          "src/x86.rs": "ce4d367b981fe13a75cf9e25a40f90714b6f0da9d2f85e7daa77ff6a31db4b73",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "compact-confirmation/paired-results.json": {
+      "sha256": "a5cd4c05eb57e438867ceb53df036a850b3ba097f7e7d8475aa6102a3e0c5984",
+      "scores": {
+        "cpp": {
+          "wins": 5,
+          "ties": 0,
+          "losses": 21
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 11,
+          "ties": 14,
+          "losses": 1
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "6cd2e56c23b219468ea062e41a73fdf54651ec10f39bd9740edfcda782f38438",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+          "src/x86.rs": "413137abcb84cae6abf3848849f31cfdedd15959f9e910f3c6b2258198e005dd",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "cycle-confirmation/paired-results.json": {
+      "sha256": "66ead258f67f0a2c36c05d559298e066c2a59523e6c9aa2665e5d1b8e58f7201",
+      "scores": {
+        "cpp": {
+          "wins": 6,
+          "ties": 0,
+          "losses": 20
+        },
+        "primal": {
+          "wins": 24,
+          "ties": 0,
+          "losses": 2
+        },
+        "baseline": {
+          "wins": 2,
+          "ties": 19,
+          "losses": 5
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "aaccdec6028bc290744e58cc49a22cb08872d591ae0adea218cdff9699d358f3",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "be6bc374f382e966b26dd54301fa34a064cee5511532aca29696f0264bec16ae",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "first-confirmation/paired-results.json": {
+      "sha256": "925e3d90dcceb1f908e981a27541fc482ac6c106172c4598619bf77c50b491d3",
+      "scores": {
+        "cpp": {
+          "wins": 6,
+          "ties": 2,
+          "losses": 18
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 4,
+          "ties": 18,
+          "losses": 4
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "4632b8d1f0c41e63c9ff004f9bf30e1ec15c82deab9d7351dbb4e1f46e762a04",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "7ea4b0a02a4f27aab62e793e71ec9334cbf39e0c950fa2380d9ba668952a60a3",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "hybrid-confirmation/paired-results.json": {
+      "sha256": "afd79d3e9e5a22549463c5c1555f6a664595037566a1de04215dd7e2f143a36c",
+      "scores": {
+        "cpp": {
+          "wins": 7,
+          "ties": 0,
+          "losses": 19
+        },
+        "primal": {
+          "wins": 23,
+          "ties": 1,
+          "losses": 2
+        },
+        "baseline": {
+          "wins": 4,
+          "ties": 17,
+          "losses": 5
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "dbed8aa335c30fa910aa2b85374c1ff3b3dbc1b5eded4635845343dc1e8c355e",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "4ebb0846769e29854690b9dc29da94b3076bf56206f2e01e9769e1512a37cf9c",
+          "src/x86.rs": "21362ea7585a1215a71f57c76ea575eb9e9f909c7d9403eda5619c03ca6979a6",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "medium-confirmation/paired-results.json": {
+      "sha256": "ea7384335df0d8970d420bb99f9e9e8dae53ad532452083b60ec677718dfa00a",
+      "scores": {
+        "cpp": {
+          "wins": 5,
+          "ties": 0,
+          "losses": 21
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 7,
+          "ties": 19,
+          "losses": 0
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "3eb148f96f44911e299b8e3b94ac79438bde343c78afcb850e12f10fe548ebb5",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "medium-window-confirmation/paired-results.json": {
+      "sha256": "c60f8e6268f0f997a25654ec5f37ac81ec7d10c5645e897f3af1f609844381dc",
+      "scores": {
+        "cpp": {
+          "wins": 8,
+          "ties": 1,
+          "losses": 17
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 5,
+          "ties": 19,
+          "losses": 2
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+          "src/x86.rs": "9e768bb0760d4c0c6d5cb0e3e3e8ab48903f39b29ece1940f650a1ed02a2185c",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "mixed-fill-confirmation/paired-results.json": {
+      "sha256": "63dd9f2592d06b6386ac6fda67ed67bce422496bebb0c9c096826385f50b79fd",
+      "scores": {
+        "cpp": {
+          "wins": 10,
+          "ties": 2,
+          "losses": 14
+        },
+        "primal": {
+          "wins": 26,
+          "ties": 0,
+          "losses": 0
+        },
+        "baseline": {
+          "wins": 14,
+          "ties": 11,
+          "losses": 1
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "6cd2e56c23b219468ea062e41a73fdf54651ec10f39bd9740edfcda782f38438",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+          "src/x86.rs": "b5cc47b4300c0f44fbff4a3d19b89dadba1dabf9bcd18d25f229a1edeb560fd7",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "overlap-confirmation/paired-results.json": {
+      "sha256": "ab67f221d12028fb85637a6a1b1cb01d8b007326f918c036f8cac23cc694dfc1",
+      "scores": {
+        "cpp": {
+          "wins": 5,
+          "ties": 0,
+          "losses": 21
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 10,
+          "ties": 15,
+          "losses": 1
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "6cd2e56c23b219468ea062e41a73fdf54651ec10f39bd9740edfcda782f38438",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+          "src/x86.rs": "82300a5fe83c33258df6141519ddffa58cb1abb0470f7972f9418f8dfe693b4e",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "statevec-confirmation/paired-results.json": {
+      "sha256": "8e97115f3fa7fc03d35b78d75b87918dd6e01310293891a8a7ddffa8bbee0550",
+      "scores": {
+        "cpp": {
+          "wins": 6,
+          "ties": 1,
+          "losses": 19
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 1,
+          "ties": 24,
+          "losses": 1
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "75b06e6ac41f0c8cf56f9adfead4de4c50495544d32ad4a608f7ddf12a51000d",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "streams-confirmation/paired-results.json": {
+      "sha256": "604341f5fb95f52096a10f8cf7e06d4d865aac10be392569fa197549327ecd2d",
+      "scores": {
+        "cpp": {
+          "wins": 5,
+          "ties": 1,
+          "losses": 20
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 3,
+          "ties": 18,
+          "losses": 5
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+          "src/x86.rs": "fb429fbd73574840af5b95405e06c1bb05a2978b12a093ef6012d4a7edae14ed",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "tail-confirmation/paired-results.json": {
+      "sha256": "a5ff8a9b1465b2e1fc20905d18f8862af65e5cdb0f03efbb822ef833c4d19fc5",
+      "scores": {
+        "cpp": {
+          "wins": 6,
+          "ties": 2,
+          "losses": 18
+        },
+        "primal": {
+          "wins": 25,
+          "ties": 0,
+          "losses": 1
+        },
+        "baseline": {
+          "wins": 3,
+          "ties": 13,
+          "losses": 10
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "7c8fec99c20b71db5e6da6b4921f68c4a0dc3ca7265072c65709d626ce5ffa4b",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "window-confirmation/paired-results.json": {
+      "sha256": "d16cb771760cebc43bb9f13e66f3187e41d62b8469899c3719e867e37f8d3b04",
+      "scores": {
+        "cpp": {
+          "wins": 7,
+          "ties": 1,
+          "losses": 18
+        },
+        "primal": {
+          "wins": 26,
+          "ties": 0,
+          "losses": 0
+        },
+        "baseline": {
+          "wins": 8,
+          "ties": 15,
+          "losses": 3
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+          "src/x86.rs": "56fb1cb445d8f6acca21b303eac1b126455c717bb0a701b248247c2405fc7701",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "apple-final-paired-results.json": {
+      "sha256": "2031c617aff407cd89298b0b093d3ad98dcceef376f02c12c5e4417f3fd59476",
+      "scores": {
+        "cpp": {
+          "wins": 19,
+          "ties": 3,
+          "losses": 4
+        },
+        "primal": {
+          "wins": 26,
+          "ties": 0,
+          "losses": 0
+        },
+        "baseline": {
+          "wins": 2,
+          "ties": 23,
+          "losses": 1
+        }
+      },
+      "baseline_cpp_wins_lost": [
+        "scattered_1e14"
+      ],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "6cd2e56c23b219468ea062e41a73fdf54651ec10f39bd9740edfcda782f38438",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+          "src/x86.rs": "38f39a78d7baf707e2b9a14e393692570cc2543c53e655cb59093ebd915a512c",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    },
+    "apple-paired-results.json": {
+      "sha256": "272ce597aceb3b14ce098ba346178c44c00b51a3b21476e56c8d6dd8525ac717",
+      "scores": {
+        "cpp": {
+          "wins": 19,
+          "ties": 1,
+          "losses": 6
+        },
+        "primal": {
+          "wins": 26,
+          "ties": 0,
+          "losses": 0
+        },
+        "baseline": {
+          "wins": 3,
+          "ties": 19,
+          "losses": 4
+        }
+      },
+      "baseline_cpp_wins_lost": [],
+      "source_sha256": {
+        "baseline": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+          "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        },
+        "ours": {
+          "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+          "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+          "src/lib.rs": "431801d61c85a9a8469f74b03c7a92b5b9403cc6150fd327e9ddbfb5d1350d09",
+          "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+          "src/next.rs": "1e77b734549232b9d4576282000b75dc96a3896417122449102aa65cb2892445",
+          "src/x86.rs": "bcd19072c5e46716c620556f0f4d693fcc1ef966f2988fafeedc9b923a729d26",
+          "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+          "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+          "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+          "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+          "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+          "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+          "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+          "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+        }
+      }
+    }
+  },
+  "generator_sha256": "fcfa54c2e8a330108e23947e542209d18d4bfff84ea097e70986c3b1556d7b39",
+  "selected_source_matches_working_tree": true,
+  "selected_report": "mixed-fill-confirmation/paired-results.json",
+  "arm_selected_executables_unchanged": true,
+  "supplemental_apple": {
+    "apple-final-short-results.json": {
+      "sha256": "dc421c646e5e2355a5c8aeb1eb1f0b5d11bb27bae8459b2c0a3183577f3fe2dd",
+      "scores": {
+        "ours": {
+          "wins": 24,
+          "ties": 0,
+          "losses": 0
+        },
+        "ours_baseline": {
+          "wins": 24,
+          "ties": 0,
+          "losses": 0
+        }
+      },
+      "baseline_wins_lost": []
+    },
+    "apple-final-holdout-results.json": {
+      "sha256": "4058204c5048a4d438980c19aeb2add7817e21f96e648e78ee218d2195c33751",
+      "scores": {
+        "ours": {
+          "wins": 19,
+          "ties": 0,
+          "losses": 5
+        },
+        "ours_baseline": {
+          "wins": 19,
+          "ties": 1,
+          "losses": 4
+        }
+      },
+      "baseline_wins_lost": []
+    }
+  },
+  "historical_reports_and_generator_unchanged": 240
+}

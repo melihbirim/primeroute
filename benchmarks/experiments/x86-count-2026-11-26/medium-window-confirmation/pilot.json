@@ -1,0 +1,667 @@
+{
+  "kind": "kernel selection pilot; final comparison is paired-results.json",
+  "started_at_utc": "2026-11-26T14:54:20.997426+00:00",
+  "status": "complete",
+  "threads": 1,
+  "lscpu": "{\n   \"lscpu\": [\n      {\n         \"field\": \"Architecture:\",\n         \"data\": \"x86_64\"\n      },{\n         \"field\": \"CPU op-mode(s):\",\n         \"data\": \"32-bit, 64-bit\"\n      },{\n         \"field\": \"Address sizes:\",\n         \"data\": \"48 bits physical, 48 bits virtual\"\n      },{\n         \"field\": \"Byte Order:\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU(s):\",\n         \"data\": \"4\"\n      },{\n         \"field\": \"On-line CPU(s) list:\",\n         \"data\": \"0-3\"\n      },{\n         \"field\": \"Vendor ID:\",\n         \"data\": \"AuthenticAMD\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"AMD EPYC 9V74 80-Core Processor\"\n      },{\n         \"field\": \"CPU family:\",\n         \"data\": \"25\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"17\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"2\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"5192.29\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fpu vme de pse tsc msr pae mce cx8 apic sep mtrr pge mca cmov pat pse36 clflush mmx fxsr sse sse2 ht syscall nx mmxext fxsr_opt pdpe1gb rdtscp lm constant_tsc rep_good nopl xtopology tsc_reliable nonstop_tsc cpuid extd_apicid aperfmperf tsc_known_freq pni pclmulqdq ssse3 fma cx16 pcid sse4_1 sse4_2 movbe popcnt aes xsave avx f16c rdrand hypervisor lahf_lm cmp_legacy svm cr8_legacy abm sse4a misalignsse 3dnowprefetch osvw topoext vmmcall fsgsbase bmi1 avx2 smep bmi2 erms invpcid avx512f avx512dq rdseed adx smap avx512ifma clflushopt clwb avx512cd sha_ni avx512bw avx512vl xsaveopt xsavec xgetbv1 xsaves user_shstk avx512_bf16 clzero xsaveerptr rdpru arat npt nrip_save tsc_scale vmcb_clean flushbyasid decodeassists pausefilter pfthreshold v_vmsave_vmload avx512vbmi umip avx512_vbmi2 gfni vaes vpclmulqdq avx512_vnni avx512_bitalg avx512_vpopcntdq rdpid fsrm\"\n      },{\n         \"field\": \"Virtualization:\",\n         \"data\": \"AMD-V\"\n      },{\n         \"field\": \"Hypervisor vendor:\",\n         \"data\": \"Microsoft\"\n      },{\n         \"field\": \"Virtualization type:\",\n         \"data\": \"full\"\n      },{\n         \"field\": \"L1d cache:\",\n         \"data\": \"64 KiB (2 instances)\"\n      },{\n         \"field\": \"L1i cache:\",\n         \"data\": \"64 KiB (2 instances)\"\n      },{\n         \"field\": \"L2 cache:\",\n         \"data\": \"2 MiB (2 instances)\"\n      },{\n         \"field\": \"L3 cache:\",\n         \"data\": \"32 MiB (1 instance)\"\n      },{\n         \"field\": \"NUMA node(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"NUMA node0 CPU(s):\",\n         \"data\": \"0-3\"\n      },{\n         \"field\": \"Vulnerability Gather data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Ghostwrite:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Indirect target selection:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mmio stale data:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Old microcode:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Reg file data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Retbleed:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec rstack overflow:\",\n         \"data\": \"Vulnerable: Safe RET, no microcode\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Vulnerable\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; usercopy/swapgs barriers and __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; Retpolines; STIBP disabled; RSB filling; PBRSB-eIBRS Not affected; BHI Not affected\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsa:\",\n         \"data\": \"Vulnerable: No microcode\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Vmscape:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n",
+  "rustc": "rustc 1.94.1 (e408947bf 2026-03-25)\nbinary: rustc\ncommit-hash: e408947bfd200af42db322daf0fadfe7e26d3bd1\ncommit-date: 2026-03-25\nhost: x86_64-unknown-linux-gnu\nrelease: 1.94.1\nLLVM version: 21.1.8\n",
+  "driver_sha256": "9193a8ec8abea79ddf2796ec064e32ff4fc3db87e34d8e317cffbdfd5b2acfce",
+  "variants": {
+    "baseline": {
+      "dense_kib": null,
+      "block_kib": null,
+      "fill_group": null,
+      "compact_dense": false,
+      "cache_dense_kib": null,
+      "dense_backend": null,
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "65b77b808015f1ee71b01f5bef0bbaa14a8cfe935fbf792a2e9d38bcbb45ff43",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+        "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "98712ddf7584d0ee3114ed19152d1bf825197216317ebd38db4a03802ef649a7"
+    },
+    "queue8_outer128": {
+      "dense_kib": 8,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 128,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "32dd41e66e0bb72510a50fe53aed39f4f2f705c14bc6eb7e9f53a0faf5d40a70",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "e6065ed8cb49ecb7a2a043137a3e334a919015ad99c97642331a98460d5eeb52"
+    },
+    "queue8_outer256": {
+      "dense_kib": 8,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 256,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "62f1b947750a7c07d659c8c71ffb7b8bd774c6fca424eb3f01501e87965e5df7",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "316e84493c92331901b11f65859cb868b9e73c733a08d82d42f3679b8bbe7b82"
+    },
+    "queue8_outer512": {
+      "dense_kib": 8,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 512,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "9e768bb0760d4c0c6d5cb0e3e3e8ab48903f39b29ece1940f650a1ed02a2185c",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "ba240009277f7b047da8605e65e5e93d8b177334dba7c51a65575b80289ea460"
+    },
+    "queue8_outer1024": {
+      "dense_kib": 8,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "517f4b07a2fce17ff2563008426756f8cc322d224c0dea2f0bd87f1d43314198",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "9a43cbc10f51a268df18aeea70a18ed2170b83d448116d7896b54f8cfc0fd131"
+    },
+    "queue16_outer256": {
+      "dense_kib": 16,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 256,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "5a0954e11c3fe8936d168841b81f66308cb1613910b9cae37f5ecee7e95cc93c",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "2e12f45321ac06a75e2e4ff20dc663b1b6dc8231693e0f43d52f13f25d18e6a8"
+    },
+    "queue16_outer512": {
+      "dense_kib": 16,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 512,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "cc10a51582a4ba29eeefe60ef76d9eb51ea8ae499b35ded475b08827967f84e7",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "118a5232a3077d7f98ff70ff879d5f6d677f7fd1e9100b8040b9ec9bd1176d57"
+    },
+    "queue16_outer1024": {
+      "dense_kib": 16,
+      "block_kib": 32,
+      "fill_group": 17,
+      "compact_dense": false,
+      "cache_dense_kib": 32,
+      "dense_backend": "sorted_medium_canonical_bulk",
+      "compact_fill": false,
+      "segment_kib": 1024,
+      "rustflags": "",
+      "source_sha256": {
+        "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+        "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+        "src/lib.rs": "db5e562cee4e4135c3e7967e30ce1db0f728725afe2aea77b0e753ac7c93f198",
+        "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+        "src/next.rs": "c526dad8ea2213131ea6e8a6bcfdf50d76bb70dbfd6f5e18e2f26715fd475d49",
+        "src/x86.rs": "f4efaac893efb9b90470b6f8d46a384a4c035a4b41e6c99548ab21ba0fa39c3d",
+        "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+        "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+        "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+        "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+        "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+        "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+        "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+        "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+      },
+      "binary_sha256": "858b7b7ccdcd5ddf464aba18094f39fd7ac6ed19f808e9554f1e2baa6f42ac90"
+    }
+  },
+  "screening": [
+    {
+      "label": "1B screening",
+      "limit": 1000000000,
+      "prime_count": 50847534,
+      "runs": 3,
+      "warmups": 1,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue8_outer128": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer128/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue8_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer256/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue8_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer512/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue8_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue16_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer256/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue16_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer512/target/release/primeroute",
+          "1000000000"
+        ],
+        "queue16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer1024/target/release/primeroute",
+          "1000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "1000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 82.198012,
+          "samples_ms": [
+            82.198012,
+            82.420237,
+            82.173165
+          ]
+        },
+        "queue8_outer128": {
+          "median_ms": 74.960928,
+          "samples_ms": [
+            74.960928,
+            74.880577,
+            75.42065
+          ]
+        },
+        "queue8_outer256": {
+          "median_ms": 76.851657,
+          "samples_ms": [
+            76.851657,
+            77.314374,
+            76.773429
+          ]
+        },
+        "queue8_outer512": {
+          "median_ms": 80.202018,
+          "samples_ms": [
+            79.731436,
+            81.423666,
+            80.202018
+          ]
+        },
+        "queue8_outer1024": {
+          "median_ms": 88.381239,
+          "samples_ms": [
+            88.381239,
+            87.709587,
+            88.741803
+          ]
+        },
+        "queue16_outer256": {
+          "median_ms": 79.525805,
+          "samples_ms": [
+            79.484194,
+            79.525805,
+            79.531448
+          ]
+        },
+        "queue16_outer512": {
+          "median_ms": 82.755562,
+          "samples_ms": [
+            82.58151,
+            82.755562,
+            83.013387
+          ]
+        },
+        "queue16_outer1024": {
+          "median_ms": 92.043367,
+          "samples_ms": [
+            92.043367,
+            90.369114,
+            92.794483
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 83.098189,
+          "samples_ms": [
+            83.351781,
+            83.098189,
+            83.064396
+          ]
+        }
+      }
+    },
+    {
+      "label": "10B screening",
+      "limit": 10000000000,
+      "prime_count": 455052511,
+      "runs": 5,
+      "warmups": 1,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue8_outer128": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer128/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue8_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer256/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue8_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer512/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue8_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue16_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer256/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue16_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer512/target/release/primeroute",
+          "10000000000"
+        ],
+        "queue16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer1024/target/release/primeroute",
+          "10000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "10000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 1069.479681,
+          "samples_ms": [
+            1066.33752,
+            1074.290778,
+            1080.956968,
+            1069.479681,
+            1068.085624
+          ]
+        },
+        "queue8_outer128": {
+          "median_ms": 967.232412,
+          "samples_ms": [
+            954.388336,
+            967.773659,
+            967.232412,
+            982.918054,
+            953.945241
+          ]
+        },
+        "queue8_outer256": {
+          "median_ms": 914.908833,
+          "samples_ms": [
+            904.230599,
+            906.129879,
+            919.172665,
+            918.616409,
+            914.908833
+          ]
+        },
+        "queue8_outer512": {
+          "median_ms": 913.596793,
+          "samples_ms": [
+            908.929558,
+            911.043932,
+            924.233959,
+            919.427032,
+            913.596793
+          ]
+        },
+        "queue8_outer1024": {
+          "median_ms": 981.13347,
+          "samples_ms": [
+            973.911906,
+            957.597857,
+            981.374342,
+            981.13347,
+            985.126025
+          ]
+        },
+        "queue16_outer256": {
+          "median_ms": 944.733275,
+          "samples_ms": [
+            947.392711,
+            939.7277,
+            950.677848,
+            942.258345,
+            944.733275
+          ]
+        },
+        "queue16_outer512": {
+          "median_ms": 948.865381,
+          "samples_ms": [
+            948.865381,
+            946.330571,
+            957.662305,
+            953.525384,
+            944.885776
+          ]
+        },
+        "queue16_outer1024": {
+          "median_ms": 1023.174284,
+          "samples_ms": [
+            1023.174284,
+            984.712291,
+            1030.684015,
+            1037.580867,
+            1002.915507
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 885.780423,
+          "samples_ms": [
+            886.016599,
+            885.457242,
+            897.343528,
+            885.153404,
+            885.780423
+          ]
+        }
+      }
+    },
+    {
+      "label": "100B screening; one sample is selection evidence only",
+      "limit": 100000000000,
+      "prime_count": 4118054813,
+      "runs": 1,
+      "warmups": 0,
+      "commands": {
+        "baseline": [
+          "/home/runner/work/_temp/x86-results/sources/baseline/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue8_outer128": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer128/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue8_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer256/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue8_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer512/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue8_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/queue8_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue16_outer256": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer256/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue16_outer512": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer512/target/release/primeroute",
+          "100000000000"
+        ],
+        "queue16_outer1024": [
+          "/home/runner/work/_temp/x86-results/sources/queue16_outer1024/target/release/primeroute",
+          "100000000000"
+        ],
+        "cpp_default": [
+          "/home/runner/work/_temp/primesieve/build/primesieve",
+          "100000000000",
+          "--threads=1",
+          "--count=1",
+          "--quiet",
+          "--no-status"
+        ]
+      },
+      "results": {
+        "baseline": {
+          "median_ms": 13779.374006,
+          "samples_ms": [
+            13779.374006
+          ]
+        },
+        "queue8_outer128": {
+          "median_ms": 13387.066313,
+          "samples_ms": [
+            13387.066313
+          ]
+        },
+        "queue8_outer256": {
+          "median_ms": 11453.742358,
+          "samples_ms": [
+            11453.742358
+          ]
+        },
+        "queue8_outer512": {
+          "median_ms": 10957.929302,
+          "samples_ms": [
+            10957.929302
+          ]
+        },
+        "queue8_outer1024": {
+          "median_ms": 11554.284075,
+          "samples_ms": [
+            11554.284075
+          ]
+        },
+        "queue16_outer256": {
+          "median_ms": 11857.232571,
+          "samples_ms": [
+            11857.232571
+          ]
+        },
+        "queue16_outer512": {
+          "median_ms": 11320.276855,
+          "samples_ms": [
+            11320.276855
+          ]
+        },
+        "queue16_outer1024": {
+          "median_ms": 11576.040705,
+          "samples_ms": [
+            11576.040705
+          ]
+        },
+        "cpp_default": {
+          "median_ms": 10742.436488,
+          "samples_ms": [
+            10742.436488
+          ]
+        }
+      }
+    }
+  ],
+  "allowed_cpus_before": [
+    0,
+    1,
+    2,
+    3
+  ],
+  "affinity": [
+    0
+  ],
+  "cpu_info": "AMD EPYC 9V74 80-Core Processor\nLogical CPU cores: 4\nHas AVX2: yes\nHas AVX512 BW: yes\nHas AVX512 VBMI2: yes\nL1 cache size: 32 KiB\nL2 cache size: 1024 KiB\nL3 cache size: 32 MiB\nL1 cache sharing: 2 threads\nL2 cache sharing: 2 threads\nL3 cache sharing: 4 threads\n",
+  "primesieve_version": "primesieve 12.18, <https://github.com/kimwalisch/primesieve>\nCopyright (C) 2010 - 2026 Kim Walisch\nBSD 2-Clause License <https://opensource.org/licenses/BSD-2-Clause>\n",
+  "instrumented_baseline": {
+    "kind": "instrumented component selection evidence, not final timing",
+    "stage_names": [
+      "setup",
+      "fill",
+      "dense",
+      "medium",
+      "buckets",
+      "finish_and_count"
+    ],
+    "source_sha256": {
+      "src/batch_order.rs": "1238cd692d1e0c75ee90796454925053e19bb3cfad0d045f78f872ec9fccac3d",
+      "src/candidates.rs": "47f20379244778177392b925e91ef9e153be4b755e9cd37bbf764cea7db5bf92",
+      "src/lib.rs": "7adfee9ac2b614a8760d0179ffbedbf82f9babede5bca0e7757f35d006be9707",
+      "src/main.rs": "07ef3d946c481f9d8181b74ca601e0ce406ef5a7e9dcd334b4c695d901f63f34",
+      "src/next.rs": "8f3dfa5e66d1925518cd3b51a2b026c03ecb56c23810c410d991a2acdd89d591",
+      "src/x86.rs": "cfcad4a3090ecbbbedc69e4d0c90d92c035558106345f22389f3416bc448c153",
+      "examples/profile_count.rs": "a4aee9aca257c71fba02d11451ceee4aa4485201215270c2652385bd277607cc",
+      "examples/range_bench.rs": "24af9a871f4402bef12da4d3bf9b1f26ef4aa67c42fdfd34e00fafba3f4ab194",
+      "Cargo.toml": "55ae85ba72c296d4d8a8b2587a53203b2b59ae5be2291110f8066e62416048f2",
+      "Cargo.lock": "275b9afb8455576d1a709186b5946951bf0da1b459cc4e8d697b33adf7cde4df",
+      "benchmarks/primal/Cargo.toml": "9c50212f222181e7c5f010995af3921dda6d0885de32d7630c5a94c52bc8a799",
+      "benchmarks/primal/Cargo.lock": "9ec9f5c0c8a06146a815471f4e1c57907f7050de99b33fefd96ac105051dd583",
+      "benchmarks/primal/src/bin/batch_next.rs": "051ba02097271ea7889db34bee54b65deb36b3263a8ca2bb11f3c7a905c401e6",
+      "benchmarks/primal/src/bin/range_bench.rs": "cf4239a567ce02ae997b648b82859d27bd8fbccc7eae772c15550f9c5e57b9c3",
+      "benchmarks/primal/src/main.rs": "c267df92e8ea40dd92385b10419356d81a827c2f71029002fab6957fd8a8fbde"
+    },
+    "count": 4118054813,
+    "total_ns": 13953796983,
+    "stages_ns": [
+      1760803,
+      856867998,
+      11817348759,
+      1204486390,
+      1179784,
+      67242697
+    ],
+    "threads": 1
+  },
+  "selected_variant": "queue8_outer512",
+  "selection_rule": "Fastest candidate on a one-sample 100B pilot over all variants; 10B is diagnostic only. Independent fixed-sample confirmation follows.",
+  "screen_completed_at_utc": "2026-11-26T15:00:54.520872+00:00",
+  "confirmation_driver_sha256": "9b14e249a9e1ac6a04757b8f0d6bb95054a21979e46a9249f317c66d076ff96f",
+  "completed_at_utc": "2026-11-26T15:12:10.073453+00:00",
+  "retained_counter_binaries_sha256": {
+    "primal": "137e803a25e5dee6f2d82f60da885c3d2803e8c86722ed0f3d990a4aafe29ce2",
+    "selected": "ba240009277f7b047da8605e65e5e93d8b177334dba7c51a65575b80289ea460",
+    "baseline": "98712ddf7584d0ee3114ed19152d1bf825197216317ebd38db4a03802ef649a7",
+    "primesieve": "12c5e639a585157f59c4490c6fe5f2b4dc47c22f5cd3b0cf01b3c8a3301689c5"
+  }
+}

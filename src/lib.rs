@@ -1,6 +1,8 @@
 mod batch_order;
 mod candidates;
 mod next;
+#[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+mod x86;
 pub use next::{
     BatchOptions, BatchResult, BatchStats, BatchStrategy, batch_next_primes,
     batch_next_primes_with_options, is_prime, next_prime,
@@ -12,6 +14,9 @@ const SMALL_PRIMES: [usize; 39] = [
     2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67, 71, 73, 79, 83, 89, 97,
     101, 103, 107, 109, 113, 127, 131, 137, 139, 149, 151, 157, 163, 167,
 ];
+#[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+const SEGMENT_SIZE: usize = x86::SEGMENT_BYTES;
+#[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
 const SEGMENT_SIZE: usize = 128 * 1024;
 // Bounded compiler-generated seed primes, not range answers or cached counts.
 const STATIC_SEED_LIMIT: usize = 1 << 20;
@@ -171,8 +176,15 @@ fn fill_short(low: usize, mut sieve: &mut [u8]) {
     }
 }
 
-// Expanded masks are prepared once for long requests; short requests retain
-// the compact cyclic fill to avoid paying for these allocations.
+// Long requests prepare one pre-sieve engine for the call. Fixed-size headers
+// retain the existing query-local stack storage without an extra allocation.
+#[allow(clippy::large_enum_variant)]
+enum PreparedPreSieve {
+    Expanded([Vec<u8>; 17]),
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    Compact,
+}
+
 fn repeat_pattern(pattern: &[u8], size: usize) -> Vec<u8> {
     let mut repeated = vec![0; size + pattern.len()];
     for chunk in repeated.chunks_mut(pattern.len()) {
@@ -218,7 +230,7 @@ struct SievingPrime {
     first: u8,
 }
 
-const DENSE_PRIME_LIMIT: usize = SEGMENT_SIZE;
+const DENSE_PRIME_LIMIT: usize = 128 * 1024;
 
 const RESIDUE_INDEX: [usize; 30] = {
     let mut indices = [0; 30];
@@ -390,6 +402,12 @@ impl SparsePrime {
 
 fn seed_primes(limit: usize) -> Vec<u32> {
     debug_assert!(limit <= u32::MAX as usize);
+    // Batch queries can reuse the same bounded seed metadata as standalone
+    // ranges. Return an owned prefix; no query results survive the call.
+    if limit <= STATIC_SEED_LIMIT {
+        let end = STATIC_SEEDS.partition_point(|&p| p as usize <= limit);
+        return STATIC_SEEDS[..end].to_vec();
+    }
     // Reuse the packed sieve for larger seed tables. Recursion quickly shrinks
     // the bound by sqrt(); the small odd-only sieve below terminates it.
     if limit >= 4_096 {
@@ -456,6 +474,7 @@ fn dense_prime(p: usize, first_byte: usize) -> SievingPrime {
     }
 }
 
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline(always)]
 fn mark_dense(state: &mut SievingPrime, sieve: &mut [u8]) {
     let len = sieve.len();
@@ -527,6 +546,13 @@ fn rotate_dense(state: &mut SievingPrime) {
             vst1q_u8(ptr, vqtbl2q_u8(table, a));
             vst1q_u8(ptr.add(16), vqtbl2q_u8(table, b));
         }
+        state.first = 0;
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 was checked; the helper loads and stores exactly eight u32s.
+        unsafe { x86::rotate_offsets(&mut state.next, first) };
         state.first = 0;
         return;
     }
@@ -607,6 +633,7 @@ fn mark_dense_final_many(states: &[SievingPrime], sieve: &mut [u8]) {
     }
 }
 
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline(never)]
 fn mark_dense_many(states: &mut [SievingPrime], sieve: &mut [u8]) {
     for state in states {
@@ -711,6 +738,7 @@ fn mark_sparse_once(state: SparsePrime, low: usize, sieve: &mut [u8]) {
 
 // Carry bytes and masks rotate with the multiplier wheel. Keeping all eight
 // in registers removes the dependent table load from each medium-prime hit.
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 const PACKED_CARRIES: [u64; 8] = {
     let mut packed = [0u64; 8];
     let mut class = 0;
@@ -724,6 +752,7 @@ const PACKED_CARRIES: [u64; 8] = {
     }
     packed
 };
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 const PACKED_MASKS: [u64; 8] = {
     let mut packed = [0u64; 8];
     let mut class = 0;
@@ -733,6 +762,7 @@ const PACKED_MASKS: [u64; 8] = {
     }
     packed
 };
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 const PACKED_GAPS: u64 = {
     let mut packed = 0;
     let mut i = 0;
@@ -742,6 +772,7 @@ const PACKED_GAPS: u64 = {
     }
     packed
 };
+#[cfg_attr(all(target_arch = "x86_64", not(test)), allow(dead_code))]
 #[inline]
 fn mark_medium(state: &mut SparsePrime, sieve: &mut [u8]) {
     let class = state.wheel as usize / 8;
@@ -883,8 +914,13 @@ fn sieve_segments_with_seeds(
         return;
     }
 
-    let expanded =
-        (span >= 8 * SEGMENT_SIZE).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
+    let expanded = (span >= 8 * 128 * 1024).then(|| {
+        #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+        if x86::COMPACT_PRE_SIEVE && std::arch::is_x86_feature_detected!("avx2") {
+            return PreparedPreSieve::Compact;
+        }
+        PreparedPreSieve::Expanded(PATTERNS.map(|p| repeat_pattern(p, capacity)))
+    });
     let dense_limit = DENSE_PRIME_LIMIT.min(span);
     let mut primes = Vec::new();
     let mut medium = Vec::new();
@@ -918,15 +954,23 @@ fn sieve_segments_with_seeds(
     let mut low = first_byte;
     let mut window = 0;
     let mut active = 0;
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    let mut dense_groups = expanded.as_ref().map(|_| x86::DenseGroups::new());
     let mut medium_active = 0;
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    let mut medium_groups: Option<x86::MediumGroups> = None;
     let mut pending_active = 0;
     while low < total_bytes {
         let len = SEGMENT_SIZE.min(total_bytes - low);
         let sieve = &mut segment[..len];
-        if let Some(ref patterns) = expanded {
-            fill_expanded(low, sieve, patterns);
-        } else {
-            fill_segment(low, sieve);
+        match &expanded {
+            Some(PreparedPreSieve::Expanded(patterns)) => fill_expanded(low, sieve, patterns),
+            #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+            Some(PreparedPreSieve::Compact) => {
+                // SAFETY: Compact is created only after runtime AVX2 detection.
+                unsafe { x86::fill_compact(low, sieve) };
+            }
+            None => fill_segment(low, sieve),
         }
 
         // Activate each prime once, then keep all marking positions relative
@@ -938,8 +982,19 @@ fn sieve_segments_with_seeds(
             for next in &mut state.next {
                 *next -= (low - first_byte) as u32;
             }
+            #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+            if let Some(groups) = &mut dense_groups {
+                groups.activate(*state);
+            }
         }
         active = next_active;
+        #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+        if let Some(groups) = &mut dense_groups {
+            groups.mark(sieve);
+        } else {
+            mark_dense_many(&mut primes[..active], sieve);
+        }
+        #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
         mark_dense_many(&mut primes[..active], sieve);
 
         let next_medium_active = medium.partition_point(|state| {
@@ -948,8 +1003,23 @@ fn sieve_segments_with_seeds(
         });
         for state in &mut medium[medium_active..next_medium_active] {
             state.next -= low;
+            #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+            if expanded.is_some() {
+                medium_groups
+                    .get_or_insert_with(x86::MediumGroups::new)
+                    .activate(state);
+            }
         }
         medium_active = next_medium_active;
+        #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+        if let Some(groups) = &mut medium_groups {
+            groups.mark(sieve);
+        } else {
+            for state in &mut medium[..medium_active] {
+                mark_medium(state, sieve);
+            }
+        }
+        #[cfg(not(all(target_arch = "x86_64", target_pointer_width = "64")))]
         for state in &mut medium[..medium_active] {
             mark_medium(state, sieve);
         }
@@ -1091,6 +1161,19 @@ fn append_seeds(primes: &mut Vec<u32>, low: usize, sieve: &[u8]) {
         unsafe { append_primes_neon(primes, low, sieve) };
         return;
     }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 was checked; the decoder reserves its padded output stores.
+        unsafe { x86::append_avx2(primes, low, sieve) };
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("popcnt") && std::arch::is_x86_feature_detected!("bmi1")
+    {
+        // SAFETY: both features checked; output stores are bounded by reservations.
+        unsafe { x86::append_popcnt(primes, low, sieve) };
+        return;
+    }
     for (i, &byte) in sieve.iter().enumerate() {
         let mut bits = byte;
         while bits != 0 {
@@ -1107,6 +1190,19 @@ fn append_primes(primes: &mut Vec<usize>, low: usize, sieve: &[u8]) {
         unsafe { append_primes_neon(primes, low, sieve) };
         return;
     }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 was checked; the decoder reserves its padded output stores.
+        unsafe { x86::append_avx2(primes, low, sieve) };
+        return;
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("popcnt") && std::arch::is_x86_feature_detected!("bmi1")
+    {
+        // SAFETY: both features checked; output stores are bounded by reservations.
+        unsafe { x86::append_popcnt(primes, low, sieve) };
+        return;
+    }
     for (i, &byte) in sieve.iter().enumerate() {
         let mut bits = byte;
         while bits != 0 {
@@ -1116,7 +1212,10 @@ fn append_primes(primes: &mut Vec<usize>, low: usize, sieve: &[u8]) {
     }
 }
 
-#[cfg(all(target_arch = "aarch64", target_pointer_width = "64"))]
+#[cfg(all(
+    any(target_arch = "aarch64", target_arch = "x86_64"),
+    target_pointer_width = "64"
+))]
 #[derive(Clone, Copy)]
 struct DecodedWord {
     offsets: u64,
@@ -1124,7 +1223,10 @@ struct DecodedWord {
     len: u8,
 }
 
-#[cfg(all(target_arch = "aarch64", target_pointer_width = "64"))]
+#[cfg(all(
+    any(target_arch = "aarch64", target_arch = "x86_64"),
+    target_pointer_width = "64"
+))]
 #[allow(long_running_const_eval)]
 static DECODED_WORDS: [DecodedWord; 65_536] = {
     let mut table = [DecodedWord {
@@ -1308,6 +1410,16 @@ fn count_bits(bytes: &[u8]) -> usize {
         // SAFETY: NEON support was checked; the function bounds its loads.
         return unsafe { count_bits_neon(bytes) };
     }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 checked; all vector loads stay inside chunks_exact(32).
+        return unsafe { x86::count_avx2(bytes) };
+    }
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("popcnt") {
+        // SAFETY: POPCNT checked; u64 words are loaded through bounded slices.
+        return unsafe { x86::count_popcnt(bytes) };
+    }
     bytes.iter().map(|byte| byte.count_ones() as usize).sum()
 }
 
@@ -1342,6 +1454,29 @@ unsafe fn count_bits_neon(bytes: &[u8]) -> usize {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn seed_prefix_reuse_matches_independent_sieve_at_boundaries() {
+        for limit in [
+            0,
+            1,
+            2,
+            3,
+            5,
+            167,
+            4095,
+            4096,
+            1_000_000,
+            STATIC_SEED_LIMIT,
+            STATIC_SEED_LIMIT + 1,
+        ] {
+            assert_eq!(
+                seed_primes(limit),
+                small_seed_primes(limit),
+                "limit={limit}"
+            );
+        }
+    }
 
     #[test]
     fn static_seeds_and_reciprocals_match_independent_arithmetic() {

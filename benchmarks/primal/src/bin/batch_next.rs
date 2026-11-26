@@ -52,11 +52,7 @@ fn verify() {
     for _ in 0..10_000 {
         state = state.wrapping_mul(6364136223846793005).wrapping_add(1);
         let n = state as u32 as u64;
-        assert_eq!(
-            primeroute::is_prime(n),
-            primal::is_prime(n),
-            "32-bit n={n}"
-        );
+        assert_eq!(primeroute::is_prime(n), primal::is_prime(n), "32-bit n={n}");
     }
     for base in [
         10u64.pow(8),
