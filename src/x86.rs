@@ -2,6 +2,7 @@
 use super::{DECODED_WORDS, DecodedWord, RESIDUES};
 use std::arch::x86_64::*;
 
+pub(super) const SEGMENT_BYTES: usize = 128 * 1024;
 const CACHE_BLOCK: usize = 32 * 1024;
 const VECTOR_STATE_ADVANCE: bool = false;
 const QUEUED_DENSE_MIN: usize = 8 * 1024;
