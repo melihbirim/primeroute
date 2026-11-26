@@ -5,6 +5,8 @@ use std::arch::x86_64::*;
 pub(super) const DENSE_LIMIT: usize = 16 * 1024;
 const CACHE_BLOCK: usize = 16 * 1024;
 const FILL_GROUP: usize = 6;
+pub(super) const AVX_FILL: bool = false;
+const COMPACT_DENSE: bool = true;
 
 #[target_feature(enable = "avx2")]
 pub(super) unsafe fn fill_expanded(low: usize, sieve: &mut [u8], patterns: &[Vec<u8>; 17]) {
@@ -300,20 +302,29 @@ fn append_byte<T: Output>(primes: &mut Vec<T>, number: usize, mut bits: u8) {
     }
 }
 
-#[derive(Clone)]
 pub(super) struct DenseGroups {
     groups: [Vec<super::SievingPrime>; 8],
     larger: [Vec<super::SievingPrime>; 8],
+    compact: MediumGroups,
 }
 impl DenseGroups {
     pub(super) fn new() -> Self {
         Self {
             groups: std::array::from_fn(|_| Vec::new()),
             larger: std::array::from_fn(|_| Vec::new()),
+            compact: MediumGroups::new(),
         }
     }
     pub(super) fn activate(&mut self, state: super::SievingPrime) {
         let class = super::RESIDUE_INDEX[state.prime as usize % 30];
+        if COMPACT_DENSE {
+            self.compact.activate(&super::SparsePrime {
+                next: state.next[state.first as usize] as usize,
+                quotient: state.prime / 30,
+                wheel: (class * 8 + state.first as usize) as u8,
+            });
+            return;
+        }
         if state.prime <= 32 * 1024 {
             self.groups[class].push(state);
         } else {
@@ -321,6 +332,12 @@ impl DenseGroups {
         }
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
+        if COMPACT_DENSE {
+            for bytes in sieve.chunks_mut(CACHE_BLOCK) {
+                self.compact.mark(bytes);
+            }
+            return;
+        }
         for bytes in sieve.chunks_mut(CACHE_BLOCK) {
             mark_dense_group::<0>(&mut self.groups[0], bytes);
             mark_dense_group::<1>(&mut self.groups[1], bytes);
@@ -470,6 +487,28 @@ fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -
     let mut i = state.next as usize;
     let q = state.quotient as usize;
     let len = sieve.len();
+    let steps = const { cycle_steps::<WHEEL>() };
+    let [a, b, c, d, e, f, g, h] = steps.map(|(gap, carry, _)| q * gap + carry);
+    let p = 30 * q + RESIDUES[WHEEL / 8];
+    if h < len {
+        let end = len - h;
+        while i < end {
+            // SAFETY: offsets are increasing because every wheel advance is
+            // nonnegative. h is the maximum, and i + h < len. Advancing i by
+            // p preserves all eight relative positions for the next full cycle.
+            unsafe {
+                *sieve.get_unchecked_mut(i + a) &= steps[0].2;
+                *sieve.get_unchecked_mut(i + b) &= steps[1].2;
+                *sieve.get_unchecked_mut(i + c) &= steps[2].2;
+                *sieve.get_unchecked_mut(i + d) &= steps[3].2;
+                *sieve.get_unchecked_mut(i + e) &= steps[4].2;
+                *sieve.get_unchecked_mut(i + f) &= steps[5].2;
+                *sieve.get_unchecked_mut(i + g) &= steps[6].2;
+                *sieve.get_unchecked_mut(i + h) &= steps[7].2;
+            }
+            i += p;
+        }
+    }
     macro_rules! hit {
         ($offset:expr) => {{
             let wheel = (WHEEL / 8) * 8 + ((WHEEL + $offset) & 7);
@@ -481,18 +520,33 @@ fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -
             i += q * step.gap as usize + step.carry as usize;
         }};
     }
-    // One complete wheel advances by p. Repeat when smaller medium primes
-    // have more than eight hits; each bounds check returns the exact next state.
-    loop {
-        hit!(0);
-        hit!(1);
-        hit!(2);
-        hit!(3);
-        hit!(4);
-        hit!(5);
-        hit!(6);
-        hit!(7);
+    hit!(0);
+    hit!(1);
+    hit!(2);
+    hit!(3);
+    hit!(4);
+    hit!(5);
+    hit!(6);
+    // Seven tail hits exhaust the possible prefix. The eighth cannot fit,
+    // otherwise the full-cycle loop would have consumed it.
+    assert!(i >= len, "a complete wheel was already handled");
+    ((i - len) as u32, (WHEEL / 8) * 8 + ((WHEEL + 7) & 7))
+}
+
+const fn cycle_steps<const WHEEL: usize>() -> [(usize, usize, u8); 8] {
+    let mut steps = [(0, 0, 0); 8];
+    let mut index = 0;
+    let mut gap = 0;
+    let mut carry = 0;
+    while index < 8 {
+        let wheel = (WHEEL / 8) * 8 + ((WHEEL + index) & 7);
+        let step = super::WHEEL_STEPS[wheel];
+        steps[index] = (gap, carry, step.mask);
+        gap += step.gap as usize;
+        carry += step.carry as usize;
+        index += 1;
     }
+    steps
 }
 
 #[inline(always)]
@@ -940,17 +994,37 @@ mod tests {
                 let mut actual = vec![255; len];
                 groups.mark(&mut actual);
                 assert_eq!(actual, expected);
-                let mut states: Vec<_> = groups
-                    .groups
-                    .iter()
-                    .chain(groups.larger.iter())
-                    .flatten()
-                    .map(|s| (s.prime, s.next, s.first))
-                    .collect();
+                // Minimum offset and wheel position determine the other seven
+                // streams; the compact representation stores exactly this state.
+                let mut states: Vec<_> = if COMPACT_DENSE {
+                    groups
+                        .compact
+                        .current
+                        .iter()
+                        .enumerate()
+                        .flat_map(|(wheel, states)| {
+                            states.iter().map(move |s| {
+                                (
+                                    30 * s.quotient + RESIDUES[wheel / 8] as u32,
+                                    s.next,
+                                    (wheel % 8) as u8,
+                                )
+                            })
+                        })
+                        .collect()
+                } else {
+                    groups
+                        .groups
+                        .iter()
+                        .chain(groups.larger.iter())
+                        .flatten()
+                        .map(|s| (s.prime, s.next[s.first as usize], s.first))
+                        .collect()
+                };
                 states.sort_unstable_by_key(|s| s.0);
                 let target: Vec<_> = reference
                     .iter()
-                    .map(|s| (s.prime, s.next, s.first))
+                    .map(|s| (s.prime, s.next[s.first as usize], s.first))
                     .collect();
                 assert_eq!(states, target);
             }

@@ -185,7 +185,7 @@ fn repeat_pattern(pattern: &[u8], size: usize) -> Vec<u8> {
 
 fn fill_expanded(low: usize, sieve: &mut [u8], patterns: &[Vec<u8>; 17]) {
     #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
-    if std::arch::is_x86_feature_detected!("avx2") {
+    if x86::AVX_FILL && std::arch::is_x86_feature_detected!("avx2") {
         // SAFETY: AVX2 checked; the helper bounds every input and output access.
         unsafe { x86::fill_expanded(low, sieve, patterns) };
         return;
