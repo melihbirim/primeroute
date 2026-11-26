@@ -110,7 +110,7 @@ for name, dense, block, fill, flags in settings:
         edits = [
             (r'CACHE_DENSE_LIMIT: usize = \d+ \* 1024', f'CACHE_DENSE_LIMIT: usize = {cache_limit} * 1024'),
             (r'SEGMENT_BYTES: usize = \d+ \* 1024', f'SEGMENT_BYTES: usize = {segment} * 1024'),
-            (r'DENSE_LIMIT: usize = \d+ \* 1024', f'DENSE_LIMIT: usize = {dense} * 1024'),
+            (r'\bDENSE_LIMIT: usize = \d+ \* 1024', f'DENSE_LIMIT: usize = {dense} * 1024'),
             (r'CACHE_BLOCK: usize = \d+ \* 1024', f'CACHE_BLOCK: usize = {block} * 1024'),
             (r'FILL_GROUP: usize = \d+', f'FILL_GROUP: usize = {fill}'),
             (r'AVX_FILL: bool = (true|false)', 'AVX_FILL: bool = false'),
