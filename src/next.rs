@@ -574,6 +574,10 @@ mod tests {
                     BatchOptions {
                         strategy: BatchStrategy::Sieve,
                         max_cluster_gap: 16_000_000,
+                        // Larger experimental x86 segments can put the last
+                        // input beyond the default root budget. This forced
+                        // sieve test explicitly budgets for its full interval.
+                        max_sieve_root: (boundary.max(base + 9_000_000) + 512).isqrt(),
                         tail_padding,
                         ..BatchOptions::default()
                     },
