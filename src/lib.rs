@@ -184,6 +184,12 @@ fn repeat_pattern(pattern: &[u8], size: usize) -> Vec<u8> {
 }
 
 fn fill_expanded(low: usize, sieve: &mut [u8], patterns: &[Vec<u8>; 17]) {
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    if std::arch::is_x86_feature_detected!("avx2") {
+        // SAFETY: AVX2 checked; the helper bounds every input and output access.
+        unsafe { x86::fill_expanded(low, sieve, patterns) };
+        return;
+    }
     let len = sieve.len();
     let [a, b, c, d, e, f, g, h, j, k, m, n, o, p, q, r, t]: [&[u8]; 17] =
         std::array::from_fn(|i| {
@@ -907,6 +913,12 @@ fn sieve_segments_with_seeds(
     let expanded =
         (span >= 8 * SEGMENT_SIZE).then(|| PATTERNS.map(|p| repeat_pattern(p, capacity)));
     let dense_limit = DENSE_PRIME_LIMIT.min(span);
+    #[cfg(all(target_arch = "x86_64", target_pointer_width = "64"))]
+    let dense_limit = if expanded.is_some() {
+        x86::DENSE_LIMIT.min(span)
+    } else {
+        dense_limit
+    };
     let mut primes = Vec::new();
     let mut medium = Vec::new();
     let mut buckets = Buckets::new(root);

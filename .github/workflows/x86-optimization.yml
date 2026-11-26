@@ -1,4 +1,4 @@
-name: Native x86 experiments
+name: Native x86 counting experiments
 
 on:
   push:
@@ -14,7 +14,7 @@ permissions:
 jobs:
   diagnostic:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - name: Install recorded Rust version
@@ -25,8 +25,15 @@ jobs:
           git clone --depth 1 --branch v12.18 https://github.com/kimwalisch/primesieve "$RUNNER_TEMP/primesieve"
           cmake -S "$RUNNER_TEMP/primesieve" -B "$RUNNER_TEMP/primesieve/build" -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF
           cmake --build "$RUNNER_TEMP/primesieve/build" --parallel 2
-      - name: Compare default and x86-64-v3 builds
-        run: python3 benchmarks/x86_diagnostic.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results"
+      - name: Screen counting kernels
+        run: python3 benchmarks/counting26.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results" --screen-only
+      - name: Upload selection evidence
+        uses: actions/upload-artifact@v4
+        with:
+          name: x86-count-pilot-${{ github.sha }}
+          path: ${{ runner.temp }}/x86-results/pilot.json
+      - name: Independent paired confirmation
+        run: python3 benchmarks/confirm_count26.py "$RUNNER_TEMP/primesieve" "$RUNNER_TEMP/x86-results"
       - uses: actions/upload-artifact@v4
         if: always()
         with:

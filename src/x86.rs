@@ -2,6 +2,61 @@
 use super::{DECODED_WORDS, DecodedWord, RESIDUES};
 use std::arch::x86_64::*;
 
+pub(super) const DENSE_LIMIT: usize = 16 * 1024;
+const CACHE_BLOCK: usize = 16 * 1024;
+const FILL_GROUP: usize = 6;
+
+#[target_feature(enable = "avx2")]
+pub(super) unsafe fn fill_expanded(low: usize, sieve: &mut [u8], patterns: &[Vec<u8>; 17]) {
+    let sources: [&[u8]; 17] = std::array::from_fn(|i| {
+        let offset = low % super::PATTERNS[i].len();
+        &patterns[i][offset..offset + sieve.len()]
+    });
+    // SAFETY: all slices contain sieve.len() bytes, and AVX2 is enabled.
+    unsafe {
+        match FILL_GROUP {
+            6 => {
+                combine::<6, true>(sieve, sources[..6].try_into().unwrap());
+                combine::<6, false>(sieve, sources[6..12].try_into().unwrap());
+                combine::<5, false>(sieve, sources[12..].try_into().unwrap());
+            }
+            9 => {
+                combine::<9, true>(sieve, sources[..9].try_into().unwrap());
+                combine::<8, false>(sieve, sources[9..].try_into().unwrap());
+            }
+            _ => combine::<17, true>(sieve, sources),
+        }
+    }
+}
+
+#[target_feature(enable = "avx2")]
+#[inline]
+unsafe fn combine<const N: usize, const INIT: bool>(output: &mut [u8], sources: [&[u8]; N]) {
+    let vector_len = output.len() / 32 * 32;
+    for offset in (0..vector_len).step_by(32) {
+        // SAFETY: offset + 32 <= output.len(); inputs are at least that long.
+        unsafe {
+            let mut bits = if INIT {
+                _mm256_set1_epi8(-1)
+            } else {
+                _mm256_loadu_si256(output.as_ptr().add(offset).cast())
+            };
+            for source in sources {
+                bits =
+                    _mm256_and_si256(bits, _mm256_loadu_si256(source.as_ptr().add(offset).cast()));
+            }
+            _mm256_storeu_si256(output.as_mut_ptr().add(offset).cast(), bits);
+        }
+    }
+    for offset in vector_len..output.len() {
+        let mut bits = if INIT { 255 } else { output[offset] };
+        for source in sources {
+            bits &= source[offset];
+        }
+        output[offset] = bits;
+    }
+}
+
 #[target_feature(enable = "avx2")]
 pub(super) unsafe fn rotate_offsets(offsets: &mut [u32; 8], first: usize) {
     let indices = _mm256_add_epi32(
@@ -266,7 +321,7 @@ impl DenseGroups {
         }
     }
     pub(super) fn mark(&mut self, sieve: &mut [u8]) {
-        for bytes in sieve.chunks_mut(32 * 1024) {
+        for bytes in sieve.chunks_mut(CACHE_BLOCK) {
             mark_dense_group::<0>(&mut self.groups[0], bytes);
             mark_dense_group::<1>(&mut self.groups[1], bytes);
             mark_dense_group::<2>(&mut self.groups[2], bytes);
@@ -426,18 +481,18 @@ fn mark_medium_chain<const WHEEL: usize>(state: MediumPrime, sieve: &mut [u8]) -
             i += q * step.gap as usize + step.carry as usize;
         }};
     }
-    hit!(0);
-    hit!(1);
-    hit!(2);
-    hit!(3);
-    hit!(4);
-    hit!(5);
-    hit!(6);
-    hit!(7);
-    // A full wheel advances by p. Medium p > SEGMENT_SIZE >= len, so
-    // there cannot be a ninth mark in this window, even in dense masks.
-    debug_assert!(i >= len);
-    ((i - len) as u32, WHEEL)
+    // One complete wheel advances by p. Repeat when smaller medium primes
+    // have more than eight hits; each bounds check returns the exact next state.
+    loop {
+        hit!(0);
+        hit!(1);
+        hit!(2);
+        hit!(3);
+        hit!(4);
+        hit!(5);
+        hit!(6);
+        hit!(7);
+    }
 }
 
 #[inline(always)]
@@ -516,6 +571,30 @@ fn mark_classes(states: &mut [super::SievingPrime], bitmap: &mut [u8]) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn expanded_fill_matches_cyclic_masks_with_unaligned_tails() {
+        if !std::arch::is_x86_feature_detected!("avx2") {
+            return;
+        }
+        let expanded = super::super::PATTERNS.map(|p| super::super::repeat_pattern(p, 131_072));
+        for low in [0, 1, 17, 1_000_000_000_000usize / 30] {
+            for len in [0, 1, 31, 32, 33, 127, 1023, 131_071, 131_072] {
+                let mut expected = vec![0; len];
+                super::super::fill_segment(low, &mut expected);
+                let mut guarded = vec![0xa5; len + 63];
+                // SAFETY: AVX2 checked; expanded patterns include every input byte.
+                unsafe { fill_expanded(low, &mut guarded[31..31 + len], &expanded) };
+                assert_eq!(&guarded[31..31 + len], expected);
+                assert!(
+                    guarded[..31]
+                        .iter()
+                        .chain(&guarded[31 + len..])
+                        .all(|&b| b == 0xa5)
+                );
+            }
+        }
+    }
 
     #[test]
     fn counts_match_scalar_for_unaligned_inputs_and_tails() {
@@ -727,7 +806,7 @@ mod tests {
         super::super::STATIC_SEEDS
             .iter()
             .copied()
-            .filter(|&p| p as usize > super::super::DENSE_PRIME_LIMIT && p as usize <= 1_000_000)
+            .filter(|&p| p as usize > DENSE_LIMIT && p as usize <= 1_000_000)
             .map(|p| {
                 let mut state = super::super::SparsePrime::new(p as usize, low);
                 state.next -= low;
@@ -805,7 +884,11 @@ mod tests {
     }
     #[test]
     fn medium_square_activation_matches_single_window_queries() {
-        let start = 131_101usize * 131_101 - 2_000_000;
+        let p = *super::super::STATIC_SEEDS
+            .iter()
+            .find(|&&p| p as usize > DENSE_LIMIT)
+            .unwrap() as usize;
+        let start = p * p - 2_000_000;
         let end = start + 40_000_000;
         let mut expected = Vec::new();
         let mut low = start;

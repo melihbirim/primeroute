@@ -22,8 +22,10 @@ p.add_argument('--runs', type=int, default=15)
 p.add_argument('--warmups', type=int, default=3)
 p.add_argument('--large-runs', type=int, default=3)
 p.add_argument('--large', action='store_true')
+p.add_argument('--large-cpp-sizes', type=int, nargs='*', default=[], help='Additional C++ cache sizes at 100 billion (KiB)')
 a = p.parse_args()
 assert a.runs > 0 and a.warmups >= 0 and a.large_runs > 0
+assert all(1 <= size <= 8192 for size in a.large_cpp_sizes)
 affinity_before = sorted(os.sched_getaffinity(0)) if hasattr(os,'sched_getaffinity') else None
 if affinity_before:
     os.sched_setaffinity(0, {affinity_before[0]})
@@ -50,7 +52,7 @@ for name, root in roots.items():
     source_paths[name] = {str(f.relative_to(root)): f for f in files}
 report = {'status':'running','started_at_utc':datetime.now(timezone.utc).isoformat(),
           'platform':platform.platform(),'machine':platform.machine(),'threads':1,
-          'runs':a.runs,'warmups':a.warmups,'large_runs':a.large_runs,
+          'runs':a.runs,'warmups':a.warmups,'large_runs':a.large_runs,'large_cpp_sizes_kib':a.large_cpp_sizes,
           'source_sha256':{n:{key:sha(path) for key,path in files.items()} for n,files in source_paths.items()},
           'runner_sha256':sha(Path(__file__)),
           'input_sha256':sha(ROOT/'benchmarks/batch-next-results.json'),
@@ -100,6 +102,8 @@ for limit,count in [(10**8,5_761_455),(10**9,50_847_534),(10**10,455_052_511)]+(
     commands={n:[str(programs[n+'_count']),str(limit)] for n in roots if not large or n!='baseline_v3'}
     commands['cpp_default']=[str(cpp),str(limit),'--threads=1','--count=1','--quiet','--no-status']
     if not large:commands['cpp_1024k']=commands['cpp_default']+['--size=1024']
+    if large:
+        for size in a.large_cpp_sizes:commands[f'cpp_{size}k']=commands['cpp_default']+[f'--size={size}']
     commands['primal']=[str(programs['primal_count']),str(limit)]
     if a.v3 and not large:commands['primal_v3']=[str(programs['primal_v3_count']),str(limit)]
     measure('prefix',f'count through {limit}',commands,{'limit':limit,'metric':'process wall time ms'},count,
