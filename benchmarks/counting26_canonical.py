@@ -90,6 +90,8 @@ fn main() {
 # screened implementation still sieves and verifies the complete prime count.
 settings = [
     ('baseline', None, None, None, ''),
+    ('canonical16_32', 16, 32, 17, ''),
+    ('canonical32_32', 32, 32, 17, ''),
     ('canonical64_32', 64, 32, 17, ''),
     ('canonical128_32', 128, 32, 17, ''),
     ('canonical192_32', 192, 32, 17, ''),

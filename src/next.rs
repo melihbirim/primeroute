@@ -577,7 +577,12 @@ mod tests {
                         // Larger experimental x86 segments can put the last
                         // input beyond the default root budget. This forced
                         // sieve test explicitly budgets for its full interval.
-                        max_sieve_root: (boundary.max(base + 9_000_000) + 512).isqrt(),
+                        max_sieve_root: inputs
+                            .iter()
+                            .max()
+                            .unwrap()
+                            .saturating_add(tail_padding)
+                            .isqrt(),
                         tail_padding,
                         ..BatchOptions::default()
                     },
