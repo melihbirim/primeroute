@@ -194,6 +194,50 @@ The [report](benchmarks/X86_COUNT_100B.md) includes the remaining losses, a
 borderline ARM batch repeat, every rejected experiment, source identity and raw
 samples. Original benchmark results and hashes remain unchanged.
 
+### v0.1.1 CI results — 26 November
+
+The [release tag run](https://github.com/melihbirim/primeroute/actions/runs/45855473920)
+and [matching main run](https://github.com/melihbirim/primeroute/actions/runs/45855475507)
+both measure release commit `74548f1`. All test and benchmark jobs pass on native
+x86-64 and Apple Silicon ARM64. A successful job means the checks and benchmarks
+completed; it does not mean Rust wins every comparison.
+
+Each run has **20 cases**: two prefix counts, eight range count/list cases and
+ten batch workloads. All comparators use **one thread**. The tables count a win
+when Rust takes less than 97% of the comparator's time, a loss above 103%, and a
+tie in between. Primesieve uses the fastest configuration median measured for
+each case; primal ranges use the segmented adapter described above.
+
+| Run | CPU reported by runner | vs primesieve: wins / ties / losses | vs primal: wins / ties / losses |
+| --- | --- | ---: | ---: |
+| Release tag | AMD EPYC 7763, AVX2 | 8 / 2 / 10 | 18 / 1 / 1 |
+| Main | AMD EPYC 9V74, AVX-512 available | 10 / 1 / 9 | 20 / 0 / 0 |
+| Release tag | Apple M2 Pro (Virtual) | 16 / 0 / 4 | 20 / 0 / 0 |
+| Main | Apple M1 (Virtual) | 13 / 1 / 6 | 20 / 0 / 0 |
+
+The runs use the same release source but different CPUs. Hardware differences
+and shared-runner variability affect timings, so these totals are not a
+before/after code comparison.
+
+On Apple Silicon, counting to one billion beats primesieve in both runs, as do
+most short ranges and batches. Counting to 100 million, the 100-million-wide
+range near 10¹² in both count and list modes, and scattered batches near 10¹²
+lose in both runs. On x86, primesieve leads most range cases and several dense
+batches. Scattered, packed, spaced and isolated batches near 10¹⁴ beat primesieve
+on both x86 CPUs.
+
+Primal is slower in most cases, with two exceptions in the EPYC 7763 tag run:
+scattered batches near 10⁸ tie, and scattered batches near 10¹² take **9.1% more
+time** than primal. The **26/26** primal wins above describe the dedicated
+26-case experiment on its recorded machines, rather than every CI runner.
+
+CI counts only to **100 million and one billion**. It does not remeasure
+10 billion, 100 billion, the 24-case short suite or its unaligned holdout. The
+original 26-case reports and 100-billion measurements above remain separate,
+with their original results and hashes unchanged. These release CI results
+support the broad workload differences; they do not reproduce every published
+timing or independently validate the 100-billion result.
+
 ### Earlier platform checks — 25–26 November
 
 The tables above retain the original M2 measurements and their original hashes.
